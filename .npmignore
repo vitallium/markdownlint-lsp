@@ -1,0 +1,12 @@
+.gitignore
+README.md
+*~
+
+/.git
+/.github
+/.gitattributes
+
+/node_modules
+/src
+/test
+/coverage
