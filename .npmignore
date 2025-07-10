@@ -1,7 +1,7 @@
 .gitignore
 README.md
 *~
-
+.npmrc
 /.git
 /.github
 /.gitattributes
