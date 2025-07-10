@@ -1,40 +1,43 @@
 {
-  "name": "markdownlint-lsp",
-  "version": "0.1.0",
-  "main": "lib/index.js",
-  "type": "module",
-  "bin": {
-    "markdownlint-lsp-server": "lib/index.js"
-  },
-  "files": [
-    "lib/**/*.js"
-  ],
-  "scripts": {
-    "start": "node lib/index.js --stdio",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Vitaly Slobodin <vitaliy.slobodin@gmail.com>",
-  "license": "MIT",
-  "description": "A Language Server Protocol (LSP) implementation for markdownlint",
-  "keywords": [
-    "markdown",
-    "markdownlint",
-    "lsp",
-    "language-server"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vitallium/markdownlint-lsp.git"
-  },
-  "bugs": {
-    "url": "https://github.com/vitallium/markdownlint-lsp/issues"
-  },
-  "homepage": "https://github.com/vitallium/markdownlint-lsp#readme",
-  "dependencies": {
-    "globby": "^14.1.0",
-    "js-yaml": "^4.1.0",
-    "markdownlint": "^0.38.0",
-    "vscode-languageserver": "^9.0.1",
-    "vscode-languageserver-textdocument": "^1.0.12"
-  }
+	"name": "markdownlint-lsp",
+	"version": "0.1.0",
+	"main": "lib/index.js",
+	"type": "module",
+	"bin": {
+		"markdownlint-lsp-server": "lib/index.js"
+	},
+	"files": [
+		"lib/**/*.js"
+	],
+	"scripts": {
+		"start": "node lib/index.js --stdio",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Vitaly Slobodin <vitaliy.slobodin@gmail.com>",
+	"license": "MIT",
+	"description": "A Language Server Protocol (LSP) implementation for markdownlint",
+	"keywords": [
+		"markdown",
+		"markdownlint",
+		"lsp",
+		"language-server"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/vitallium/markdownlint-lsp.git"
+	},
+	"bugs": {
+		"url": "https://github.com/vitallium/markdownlint-lsp/issues"
+	},
+	"homepage": "https://github.com/vitallium/markdownlint-lsp#readme",
+	"dependencies": {
+		"globby": "^14.1.0",
+		"js-yaml": "^4.1.0",
+		"markdownlint": "^0.38.0",
+		"vscode-languageserver": "^9.0.1",
+		"vscode-languageserver-textdocument": "^1.0.12"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.1.1"
+	}
 }
