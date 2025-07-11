@@ -1,18 +1,8 @@
 {
 	"name": "markdownlint-lsp",
 	"version": "0.2.0",
-	"main": "lib/index.js",
+	"main": "lib/index.mjs",
 	"type": "module",
-	"bin": {
-		"markdownlint-lsp-server": "lib/index.js"
-	},
-	"files": [
-		"lib/**/*.js"
-	],
-	"scripts": {
-		"start": "node lib/index.js --stdio",
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
 	"author": "Vitaly Slobodin <vitaliy.slobodin@gmail.com>",
 	"license": "MIT",
 	"description": "A Language Server Protocol (LSP) implementation for markdownlint",
@@ -38,6 +28,16 @@
 		"vscode-languageserver-textdocument": "^1.0.12"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.1.1"
+		"@biomejs/biome": "2.1.1",
+		"mocha": "^10.4.0"
+	},
+	"bin": {
+		"markdownlint-lsp-server": "lib/index.mjs"
+	},
+	"files": [
+		"lib/**/*.mjs"
+	],
+	"scripts": {
+		"start": "node lib/index.js --stdio"
 	}
 }
