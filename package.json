@@ -1,6 +1,6 @@
 {
 	"name": "markdownlint-lsp",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"main": "lib/index.mjs",
 	"type": "module",
 	"author": "Vitaly Slobodin <vitaliy.slobodin@gmail.com>",
