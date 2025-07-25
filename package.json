@@ -38,6 +38,6 @@
 		"lib/**/*.mjs"
 	],
 	"scripts": {
-		"start": "node lib/index.js --stdio"
+		"start": "node lib/index.mjs --stdio"
 	}
 }
