@@ -28,8 +28,7 @@
 		"vscode-languageserver-textdocument": "^1.0.12"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.1.1",
-		"mocha": "^10.4.0"
+		"@biomejs/biome": "2.2.4"
 	},
 	"bin": {
 		"markdownlint-lsp-server": "lib/index.mjs"
