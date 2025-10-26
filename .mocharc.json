@@ -1,0 +1,9 @@
+{
+	"timeout": 10000,
+	"reporter": "spec",
+	"color": true,
+	"bail": false,
+	"recursive": true,
+	"exit": true,
+	"node-option": ["experimental-modules", "no-warnings"]
+}
