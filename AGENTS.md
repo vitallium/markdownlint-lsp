@@ -4,7 +4,8 @@ This file provides guidance to AI coding agents when working with code in this r
 
 ## Project Overview
 
-This is a Language Server Protocol (LSP) implementation for markdownlint that provides real-time linting for Markdown files in editors and IDEs.
+This is a Language Server Protocol (LSP) implementation for markdownlint that
+provides real-time linting for Markdown files in editors and IDEs.
 
 ## Architecture
 
@@ -58,7 +59,8 @@ This is a Language Server Protocol (LSP) implementation for markdownlint that pr
 
 ### File Watching
 
-All configuration files are watched for changes, triggering re-validation of all open documents.
+All configuration files are watched for changes, triggering re-validation of all
+open documents.
 
 ## Development Notes
 
