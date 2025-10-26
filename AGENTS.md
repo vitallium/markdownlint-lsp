@@ -62,11 +62,6 @@ All configuration files are watched for changes, triggering re-validation of all
 
 ## Development Notes
 
-### Testing
-
-- Configuration loading can be tested with `node -e "import { loadConfig } from './lib/config.mjs';"`
-- File watching patterns can be verified by checking `ALL_CONFIG_FILENAMES_EXCEPT_PACKAGE_JSON`
-
 ### Dependencies
 
 - `markdownlint` - Core linting functionality
@@ -102,19 +97,6 @@ npx biome check .
 
 # Run linting
 npx biome lint .
-```
-
-### Testing
-
-```bash
-# Run tests with Mocha
-npm test
-
-# Run specific test file
-npx mocha test/specific-test.js
-
-# Test configuration loading manually
-node -e "import { loadConfig } from './lib/config.mjs'; console.log('Config loaded');"
 ```
 
 ## LSP Server Implementation Details
