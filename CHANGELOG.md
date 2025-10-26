@@ -2,6 +2,61 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.0] - 2025-10-26
+
+### Features
+
+- Implement code actions
+- Resolve root path from workspace folders
+
+### Bug Fixes
+
+- Register workspace folder handlers after capabilities are set
+- Use correct workspace root for each document
+- Prevent stale diagnostics with version tracking
+- Skip config loading for non-file URIs
+- Clamp text edits to line bounds
+- Watch package.json for config changes
+- Correct config precedence order
+- Clear stale diagnostics when validation fails
+- Clean up config cache on document close
+- Use path.relative for robust workspace root detection
+- Guard config merge when settings missing
+- Treat workspace roots as valid subdirectories
+
+### Refactor
+
+- Remove unused #getWorkspaceRoot method
+- Centralize root path resolution
+
+### Documentation
+
+- Remove non-existent test references from AGENTS.md
+
+### Performance
+
+- Throttle validation on open and change events
+- Cache config loading results
+- Prevent duplicate validation on document save
+- Debounce config file change events
+- Increase config change debounce from 100ms to 300ms
+
+### Testing
+
+- Add comprehensive behavior tests for markdownlint LSP server
+
+### Miscellaneous Tasks
+
+- Add CHANGELOG.md
+- *(deps)* Update markdownlint to v0.39.0
+- Add Zed settings
+- Add AGENTS.md file
+- Remove unused globby dependency
+- Remove empty onWillSave handler
+- *(server)* Remove redundant comments
+- *(agents)* Add note about pnpm package manager
+- *(agents)* Wrap long lines in AGENTS.md
+
 ## [0.5.1] - 2025-09-18
 
 ### Bug Fixes
