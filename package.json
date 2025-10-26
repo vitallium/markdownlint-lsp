@@ -21,7 +21,6 @@
 	},
 	"homepage": "https://github.com/vitallium/markdownlint-lsp#readme",
 	"dependencies": {
-		"globby": "^14.1.0",
 		"js-yaml": "^4.1.0",
 		"markdownlint": "^0.39.0",
 		"vscode-languageserver": "^9.0.1",

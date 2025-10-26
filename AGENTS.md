@@ -72,7 +72,6 @@ All configuration files are watched for changes, triggering re-validation of all
 - `markdownlint` - Core linting functionality
 - `vscode-languageserver` - LSP implementation
 - `js-yaml` - YAML parsing for configuration files
-- `globby` - File globbing utilities
 
 ### Build & Development
 
