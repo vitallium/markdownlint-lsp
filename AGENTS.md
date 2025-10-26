@@ -76,6 +76,8 @@ All configuration files are watched for changes, triggering re-validation of all
 
 ## Development Commands
 
+This project uses [pnpm](https://pnpm.io/) for package management.
+
 ### Running the LSP Server
 
 ```bash
