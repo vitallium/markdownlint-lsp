@@ -131,12 +131,11 @@ End of paste
 Regular text with emoji: 😊 👍 ✨
 `;
 
-		await client.openTextDocument(uri, content);
-		const publishedDiagnostics =
-			await client.waitForDiagnosticsArray(uri);
+			await client.openTextDocument(uri, content);
+			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
 
-		// Should not have any errors for emoji in headings
-		expect(publishedDiagnostics).to.have.lengthOf(0);
+			// Should not have any errors for emoji in headings
+			expect(publishedDiagnostics).to.have.lengthOf(0);
 		});
 
 		it("should handle non-ASCII characters in content", async () => {
@@ -158,12 +157,11 @@ Dies ist ein deutscher Text mit Umlauten: ä, ö, ü, ß
 טקסט בעברית מימין לשמאל.
 `;
 
-		await client.openTextDocument(uri, content);
-		const publishedDiagnostics =
-			await client.waitForDiagnosticsArray(uri);
+			await client.openTextDocument(uri, content);
+			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
 
-		// Should handle all Unicode correctly
-		expect(publishedDiagnostics).to.have.lengthOf(0);
+			// Should handle all Unicode correctly
+			expect(publishedDiagnostics).to.have.lengthOf(0);
 		});
 
 		it("should correctly calculate positions with multi-byte characters", async () => {
@@ -175,12 +173,11 @@ Dies ist ein deutscher Text mit Umlauten: ä, ö, ü, ß
 Text after Chinese characters
 `;
 
-		await client.openTextDocument(uri, content);
-		const publishedDiagnostics =
-			await client.waitForDiagnosticsArray(uri);
+			await client.openTextDocument(uri, content);
+			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
 
-		// Should detect the missing space after # even with Chinese characters
-		const md018 = publishedDiagnostics.find((d) => d.code === "MD018");
+			// Should detect the missing space after # even with Chinese characters
+			const md018 = publishedDiagnostics.find((d) => d.code === "MD018");
 			expect(md018).to.exist;
 			expect(md018.range.start.line).to.equal(2); // Third line
 		});
@@ -197,16 +194,15 @@ Text after Chinese characters
 			}
 
 			const startTime = Date.now();
-		await client.openTextDocument(uri, content);
-		const publishedDiagnostics =
-			await client.waitForDiagnosticsArray(uri);
-		const elapsed = Date.now() - startTime;
+			await client.openTextDocument(uri, content);
+			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
+			const elapsed = Date.now() - startTime;
 
 			// Should complete within reasonable time
 			expect(elapsed).to.be.lessThan(5000);
 
 			// Should detect duplicate headings
-		const md024 = publishedDiagnostics.filter((d) => d.code === "MD024");
+			const md024 = publishedDiagnostics.filter((d) => d.code === "MD024");
 			expect(md024.length).to.be.greaterThan(0);
 		});
 
@@ -226,12 +222,11 @@ Text after Chinese characters
 				content += "\n";
 			}
 
-		await client.openTextDocument(uri, content);
-		const publishedDiagnostics =
-			await client.waitForDiagnosticsArray(uri);
+			await client.openTextDocument(uri, content);
+			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
 
-		// Should handle large tables without issues
-		expect(publishedDiagnostics).to.exist;
+			// Should handle large tables without issues
+			expect(publishedDiagnostics).to.exist;
 		});
 
 		it("should handle documents with many code blocks", async () => {
@@ -256,13 +251,12 @@ Text after Chinese characters
 				}
 			}
 
-		await client.openTextDocument(uri, content);
-		const publishedDiagnostics =
-			await client.waitForDiagnosticsArray(uri);
+			await client.openTextDocument(uri, content);
+			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
 
-		// Should detect code blocks without language (MD040)
-		const md040 = publishedDiagnostics.filter((d) => d.code === "MD040");
-		expect(md040.length).to.be.greaterThan(0);
+			// Should detect code blocks without language (MD040)
+			const md040 = publishedDiagnostics.filter((d) => d.code === "MD040");
+			expect(md040.length).to.be.greaterThan(0);
 		});
 	});
 
@@ -271,8 +265,8 @@ Text after Chinese characters
 			const uri = `file://${path.join(__dirname, "rapid-changes-test.md")}`;
 			const initialContent = "# Heading\n\n";
 
-		await client.openTextDocument(uri, initialContent);
-		await client.waitForDiagnosticsArray(uri);
+			await client.openTextDocument(uri, initialContent);
+			await client.waitForDiagnosticsArray(uri);
 
 			// Simulate rapid typing
 			const changes = "This is being typed quickly".split("");
@@ -293,12 +287,12 @@ Text after Chinese characters
 			}
 
 			// Wait for final diagnostics without missing the notification
-		const diagnosticsPromise = client.waitForDiagnostics(uri);
-		await wait(500);
-		const diagnosticsReport = await diagnosticsPromise;
+			const diagnosticsPromise = client.waitForDiagnostics(uri);
+			await wait(500);
+			const diagnosticsReport = await diagnosticsPromise;
 
-		// Should have processed all changes
-		expect(diagnosticsReport.diagnostics).to.exist;
+			// Should have processed all changes
+			expect(diagnosticsReport.diagnostics).to.exist;
 		});
 	});
 
@@ -314,13 +308,13 @@ invalid: yaml: syntax:: here
 Regular content
 `;
 
-		await client.openTextDocument(uri, content);
-		const diagnosticsReport = await client.waitForDiagnostics(uri);
+			await client.openTextDocument(uri, content);
+			const diagnosticsReport = await client.waitForDiagnostics(uri);
 
-		// Should still process the document despite invalid frontmatter
-		expect(diagnosticsReport).to.exist;
-		// The actual markdown content should be validated
-		expect(diagnosticsReport.diagnostics).to.be.an("array");
+			// Should still process the document despite invalid frontmatter
+			expect(diagnosticsReport).to.exist;
+			// The actual markdown content should be validated
+			expect(diagnosticsReport.diagnostics).to.be.an("array");
 		});
 
 		it("should handle documents with mixed line endings", async () => {
@@ -328,11 +322,11 @@ Regular content
 			// Mix of \n, \r\n, and \r
 			const content = "# Heading\r\n\rParagraph one\n\nParagraph two\r\n";
 
-		await client.openTextDocument(uri, content);
-		const diagnosticsReport = await client.waitForDiagnostics(uri);
+			await client.openTextDocument(uri, content);
+			const diagnosticsReport = await client.waitForDiagnostics(uri);
 
-		// Should handle mixed line endings gracefully
-		expect(diagnosticsReport).to.exist;
+			// Should handle mixed line endings gracefully
+			expect(diagnosticsReport).to.exist;
 		});
 
 		it("should handle empty code blocks", async () => {
@@ -350,14 +344,16 @@ Regular content
 \`\`\`
 `;
 
-		await client.openTextDocument(uri, content);
-		const diagnosticsReport = await client.waitForDiagnostics(uri);
+			await client.openTextDocument(uri, content);
+			const diagnosticsReport = await client.waitForDiagnostics(uri);
 
-		// Should handle empty code blocks
-		expect(diagnosticsReport).to.exist;
-		// May have MD040 for fenced code block without language
-		const md040 = diagnosticsReport.diagnostics.find((d) => d.code === "MD040");
-		expect(md040).to.exist;
+			// Should handle empty code blocks
+			expect(diagnosticsReport).to.exist;
+			// May have MD040 for fenced code block without language
+			const md040 = diagnosticsReport.diagnostics.find(
+				(d) => d.code === "MD040",
+			);
+			expect(md040).to.exist;
 		});
 	});
 
@@ -384,11 +380,11 @@ Regular content
             1. Ordered Level 5
 `;
 
-		await client.openTextDocument(uri, content);
-		const diagnosticsReport = await client.waitForDiagnostics(uri);
+			await client.openTextDocument(uri, content);
+			const diagnosticsReport = await client.waitForDiagnostics(uri);
 
-		// Should handle deep nesting
-		expect(diagnosticsReport).to.exist;
+			// Should handle deep nesting
+			expect(diagnosticsReport).to.exist;
 		});
 
 		it("should handle nested blockquotes", async () => {
@@ -409,11 +405,11 @@ Regular content
 > > With its own paragraphs
 `;
 
-		await client.openTextDocument(uri, content);
-		const diagnosticsReport = await client.waitForDiagnostics(uri);
+			await client.openTextDocument(uri, content);
+			const diagnosticsReport = await client.waitForDiagnostics(uri);
 
-		// Should handle nested blockquotes
-		expect(diagnosticsReport).to.exist;
+			// Should handle nested blockquotes
+			expect(diagnosticsReport).to.exist;
 		});
 	});
 
@@ -432,12 +428,11 @@ This is an [unused reference][unused].
 [unused]: https://example.com "Unused Link"
 `;
 
-		await client.openTextDocument(uri, content);
-		const publishedDiagnostics =
-			await client.waitForDiagnosticsArray(uri);
+			await client.openTextDocument(uri, content);
+			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
 
-		// Should detect undefined references
-		const md052 = publishedDiagnostics.find((d) => d.code === "MD052");
+			// Should detect undefined references
+			const md052 = publishedDiagnostics.find((d) => d.code === "MD052");
 			expect(md052).to.exist;
 		});
 
@@ -452,11 +447,11 @@ Link to [Section One](#section-one)
 Link to [Non-existent Section](#non-existent)
 `;
 
-		await client.openTextDocument(uri, content);
-		const diagnosticsReport = await client.waitForDiagnostics(uri);
+			await client.openTextDocument(uri, content);
+			const diagnosticsReport = await client.waitForDiagnostics(uri);
 
-		// Should validate link fragments if MD051 is enabled
-		expect(diagnosticsReport).to.exist;
+			// Should validate link fragments if MD051 is enabled
+			expect(diagnosticsReport).to.exist;
 		});
 	});
 });
