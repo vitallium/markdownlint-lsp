@@ -79,6 +79,7 @@ describe("Edge Cases and Performance", function () {
 			const initialContent = "# Document\n\n";
 
 			await client.openTextDocument(uri, initialContent);
+			await client.waitForDiagnosticsArray(uri);
 
 			// Simulate pasting a large block of text with errors
 			const pastedContent = `## Section with errors
