@@ -43,6 +43,8 @@
 	],
 	"scripts": {
 		"start": "node lib/index.mjs --stdio",
+		"lint": "biome check .",
+		"lint:fix": "biome check --write .",
 		"test": "mocha test/**/*.test.mjs",
 		"test:watch": "mocha test/**/*.test.mjs --watch",
 		"test:server": "mocha test/server.test.mjs",
