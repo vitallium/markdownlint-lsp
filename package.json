@@ -22,7 +22,7 @@
 	"homepage": "https://github.com/vitallium/markdownlint-lsp#readme",
 	"dependencies": {
 		"js-yaml": "^4.1.1",
-		"markdownlint": "^0.39.0",
+		"markdownlint": "^0.40.0",
 		"vscode-languageserver": "^9.0.1",
 		"vscode-languageserver-textdocument": "^1.0.12"
 	},
