@@ -282,6 +282,19 @@ export class TestLanguageClient {
 		});
 	}
 
+	async requestCodeActions(uri, range, diagnostics = []) {
+		return this.#client.sendRequest("textDocument/codeAction", {
+			textDocument: {
+				uri,
+			},
+			range,
+			context: {
+				diagnostics,
+				only: ["source.fixAll", "quickfix"],
+			},
+		});
+	}
+
 	async waitForDiagnostics(uri, timeout = 5000) {
 		return new Promise((resolve, reject) => {
 			let timeoutId;
