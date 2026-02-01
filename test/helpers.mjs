@@ -7,8 +7,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 class MockLanguageClient extends EventEmitter {
-	constructor() {
+	constructor(options = {}) {
 		super();
+		this.options = options;
 		this.state = 0; // 0 = stopped, 1 = starting, 2 = running
 		this.initializeResult = {
 			capabilities: {
@@ -98,6 +99,68 @@ class MockLanguageClient extends EventEmitter {
 			this.emit("exit", code);
 		});
 
+		const baseCapabilities = {
+			textDocument: {
+				synchronization: {
+					dynamicRegistration: false,
+					willSave: false,
+					willSaveWaitUntil: false,
+					didSave: true,
+				},
+				publishDiagnostics: {
+					relatedInformation: true,
+					versionSupport: true,
+					codeDescriptionSupport: true,
+					dataSupport: true,
+				},
+			},
+			workspace: {
+				workspaceFolders: true,
+				configuration: true,
+				didChangeConfiguration: {
+					dynamicRegistration: false,
+				},
+				didChangeWatchedFiles: {
+					dynamicRegistration: false,
+				},
+			},
+		};
+
+		const capabilities = {
+			textDocument: {
+				...baseCapabilities.textDocument,
+				...this.options.capabilities?.textDocument,
+				synchronization: {
+					...baseCapabilities.textDocument.synchronization,
+					...this.options.capabilities?.textDocument?.synchronization,
+				},
+				publishDiagnostics: {
+					...baseCapabilities.textDocument.publishDiagnostics,
+					...this.options.capabilities?.textDocument?.publishDiagnostics,
+				},
+			},
+			workspace: {
+				...baseCapabilities.workspace,
+				...this.options.capabilities?.workspace,
+				didChangeConfiguration: {
+					...baseCapabilities.workspace.didChangeConfiguration,
+					...this.options.capabilities?.workspace?.didChangeConfiguration,
+				},
+				didChangeWatchedFiles: {
+					...baseCapabilities.workspace.didChangeWatchedFiles,
+					...this.options.capabilities?.workspace?.didChangeWatchedFiles,
+				},
+			},
+			general: {
+				...this.options.capabilities?.general,
+			},
+		};
+
+		const initializationOptions = {
+			validationDelay: 0,
+			...this.options.initializationOptions,
+		};
+
 		// Send initialize request
 		const result = await this.sendRequest("initialize", {
 			processId: process.pid,
@@ -106,41 +169,14 @@ class MockLanguageClient extends EventEmitter {
 				version: "1.0.0",
 			},
 			rootUri: `file://${path.join(__dirname, "fixtures")}`,
-			capabilities: {
-				textDocument: {
-					synchronization: {
-						dynamicRegistration: false,
-						willSave: false,
-						willSaveWaitUntil: false,
-						didSave: true,
-					},
-					publishDiagnostics: {
-						relatedInformation: true,
-						versionSupport: true,
-						codeDescriptionSupport: true,
-						dataSupport: true,
-					},
-				},
-				workspace: {
-					workspaceFolders: true,
-					configuration: true,
-					didChangeConfiguration: {
-						dynamicRegistration: false,
-					},
-					didChangeWatchedFiles: {
-						dynamicRegistration: false,
-					},
-				},
-			},
+			capabilities,
 			workspaceFolders: [
 				{
 					uri: `file://${path.join(__dirname, "fixtures")}`,
 					name: "test-fixtures",
 				},
 			],
-			initializationOptions: {
-				validationDelay: 0,
-			},
+			initializationOptions,
 		});
 
 		this.initializeResult = result;
@@ -192,8 +228,8 @@ class MockLanguageClient extends EventEmitter {
 export class TestLanguageClient {
 	#client;
 
-	constructor() {
-		this.#client = new MockLanguageClient();
+	constructor(options = {}) {
+		this.#client = new MockLanguageClient(options);
 	}
 
 	get state() {
