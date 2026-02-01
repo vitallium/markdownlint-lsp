@@ -158,9 +158,44 @@ no-duplicate-heading:
 			const md024 = publishedDiagnostics.filter((d) => d.code === "MD024");
 			expect(md024).to.have.lengthOf(1); // Only the sibling "Subheading" should be flagged
 		});
+
+		it("should load .markdownlint.cjs configuration", async () => {
+			const testDir = await prepareTestDir("cjs");
+			await fs.writeFile(
+				path.join(testDir, ".markdownlint.cjs"),
+				"module.exports = { default: true, MD013: false };",
+			);
+
+			const uri = `file://${path.join(testDir, "test-cjs.md")}`;
+			const content =
+				"This is a very long line that would normally trigger line length violations\n";
+
+			await client.openTextDocument(uri, content);
+			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
+
+			const md013 = publishedDiagnostics.find((d) => d.code === "MD013");
+			expect(md013).to.be.undefined;
+		});
+
+		it("should load .markdownlint.mjs configuration", async () => {
+			const testDir = await prepareTestDir("mjs");
+			await fs.writeFile(
+				path.join(testDir, ".markdownlint.mjs"),
+				"export default { default: true, MD041: false };",
+			);
+
+			const uri = `file://${path.join(testDir, "test-mjs.md")}`;
+			const content = "Not a heading\n\n# Heading\n";
+
+			await client.openTextDocument(uri, content);
+			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
+
+			const md041 = publishedDiagnostics.find((d) => d.code === "MD041");
+			expect(md041).to.be.undefined;
+		});
 	});
 
-	describe("CLI2-style Configuration", () => {
+		describe("CLI2-style Configuration", () => {
 		it("should load .markdownlint-cli2.jsonc configuration", async () => {
 			const configContent = `{
 				"config": {
@@ -214,6 +249,41 @@ no-duplicate-heading:
 			const md009 = publishedDiagnostics.find((d) => d.code === "MD009");
 			expect(md033).to.be.undefined;
 			expect(md009).to.be.undefined;
+		});
+
+		it("should load .markdownlint-cli2.cjs configuration", async () => {
+			const testDir = await prepareTestDir("cli2-cjs");
+			await fs.writeFile(
+				path.join(testDir, ".markdownlint-cli2.cjs"),
+				"module.exports = { config: { default: true, MD013: false } };",
+			);
+
+			const uri = `file://${path.join(testDir, "test-cli2-cjs.md")}`;
+			const content =
+				"This is a very long line that would normally trigger line length violations\n";
+
+			await client.openTextDocument(uri, content);
+			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
+
+			const md013 = publishedDiagnostics.find((d) => d.code === "MD013");
+			expect(md013).to.be.undefined;
+		});
+
+		it("should load .markdownlint-cli2.mjs configuration", async () => {
+			const testDir = await prepareTestDir("cli2-mjs");
+			await fs.writeFile(
+				path.join(testDir, ".markdownlint-cli2.mjs"),
+				"export default { config: { default: true, MD041: false } };",
+			);
+
+			const uri = `file://${path.join(testDir, "test-cli2-mjs.md")}`;
+			const content = "Not a heading\n\n# Heading\n";
+
+			await client.openTextDocument(uri, content);
+			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
+
+			const md041 = publishedDiagnostics.find((d) => d.code === "MD041");
+			expect(md041).to.be.undefined;
 		});
 	});
 
