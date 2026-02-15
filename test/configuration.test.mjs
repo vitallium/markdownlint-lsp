@@ -195,7 +195,7 @@ no-duplicate-heading:
 		});
 	});
 
-		describe("CLI2-style Configuration", () => {
+	describe("CLI2-style Configuration", () => {
 		it("should load .markdownlint-cli2.jsonc configuration", async () => {
 			const configContent = `{
 				"config": {

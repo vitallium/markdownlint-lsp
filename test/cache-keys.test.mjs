@@ -11,7 +11,9 @@ describe("Config Cache Key", () => {
 		const uri = pathToFileURL(filePath).href;
 
 		const key = getConfigCacheKey(uri, workspaceRoot);
-		expect(key).to.equal(`${workspaceRoot}:${path.join(workspaceRoot, "docs")}`);
+		expect(key).to.equal(
+			`${workspaceRoot}:${path.join(workspaceRoot, "docs")}`,
+		);
 	});
 
 	it("should key non-file URIs by full URI", () => {

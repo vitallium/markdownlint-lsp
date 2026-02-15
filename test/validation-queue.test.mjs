@@ -40,7 +40,8 @@ describe("Validation Queue", () => {
 		]);
 
 		const { diagnostics } = await client.waitForDiagnostics(uri);
-		expect(diagnostics.some((diagnostic) => diagnostic.code === "MD018")).to
-			.equal(true);
+		expect(
+			diagnostics.some((diagnostic) => diagnostic.code === "MD018"),
+		).to.equal(true);
 	});
 });
