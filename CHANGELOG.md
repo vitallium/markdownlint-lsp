@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.7.0] - 2026-02-15
+
+### Features
+
+- Implement proper LRU cache for config loading
+- Add "Fix All" code action with overlap handling
+
+### Bug Fixes
+
+- Initialization options should override project configs
+- Add URI validation to prevent server crashes
+- Prevent stale validations from pending timeouts
+- Clear stale code action fixes on lint errors
+- Provide quick fixes when diagnostics missing
+- Guard config trace logging
+- *(server)* Negotiate position encodings
+- *(server)* Queue validations
+- *(server)* Merge initialization settings
+- *(server)* Key config cache by directory
+- *(config)* Redact sensitive logs
+- *(config)* Load js configs
+- *(server)* Apply fix-all edits
+
+### Styling
+
+- Run biome
+
+### Testing
+
+- Fix race condition
+
+### Miscellaneous Tasks
+
+- Remove .npmignore
+- Remove testing documentation files
+- Wrap README description to 72 characters
+- *(deps)* Bump `@biomejs/biome` to v2.3.2
+- *(deps)* Update `js-yaml` to v4.1.1
+- Add `lint` and `lint:fix` tasks
+- Initial setup
+- *(deps)* Update `chai` to v6.2.2
+- *(deps)* Update `markdownlint` to v0.40.0
+- *(deps)* Remove redundant pkgs from dev deps
+- *(deps)* Enable `pnpm` via corepack
+- Remove `pnpm` version
+- Log skipped fix-all overlaps
+
 ## [0.6.0] - 2025-10-26
 
 ### Features
@@ -56,6 +103,7 @@ All notable changes to this project will be documented in this file.
 - *(server)* Remove redundant comments
 - *(agents)* Add note about pnpm package manager
 - *(agents)* Wrap long lines in AGENTS.md
+- *(release)* V0.6.0
 
 ## [0.5.1] - 2025-09-18
 
