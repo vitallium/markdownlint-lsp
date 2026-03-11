@@ -2,7 +2,7 @@ import * as path from "node:path";
 import { fileURLToPath } from "node:url";
 import { expect } from "chai";
 import { after, before, describe, it } from "mocha";
-import { TestLanguageClient, wait } from "./helpers.mjs";
+import { TestLanguageClient } from "./helpers.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -287,10 +287,8 @@ Text after Chinese characters
 				// Don't wait between changes
 			}
 
-			// Wait for final diagnostics without missing the notification
-			const diagnosticsPromise = client.waitForDiagnostics(uri);
-			await wait(500);
-			const diagnosticsReport = await diagnosticsPromise;
+			// Wait for the next diagnostics after the burst of changes
+			const diagnosticsReport = await client.waitForDiagnostics(uri);
 
 			// Should have processed all changes
 			expect(diagnosticsReport.diagnostics).to.exist;

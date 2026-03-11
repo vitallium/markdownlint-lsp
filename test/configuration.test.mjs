@@ -2,7 +2,7 @@ import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { expect } from "chai";
-import { after, before, describe, it } from "mocha";
+import { after, afterEach, before, describe, it } from "mocha";
 import { TestLanguageClient } from "./helpers.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -37,6 +37,12 @@ describe("Configuration Loading", function () {
 		await client.stop();
 		// Cleanup temp directory and workspace-level artifacts
 		await fs.rm(tempDir, { recursive: true, force: true });
+		await fs.rm(path.join(fixturesDir, "package.json"), {
+			force: true,
+		});
+	});
+
+	afterEach(async () => {
 		await fs.rm(path.join(fixturesDir, "package.json"), {
 			force: true,
 		});
