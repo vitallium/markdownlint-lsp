@@ -23,6 +23,8 @@ class MockLanguageClient extends EventEmitter {
 		this.messageId = 0;
 		this.pendingRequests = new Map();
 		this.diagnosticsHandlers = [];
+		this.lastDiagnostics = new Map();
+		this.diagnosticsSequence = 0;
 	}
 
 	async sendRequest(method, params) {
@@ -71,8 +73,13 @@ class MockLanguageClient extends EventEmitter {
 				resolve(message.result);
 			}
 		} else if (message.method === "textDocument/publishDiagnostics") {
+			this.diagnosticsSequence += 1;
+			this.lastDiagnostics.set(message.params.uri, {
+				params: message.params,
+				sequence: this.diagnosticsSequence,
+			});
 			for (const handler of this.diagnosticsHandlers) {
-				handler(message.params);
+				handler(message.params, this.diagnosticsSequence);
 			}
 		}
 	}
@@ -296,11 +303,15 @@ export class TestLanguageClient {
 	}
 
 	async waitForDiagnostics(uri, timeout = 5000) {
+		const minSequence =
+			(this.#client.lastDiagnostics.get(uri)?.sequence ??
+				this.#client.diagnosticsSequence) + 1;
+
 		return new Promise((resolve, reject) => {
 			let timeoutId;
 
-			const diagnosticsHandler = (params) => {
-				if (params.uri === uri) {
+			const diagnosticsHandler = (params, sequence) => {
+				if (params.uri === uri && sequence >= minSequence) {
 					clearTimeout(timeoutId);
 					this.#client.diagnosticsHandlers =
 						this.#client.diagnosticsHandlers.filter(
@@ -322,6 +333,16 @@ export class TestLanguageClient {
 				"textDocument/publishDiagnostics",
 				diagnosticsHandler,
 			);
+
+			const lastDiagnostics = this.#client.lastDiagnostics.get(uri);
+			if (lastDiagnostics && lastDiagnostics.sequence >= minSequence) {
+				clearTimeout(timeoutId);
+				this.#client.diagnosticsHandlers =
+					this.#client.diagnosticsHandlers.filter(
+						(h) => h !== diagnosticsHandler,
+					);
+				resolve(lastDiagnostics.params);
+			}
 		});
 	}
 
