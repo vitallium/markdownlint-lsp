@@ -3,3 +3,7 @@ Check if we have outdated deps
 ---
 
 update it
+
+---
+
+make conventional commit and push
