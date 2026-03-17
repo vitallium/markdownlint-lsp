@@ -1,0 +1,881 @@
+{
+  "info": {
+    "id": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+    "slug": "nimble-tiger",
+    "projectID": "95e367b94769c39625577a9d9b6b0ecab0d7094b",
+    "directory": "/Users/vslobodin/Development/markdownlint-lsp",
+    "title": "Outdated dependency check",
+    "version": "1.2.27",
+    "summary": {
+      "additions": 38,
+      "deletions": 38,
+      "files": 2
+    },
+    "time": {
+      "created": 1773746858824,
+      "updated": 1773746891184
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1773746858841
+        },
+        "summary": {
+          "diffs": []
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "openai",
+          "modelID": "gpt-5.3-codex"
+        },
+        "id": "REDACTED",
+        "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Check if we have outdated deps",
+          "id": "REDACTED",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "assistant",
+        "time": {
+          "created": 1773746858853,
+          "completed": 1773746861852
+        },
+        "parentID": "REDACTED",
+        "modelID": "gpt-5.3-codex",
+        "providerID": "openai",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/vslobodin/Development/markdownlint-lsp",
+          "root": "/Users/vslobodin/Development/markdownlint-lsp"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 11567,
+          "input": 11508,
+          "output": 59,
+          "reasoning": 29,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        },
+        "finish": "tool-calls",
+        "id": "REDACTED",
+        "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "snapshot": "b7a63fe3d7e107b0aea808622acbfc96beb52c59",
+          "id": "prt_cfb8d2daa0018ccOzHjXffMiTu",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        },
+        {
+          "type": "reasoning",
+          "text": "**Preparing package outdated check command**",
+          "metadata": {
+            "openai": {
+              "itemId": "rs_004c31515b3bf7020169b93aabebfc819194951e20fbba45f0",
+              "reasoningEncryptedContent": "REDACTED"
+            }
+          },
+          "time": {
+            "start": 1773746859923,
+            "end": 1773746861031
+          },
+          "id": "REDACTED",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        },
+        {
+          "type": "tool",
+          "callID": "REDACTED",
+          "tool": "bash",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "pnpm outdated",
+              "description": "Checks for outdated project dependencies"
+            },
+            "output": "┌──────────────────────┬─────────┬────────┐\n│ Package              │ Current │ Latest │\n├──────────────────────┼─────────┼────────┤\n│ @biomejs/biome (dev) │ 2.4.6   │ 2.4.7  │\n└──────────────────────┴─────────┴────────┘\n",
+            "title": "Checks for outdated project dependencies",
+            "metadata": {
+              "output": "┌──────────────────────┬─────────┬────────┐\n│ Package              │ Current │ Latest │\n├──────────────────────┼─────────┼────────┤\n│ @biomejs/biome (dev) │ 2.4.6   │ 2.4.7  │\n└──────────────────────┴─────────┴────────┘\n",
+              "exit": 1,
+              "description": "Checks for outdated project dependencies",
+              "truncated": false
+            },
+            "time": {
+              "start": 1773746861136,
+              "end": 1773746861794
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_004c31515b3bf7020169b93aad06208191ad2be313024881f3"
+            }
+          },
+          "id": "prt_cfb8d33e8001VGzyd3rivLiqyu",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        },
+        {
+          "type": "step-finish",
+          "reason": "tool-calls",
+          "snapshot": "b7a63fe3d7e107b0aea808622acbfc96beb52c59",
+          "cost": 0,
+          "tokens": {
+            "total": 11567,
+            "input": 11508,
+            "output": 59,
+            "reasoning": 29,
+            "cache": {
+              "read": 0,
+              "write": 0
+            }
+          },
+          "id": "REDACTED",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "assistant",
+        "time": {
+          "created": 1773746861853,
+          "completed": 1773746863638
+        },
+        "parentID": "REDACTED",
+        "modelID": "gpt-5.3-codex",
+        "providerID": "openai",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/vslobodin/Development/markdownlint-lsp",
+          "root": "/Users/vslobodin/Development/markdownlint-lsp"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 11703,
+          "input": 268,
+          "output": 43,
+          "reasoning": 0,
+          "cache": {
+            "read": 11392,
+            "write": 0
+          }
+        },
+        "finish": "stop",
+        "id": "REDACTED",
+        "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "snapshot": "b7a63fe3d7e107b0aea808622acbfc96beb52c59",
+          "id": "prt_cfb8d38be001vKd33xiA2RMBLC",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        },
+        {
+          "type": "text",
+          "text": "`pnpm outdated` shows 1 outdated dependency:\n\n- `@biomejs/biome` (dev): `2.4.6` -> `2.4.7`",
+          "time": {
+            "start": 1773746863542,
+            "end": 1773746863542
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_07750db138f940410169b93aaeba288191803b430c93a4b573"
+            }
+          },
+          "id": "REDACTED",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        },
+        {
+          "type": "step-finish",
+          "reason": "stop",
+          "snapshot": "b7a63fe3d7e107b0aea808622acbfc96beb52c59",
+          "cost": 0,
+          "tokens": {
+            "total": 11703,
+            "input": 268,
+            "output": 43,
+            "reasoning": 0,
+            "cache": {
+              "read": 11392,
+              "write": 0
+            }
+          },
+          "id": "prt_cfb8d3dc9001FsT48lhwTc6V5f",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1773746866789
+        },
+        "summary": {
+          "diffs": [
+            {
+              "file": "package.json",
+              "before": "{\n\t\"name\": \"markdownlint-lsp\",\n\t\"version\": \"0.7.0\",\n\t\"main\": \"lib/index.mjs\",\n\t\"type\": \"module\",\n\t\"author\": \"Vitaly Slobodin <vitaliy.slobodin@gmail.com>\",\n\t\"license\": \"MIT\",\n\t\"description\": \"A Language Server Protocol (LSP) implementation for markdownlint\",\n\t\"keywords\": [\n\t\t\"markdown\",\n\t\t\"markdownlint\",\n\t\t\"lsp\",\n\t\t\"language-server\"\n\t],\n\t\"repository\": {\n\t\t\"type\": \"git\",\n\t\t\"url\": \"git+https://github.com/vitallium/markdownlint-lsp.git\"\n\t},\n\t\"bugs\": {\n\t\t\"url\": \"https://github.com/vitallium/markdownlint-lsp/issues\"\n\t},\n\t\"homepage\": \"https://github.com/vitallium/markdownlint-lsp#readme\",\n\t\"dependencies\": {\n\t\t\"js-yaml\": \"^4.1.1\",\n\t\t\"markdownlint\": \"^0.40.0\",\n\t\t\"minimatch\": \"^10.2.4\",\n\t\t\"vscode-languageserver\": \"^9.0.1\",\n\t\t\"vscode-languageserver-textdocument\": \"^1.0.12\"\n\t},\n\t\"devDependencies\": {\n\t\t\"@biomejs/biome\": \"2.4.6\",\n\t\t\"@types/chai\": \"^5.2.3\",\n\t\t\"@types/mocha\": \"^10.0.10\",\n\t\t\"chai\": \"^6.2.2\",\n\t\t\"mocha\": \"^11.7.5\"\n\t},\n\t\"bin\": {\n\t\t\"markdownlint-lsp-server\": \"lib/index.mjs\"\n\t},\n\t\"files\": [\n\t\t\"lib/**/*.mjs\"\n\t],\n\t\"scripts\": {\n\t\t\"start\": \"node lib/index.mjs --stdio\",\n\t\t\"lint\": \"biome check .\",\n\t\t\"lint:fix\": \"biome check --write .\",\n\t\t\"test\": \"mocha test/**/*.test.mjs\",\n\t\t\"test:watch\": \"mocha test/**/*.test.mjs --watch\",\n\t\t\"test:server\": \"mocha test/server.test.mjs\",\n\t\t\"test:config\": \"mocha test/configuration.test.mjs\",\n\t\t\"test:edge\": \"mocha test/edge-cases.test.mjs\",\n\t\t\"test:runner\": \"node test/run-tests.mjs\",\n\t\t\"test:dev\": \"node test/run-tests.mjs --watch\"\n\t},\n\t\"packageManager\": \"pnpm@10.28.1+sha512.7d7dbbca9e99447b7c3bf7a73286afaaf6be99251eb9498baefa7d406892f67b879adb3a1d7e687fc4ccc1a388c7175fbaae567a26ab44d1067b54fcb0d6a316\"\n}\n",
+              "after": "{\n\t\"name\": \"markdownlint-lsp\",\n\t\"version\": \"0.7.0\",\n\t\"main\": \"lib/index.mjs\",\n\t\"type\": \"module\",\n\t\"author\": \"Vitaly Slobodin <vitaliy.slobodin@gmail.com>\",\n\t\"license\": \"MIT\",\n\t\"description\": \"A Language Server Protocol (LSP) implementation for markdownlint\",\n\t\"keywords\": [\n\t\t\"markdown\",\n\t\t\"markdownlint\",\n\t\t\"lsp\",\n\t\t\"language-server\"\n\t],\n\t\"repository\": {\n\t\t\"type\": \"git\",\n\t\t\"url\": \"git+https://github.com/vitallium/markdownlint-lsp.git\"\n\t},\n\t\"bugs\": {\n\t\t\"url\": \"https://github.com/vitallium/markdownlint-lsp/issues\"\n\t},\n\t\"homepage\": \"https://github.com/vitallium/markdownlint-lsp#readme\",\n\t\"dependencies\": {\n\t\t\"js-yaml\": \"^4.1.1\",\n\t\t\"markdownlint\": \"^0.40.0\",\n\t\t\"minimatch\": \"^10.2.4\",\n\t\t\"vscode-languageserver\": \"^9.0.1\",\n\t\t\"vscode-languageserver-textdocument\": \"^1.0.12\"\n\t},\n\t\"devDependencies\": {\n\t\t\"@biomejs/biome\": \"2.4.7\",\n\t\t\"@types/chai\": \"^5.2.3\",\n\t\t\"@types/mocha\": \"^10.0.10\",\n\t\t\"chai\": \"^6.2.2\",\n\t\t\"mocha\": \"^11.7.5\"\n\t},\n\t\"bin\": {\n\t\t\"markdownlint-lsp-server\": \"lib/index.mjs\"\n\t},\n\t\"files\": [\n\t\t\"lib/**/*.mjs\"\n\t],\n\t\"scripts\": {\n\t\t\"start\": \"node lib/index.mjs --stdio\",\n\t\t\"lint\": \"biome check .\",\n\t\t\"lint:fix\": \"biome check --write .\",\n\t\t\"test\": \"mocha test/**/*.test.mjs\",\n\t\t\"test:watch\": \"mocha test/**/*.test.mjs --watch\",\n\t\t\"test:server\": \"mocha test/server.test.mjs\",\n\t\t\"test:config\": \"mocha test/configuration.test.mjs\",\n\t\t\"test:edge\": \"mocha test/edge-cases.test.mjs\",\n\t\t\"test:runner\": \"node test/run-tests.mjs\",\n\t\t\"test:dev\": \"node test/run-tests.mjs --watch\"\n\t},\n\t\"packageManager\": \"pnpm@10.28.1+sha512.7d7dbbca9e99447b7c3bf7a73286afaaf6be99251eb9498baefa7d406892f67b879adb3a1d7e687fc4ccc1a388c7175fbaae567a26ab44d1067b54fcb0d6a316\"\n}\n",
+              "additions": 1,
+              "deletions": 1,
+              "status": "modified"
+            },
+            {
+              "file": "pnpm-lock.yaml",
+              "before": "lockfileVersion: '9.0'\n\nsettings:\n  autoInstallPeers: true\n  excludeLinksFromLockfile: false\n\nimporters:\n\n  .:\n    dependencies:\n      js-yaml:\n        specifier: ^4.1.1\n        version: 4.1.1\n      markdownlint:\n        specifier: ^0.40.0\n        version: 0.40.0\n      minimatch:\n        specifier: ^10.2.4\n        version: 10.2.4\n      vscode-languageserver:\n        specifier: ^9.0.1\n        version: 9.0.1\n      vscode-languageserver-textdocument:\n        specifier: ^1.0.12\n        version: 1.0.12\n    devDependencies:\n      '@biomejs/biome':\n        specifier: 2.4.6\n        version: 2.4.6\n      '@types/chai':\n        specifier: ^5.2.3\n        version: 5.2.3\n      '@types/mocha':\n        specifier: ^10.0.10\n        version: 10.0.10\n      chai:\n        specifier: ^6.2.2\n        version: 6.2.2\n      mocha:\n        specifier: ^11.7.5\n        version: 11.7.5\n\npackages:\n\n  '@biomejs/biome@2.4.6':\n    resolution: {integrity: REDACTED/3R9M6b5daArWMMtEfP52/n174RKnwRIf3oT8+wc9ihSfQ==}\n    engines: {node: '>=14.21.3'}\n    hasBin: true\n\n  '@biomejs/cli-darwin-arm64@2.4.6':\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=14.21.3'}\n    cpu: [arm64]\n    os: [darwin]\n\n  '@biomejs/cli-darwin-x64@2.4.6':\n    resolution: {integrity: sha512-4uiE/REDACTED/mt+rUzMasYeZ+0R/U1Mw==}\n    engines: {node: '>=14.21.3'}\n    cpu: [x64]\n    os: [darwin]\n\n  '@biomejs/cli-linux-arm64-musl@2.4.6':\n    resolution: {integrity: sha512-F/REDACTED}\n    engines: {node: '>=14.21.3'}\n    cpu: [arm64]\n    os: [linux]\n\n  '@biomejs/cli-linux-arm64@2.4.6':\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=14.21.3'}\n    cpu: [arm64]\n    os: [linux]\n\n  '@biomejs/cli-linux-x64-musl@2.4.6':\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=14.21.3'}\n    cpu: [x64]\n    os: [linux]\n\n  '@biomejs/cli-linux-x64@2.4.6':\n    resolution: {integrity: REDACTED/REDACTED}\n    engines: {node: '>=14.21.3'}\n    cpu: [x64]\n    os: [linux]\n\n  '@biomejs/cli-win32-arm64@2.4.6':\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=14.21.3'}\n    cpu: [arm64]\n    os: [win32]\n\n  '@biomejs/cli-win32-x64@2.4.6':\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=14.21.3'}\n    cpu: [x64]\n    os: [win32]\n\n  '@isaacs/cliui@8.0.2':\n    resolution: {integrity: REDACTED/REDACTED}\n    engines: {node: '>=12'}\n\n  '@pkgjs/parseargs@0.11.0':\n    resolution: {integrity: REDACTED/tVSshMR6loPMn8U+dPg==}\n    engines: {node: '>=14'}\n\n  '@types/chai@5.2.3':\n    resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/REDACTED}\n\n  '@types/debug@4.1.12':\n    resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/REDACTED}\n\n  '@types/deep-eql@4.0.2':\n    resolution: {integrity: REDACTED}\n\n  '@types/katex@0.16.7':\n    resolution: {integrity: REDACTED}\n\n  '@types/mocha@10.0.10':\n    resolution: {integrity: REDACTED}\n\n  '@types/ms@2.1.0':\n    resolution: {integrity: sha512-GsCCIZDE/REDACTED}\n\n  '@types/unist@2.0.11':\n    resolution: {integrity: sha512-CmBKiL6NNo/REDACTED}\n\n  ansi-regex@5.0.1:\n    resolution: {integrity: REDACTED/ZZJMlMWv37qOOb9pdJlMUEKFQ==}\n    engines: {node: '>=8'}\n\n  ansi-regex@6.2.2:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=12'}\n\n  ansi-styles@4.3.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=8'}\n\n  ansi-styles@6.2.3:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=12'}\n\n  argparse@2.0.1:\n    resolution: {integrity: REDACTED/PXw1EjAZ+q2/bEBg3DvurK3Q==}\n\n  assertion-error@2.0.1:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=12'}\n\n  balanced-match@1.0.2:\n    resolution: {integrity: REDACTED}\n\n  balanced-match@4.0.4:\n    resolution: {integrity: REDACTED}\n    engines: {node: 18 || 20 || >=22}\n\n  brace-expansion@2.0.2:\n    resolution: {integrity: REDACTED}\n\n  brace-expansion@5.0.4:\n    resolution: {integrity: REDACTED}\n    engines: {node: 18 || 20 || >=22}\n\n  browser-stdout@1.3.1:\n    resolution: {integrity: REDACTED/fXaBSmW/REDACTED}\n\n  camelcase@6.3.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=10'}\n\n  chai@6.2.2:\n    resolution: {integrity: REDACTED/UpSJTnlRg==}\n    engines: {node: '>=18'}\n\n  chalk@4.1.2:\n    resolution: {integrity: REDACTED/wy9kY7/REDACTED}\n    engines: {node: '>=10'}\n\n  character-entities-legacy@3.0.0:\n    resolution: {integrity: sha512-RpPp0asT/6ufRm//AJVwpViZbGM/MkjQFxJccQRHmISF/22NBtsHqAWmL+/pmkPWoIUJdWyeVleTl1wydHATVQ==}\n\n  character-entities@2.0.2:\n    resolution: {integrity: sha512-shx7oQ0Awen/BRIdkjkvz54PnEEI/EjwXDSIZp86/KKdbafHh1Df/REDACTED}\n\n  character-reference-invalid@2.0.1:\n    resolution: {integrity: REDACTED/tlibRvjoWX027ypmG/n0HtO5t7unw==}\n\n  chokidar@4.0.3:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>= 14.16.0'}\n\n  cliui@8.0.1:\n    resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/REDACTED/oQV73hnVK+sR+5PVRMd+Dr7YQ==}\n    engines: {node: '>=12'}\n\n  color-convert@2.0.1:\n    resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/REDACTED/U584fMg38ZHCaElKQ==}\n    engines: {node: '>=7.0.0'}\n\n  color-name@1.1.4:\n    resolution: {integrity: REDACTED/uBL/REDACTED}\n\n  commander@8.3.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>= 12'}\n\n  cross-spawn@7.0.6:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>= 8'}\n\n  debug@4.4.1:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=6.0'}\n    peerDependencies:\n      supports-color: '*'\n    peerDependenciesMeta:\n      supports-color:\n        optional: true\n\n  decamelize@4.0.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=10'}\n\n  decode-named-character-reference@1.2.0:\n    resolution: {integrity: REDACTED}\n\n  dequal@2.0.3:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=6'}\n\n  devlop@1.1.0:\n    resolution: {integrity: REDACTED/7/ns2jbpp1+PalgE/REDACTED}\n\n  diff@7.0.0:\n    resolution: {integrity: REDACTED/veA1xzRKP6ISBw==}\n    engines: {node: '>=0.3.1'}\n\n  eastasianwidth@0.2.0:\n    resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/REDACTED}\n\n  emoji-regex@8.0.0:\n    resolution: {integrity: REDACTED/RPgnr1/REDACTED}\n\n  emoji-regex@9.2.2:\n    resolution: {integrity: REDACTED/Vyg==}\n\n  escalade@3.2.0:\n    resolution: {integrity: REDACTED/jA==}\n    engines: {node: '>=6'}\n\n  escape-string-regexp@4.0.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=10'}\n\n  find-up@5.0.0:\n    resolution: {integrity: sha512-78/REDACTED}\n    engines: {node: '>=10'}\n\n  flat@5.0.2:\n    resolution: {integrity: sha512-b6suED+5/REDACTED}\n    hasBin: true\n\n  foreground-child@3.3.1:\n    resolution: {integrity: REDACTED/REDACTED}\n    engines: {node: '>=14'}\n\n  get-caller-file@2.0.5:\n    resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/REDACTED}\n    engines: {node: 6.* || 8.* || >= 10.*}\n\n  get-east-asian-width@1.4.0:\n    resolution: {integrity: REDACTED/piRdJy/D2um6hM1UP7ZEeQ4EkP+Q==}\n    engines: {node: '>=18'}\n\n  glob@10.4.5:\n    resolution: {integrity: sha512-7Bv8RF0k6xjo7d4A/PxYLbUCfb6c+Vpd2/REDACTED/sHg==}\n    hasBin: true\n\n  has-flag@4.0.0:\n    resolution: {integrity: sha512-EykJT/REDACTED/ZxU3EvlMPQ==}\n    engines: {node: '>=8'}\n\n  he@1.2.0:\n    resolution: {integrity: sha512-F/REDACTED/REDACTED}\n    hasBin: true\n\n  is-alphabetical@2.0.1:\n    resolution: {integrity: REDACTED/9kD40mD/REDACTED}\n\n  is-alphanumerical@2.0.1:\n    resolution: {integrity: sha512-hmbYhX/9MUMF5uh7tOXyK/REDACTED/whAnSwveW/LtZw==}\n\n  is-decimal@2.0.1:\n    resolution: {integrity: REDACTED/3XHR5JyEZChOyTWe2oayKnsSsr/kcGqF+z6yuH6HHpN0A==}\n\n  is-fullwidth-code-point@3.0.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=8'}\n\n  is-hexadecimal@2.0.1:\n    resolution: {integrity: REDACTED/y/7rHvlOZLZtgJ/4ttYGZg==}\n\n  is-path-inside@3.0.3:\n    resolution: {integrity: REDACTED/vd0cD2qc4HL07OjCeuHMr8Ro4CoMaeCKDB0/ECBOVWjTwUvPQ==}\n    engines: {node: '>=8'}\n\n  is-plain-obj@2.1.0:\n    resolution: {integrity: sha512-YWnfyRwxL/REDACTED}\n    engines: {node: '>=8'}\n\n  is-unicode-supported@0.1.0:\n    resolution: {integrity: REDACTED/8S6mgXgPFPw==}\n    engines: {node: '>=10'}\n\n  isexe@2.0.0:\n    resolution: {integrity: REDACTED}\n\n  jackspeak@3.4.3:\n    resolution: {integrity: sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/REDACTED/npPWugM+RQBw==}\n\n  js-yaml@4.1.1:\n    resolution: {integrity: REDACTED/REDACTED/55JZ0rmy3myCT5lsA==}\n    hasBin: true\n\n  katex@0.16.22:\n    resolution: {integrity: REDACTED}\n    hasBin: true\n\n  locate-path@6.0.0:\n    resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/REDACTED}\n    engines: {node: '>=10'}\n\n  log-symbols@4.1.0:\n    resolution: {integrity: REDACTED/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}\n    engines: {node: '>=10'}\n\n  lru-cache@10.4.3:\n    resolution: {integrity: REDACTED}\n\n  markdownlint@0.40.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=20'}\n\n  micromark-core-commonmark@2.0.3:\n    resolution: {integrity: REDACTED}\n\n  micromark-extension-directive@4.0.0:\n    resolution: {integrity: sha512-/REDACTED/Kvi34WQXg==}\n\n  micromark-extension-gfm-autolink-literal@2.1.0:\n    resolution: {integrity: REDACTED}\n\n  micromark-extension-gfm-footnote@2.1.0:\n    resolution: {integrity: sha512-/REDACTED/gqw==}\n\n  micromark-extension-gfm-table@2.1.1:\n    resolution: {integrity: sha512-t2OU/REDACTED}\n\n  micromark-extension-math@3.1.0:\n    resolution: {integrity: sha512-lvEqd+fHjATVs+2v/REDACTED}\n\n  micromark-factory-destination@2.0.1:\n    resolution: {integrity: REDACTED//tqOdY/DxhjdCiJnIA==}\n\n  micromark-factory-label@2.0.1:\n    resolution: {integrity: REDACTED/7Vg==}\n\n  micromark-factory-space@2.0.1:\n    resolution: {integrity: REDACTED/ZSGj9/REDACTED/LQg==}\n\n  micromark-factory-title@2.0.1:\n    resolution: {integrity: REDACTED}\n\n  micromark-factory-whitespace@2.0.1:\n    resolution: {integrity: sha512-Ob0nuZ3PKt/REDACTED}\n\n  micromark-util-character@2.1.1:\n    resolution: {integrity: REDACTED}\n\n  micromark-util-chunked@2.0.1:\n    resolution: {integrity: REDACTED/REDACTED}\n\n  micromark-util-classify-character@2.0.1:\n    resolution: {integrity: sha512-K0kHzM6afW/REDACTED/EaagNzCm7T/REDACTED}\n\n  micromark-util-combine-extensions@2.0.1:\n    resolution: {integrity: REDACTED/Bg==}\n\n  micromark-util-decode-numeric-character-reference@2.0.2:\n    resolution: {integrity: REDACTED}\n\n  micromark-util-encode@2.0.1:\n    resolution: {integrity: sha512-c3cVx2y4KqUnwopcO9b/SCdo2O67LwJJ/REDACTED}\n\n  micromark-util-html-tag-name@2.0.1:\n    resolution: {integrity: REDACTED}\n\n  micromark-util-normalize-identifier@2.0.1:\n    resolution: {integrity: REDACTED/Q+/GIe3WKl0Ijb/GyH9lOpUkRAO2wp0GVkLvS9Q==}\n\n  micromark-util-resolve-all@2.0.1:\n    resolution: {integrity: sha512-VdQyxFWFT2/REDACTED}\n\n  micromark-util-sanitize-uri@2.0.1:\n    resolution: {integrity: sha512-9N9IomZ/REDACTED}\n\n  micromark-util-subtokenize@2.1.0:\n    resolution: {integrity: REDACTED}\n\n  micromark-util-symbol@2.0.1:\n    resolution: {integrity: REDACTED}\n\n  micromark-util-types@2.0.2:\n    resolution: {integrity: REDACTED}\n\n  micromark@4.0.2:\n    resolution: {integrity: REDACTED}\n\n  minimatch@10.2.4:\n    resolution: {integrity: sha512-oRjTw/REDACTED/REDACTED}\n    engines: {node: 18 || 20 || >=22}\n\n  minimatch@9.0.5:\n    resolution: {integrity: REDACTED//REDACTED/wfCabAtAFWhhBow==}\n    engines: {node: '>=16 || 14 >=14.17'}\n\n  minipass@7.1.2:\n    resolution: {integrity: REDACTED/REDACTED}\n    engines: {node: '>=16 || 14 >=14.17'}\n\n  mocha@11.7.5:\n    resolution: {integrity: REDACTED/REDACTED}\n    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}\n    hasBin: true\n\n  ms@2.1.3:\n    resolution: {integrity: sha512-6FlzubTLZG3J2a/REDACTED/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}\n\n  p-limit@3.1.0:\n    resolution: {integrity: REDACTED/REDACTED}\n    engines: {node: '>=10'}\n\n  p-locate@5.0.0:\n    resolution: {integrity: sha512-LaNjtRWUBY++zB5nE/REDACTED/tl/REDACTED}\n    engines: {node: '>=10'}\n\n  package-json-from-dist@1.0.1:\n    resolution: {integrity: sha512-UEZIS3/REDACTED/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==}\n\n  parse-entities@4.0.2:\n    resolution: {integrity: REDACTED}\n\n  path-exists@4.0.0:\n    resolution: {integrity: REDACTED/REDACTED/w==}\n    engines: {node: '>=8'}\n\n  path-key@3.1.1:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=8'}\n\n  path-scurry@1.11.1:\n    resolution: {integrity: REDACTED/v1HA==}\n    engines: {node: '>=16 || 14 >=14.18'}\n\n  picocolors@1.1.1:\n    resolution: {integrity: REDACTED/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}\n\n  randombytes@2.1.0:\n    resolution: {integrity: REDACTED}\n\n  readdirp@4.1.2:\n    resolution: {integrity: REDACTED/A3DBaYGEj2H/HFZCn/kMfim73FXxEJTw06WtxQwg==}\n    engines: {node: '>= 14.18.0'}\n\n  require-directory@2.1.1:\n    resolution: {integrity: REDACTED/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}\n    engines: {node: '>=0.10.0'}\n\n  safe-buffer@5.2.1:\n    resolution: {integrity: REDACTED}\n\n  serialize-javascript@6.0.2:\n    resolution: {integrity: REDACTED}\n\n  shebang-command@2.0.0:\n    resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/REDACTED/yZp6YuDY77YtvbN0dmDA==}\n    engines: {node: '>=8'}\n\n  shebang-regex@3.0.0:\n    resolution: {integrity: REDACTED/yhz8ekcb1A==}\n    engines: {node: '>=8'}\n\n  signal-exit@4.1.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=14'}\n\n  string-width@4.2.3:\n    resolution: {integrity: REDACTED/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}\n    engines: {node: '>=8'}\n\n  string-width@5.1.2:\n    resolution: {integrity: REDACTED/REDACTED}\n    engines: {node: '>=12'}\n\n  string-width@8.1.0:\n    resolution: {integrity: sha512-Kxl3KJGb/REDACTED/REDACTED}\n    engines: {node: '>=20'}\n\n  strip-ansi@6.0.1:\n    resolution: {integrity: REDACTED/0ooI7KrPuUSztUdU5A==}\n    engines: {node: '>=8'}\n\n  strip-ansi@7.1.2:\n    resolution: {integrity: REDACTED/n8aIFhN/jCE/REDACTED}\n    engines: {node: '>=12'}\n\n  strip-json-comments@3.1.1:\n    resolution: {integrity: sha512-6fPc+R4ihwqP6N/REDACTED/mEHLp7Vehlt3ql6lEig==}\n    engines: {node: '>=8'}\n\n  supports-color@7.2.0:\n    resolution: {integrity: REDACTED/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}\n    engines: {node: '>=8'}\n\n  supports-color@8.1.1:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=10'}\n\n  vscode-jsonrpc@8.2.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=14.0.0'}\n\n  vscode-languageserver-protocol@3.17.5:\n    resolution: {integrity: REDACTED/b07H7Ecg0I3OgXDuLdn307rl/J3A9YD6/eYOssqhecL27hK1IPZAsaqh00i/Jljg==}\n\n  vscode-languageserver-textdocument@1.0.12:\n    resolution: {integrity: sha512-cxWNPesCnQCcMPeenjKKsOCKQZ/L6Tv19DTRIGuLWe32lyzWhihGVJ/rcckZXJxfdKCFvRLS3fpBIsV/ZGX4zA==}\n\n  vscode-languageserver-types@3.17.5:\n    resolution: {integrity: REDACTED}\n\n  vscode-languageserver@9.0.1:\n    resolution: {integrity: REDACTED/JPTtd4/uN0/REDACTED}\n    hasBin: true\n\n  which@2.0.2:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>= 8'}\n    hasBin: true\n\n  workerpool@9.3.4:\n    resolution: {integrity: sha512-TmPRQYYSAnnDiEB0P/REDACTED/REDACTED}\n\n  wrap-ansi@7.0.0:\n    resolution: {integrity: REDACTED/Fi7D16Q==}\n    engines: {node: '>=10'}\n\n  wrap-ansi@8.1.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=12'}\n\n  y18n@5.0.8:\n    resolution: {integrity: REDACTED/0LhANUS6/+7SCb98YOfA==}\n    engines: {node: '>=10'}\n\n  yargs-parser@21.1.1:\n    resolution: {integrity: REDACTED/REDACTED/LBw==}\n    engines: {node: '>=12'}\n\n  yargs-unparser@2.0.0:\n    resolution: {integrity: REDACTED/n7xwKOdzOA==}\n    engines: {node: '>=10'}\n\n  yargs@17.7.2:\n    resolution: {integrity: sha512-7dSzzRQ++CKnNI/REDACTED}\n    engines: {node: '>=12'}\n\n  yocto-queue@0.1.0:\n    resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/REDACTED}\n    engines: {node: '>=10'}\n\nsnapshots:\n\n  '@biomejs/biome@2.4.6':\n    optionalDependencies:\n      '@biomejs/cli-darwin-arm64': 2.4.6\n      '@biomejs/cli-darwin-x64': 2.4.6\n      '@biomejs/cli-linux-arm64': 2.4.6\n      '@biomejs/cli-linux-arm64-musl': 2.4.6\n      '@biomejs/cli-linux-x64': 2.4.6\n      '@biomejs/cli-linux-x64-musl': 2.4.6\n      '@biomejs/cli-win32-arm64': 2.4.6\n      '@biomejs/cli-win32-x64': 2.4.6\n\n  '@biomejs/cli-darwin-arm64@2.4.6':\n    optional: true\n\n  '@biomejs/cli-darwin-x64@2.4.6':\n    optional: true\n\n  '@biomejs/cli-linux-arm64-musl@2.4.6':\n    optional: true\n\n  '@biomejs/cli-linux-arm64@2.4.6':\n    optional: true\n\n  '@biomejs/cli-linux-x64-musl@2.4.6':\n    optional: true\n\n  '@biomejs/cli-linux-x64@2.4.6':\n    optional: true\n\n  '@biomejs/cli-win32-arm64@2.4.6':\n    optional: true\n\n  '@biomejs/cli-win32-x64@2.4.6':\n    optional: true\n\n  '@isaacs/cliui@8.0.2':\n    dependencies:\n      string-width: 5.1.2\n      string-width-cjs: string-width@4.2.3\n      strip-ansi: 7.1.2\n      strip-ansi-cjs: strip-ansi@6.0.1\n      wrap-ansi: 8.1.0\n      wrap-ansi-cjs: wrap-ansi@7.0.0\n\n  '@pkgjs/parseargs@0.11.0':\n    optional: true\n\n  '@types/chai@5.2.3':\n    dependencies:\n      '@types/deep-eql': 4.0.2\n      assertion-error: 2.0.1\n\n  '@types/debug@4.1.12':\n    dependencies:\n      '@types/ms': 2.1.0\n\n  '@types/deep-eql@4.0.2': {}\n\n  '@types/katex@0.16.7': {}\n\n  '@types/mocha@10.0.10': {}\n\n  '@types/ms@2.1.0': {}\n\n  '@types/unist@2.0.11': {}\n\n  ansi-regex@5.0.1: {}\n\n  ansi-regex@6.2.2: {}\n\n  ansi-styles@4.3.0:\n    dependencies:\n      color-convert: 2.0.1\n\n  ansi-styles@6.2.3: {}\n\n  argparse@2.0.1: {}\n\n  assertion-error@2.0.1: {}\n\n  balanced-match@1.0.2: {}\n\n  balanced-match@4.0.4: {}\n\n  brace-expansion@2.0.2:\n    dependencies:\n      balanced-match: 1.0.2\n\n  brace-expansion@5.0.4:\n    dependencies:\n      balanced-match: 4.0.4\n\n  browser-stdout@1.3.1: {}\n\n  camelcase@6.3.0: {}\n\n  chai@6.2.2: {}\n\n  chalk@4.1.2:\n    dependencies:\n      ansi-styles: 4.3.0\n      supports-color: 7.2.0\n\n  character-entities-legacy@3.0.0: {}\n\n  character-entities@2.0.2: {}\n\n  character-reference-invalid@2.0.1: {}\n\n  chokidar@4.0.3:\n    dependencies:\n      readdirp: 4.1.2\n\n  cliui@8.0.1:\n    dependencies:\n      string-width: 4.2.3\n      strip-ansi: 6.0.1\n      wrap-ansi: 7.0.0\n\n  color-convert@2.0.1:\n    dependencies:\n      color-name: 1.1.4\n\n  color-name@1.1.4: {}\n\n  commander@8.3.0: {}\n\n  cross-spawn@7.0.6:\n    dependencies:\n      path-key: 3.1.1\n      shebang-command: 2.0.0\n      which: 2.0.2\n\n  debug@4.4.1(supports-color@8.1.1):\n    dependencies:\n      ms: 2.1.3\n    optionalDependencies:\n      supports-color: 8.1.1\n\n  decamelize@4.0.0: {}\n\n  decode-named-character-reference@1.2.0:\n    dependencies:\n      character-entities: 2.0.2\n\n  dequal@2.0.3: {}\n\n  devlop@1.1.0:\n    dependencies:\n      dequal: 2.0.3\n\n  diff@7.0.0: {}\n\n  eastasianwidth@0.2.0: {}\n\n  emoji-regex@8.0.0: {}\n\n  emoji-regex@9.2.2: {}\n\n  escalade@3.2.0: {}\n\n  escape-string-regexp@4.0.0: {}\n\n  find-up@5.0.0:\n    dependencies:\n      locate-path: 6.0.0\n      path-exists: 4.0.0\n\n  flat@5.0.2: {}\n\n  foreground-child@3.3.1:\n    dependencies:\n      cross-spawn: 7.0.6\n      signal-exit: 4.1.0\n\n  get-caller-file@2.0.5: {}\n\n  get-east-asian-width@1.4.0: {}\n\n  glob@10.4.5:\n    dependencies:\n      foreground-child: 3.3.1\n      jackspeak: 3.4.3\n      minimatch: 9.0.5\n      minipass: 7.1.2\n      package-json-from-dist: 1.0.1\n      path-scurry: 1.11.1\n\n  has-flag@4.0.0: {}\n\n  he@1.2.0: {}\n\n  is-alphabetical@2.0.1: {}\n\n  is-alphanumerical@2.0.1:\n    dependencies:\n      is-alphabetical: 2.0.1\n      is-decimal: 2.0.1\n\n  is-decimal@2.0.1: {}\n\n  is-fullwidth-code-point@3.0.0: {}\n\n  is-hexadecimal@2.0.1: {}\n\n  is-path-inside@3.0.3: {}\n\n  is-plain-obj@2.1.0: {}\n\n  is-unicode-supported@0.1.0: {}\n\n  isexe@2.0.0: {}\n\n  jackspeak@3.4.3:\n    dependencies:\n      '@isaacs/cliui': 8.0.2\n    optionalDependencies:\n      '@pkgjs/parseargs': 0.11.0\n\n  js-yaml@4.1.1:\n    dependencies:\n      argparse: 2.0.1\n\n  katex@0.16.22:\n    dependencies:\n      commander: 8.3.0\n\n  locate-path@6.0.0:\n    dependencies:\n      p-locate: 5.0.0\n\n  log-symbols@4.1.0:\n    dependencies:\n      chalk: 4.1.2\n      is-unicode-supported: 0.1.0\n\n  lru-cache@10.4.3: {}\n\n  markdownlint@0.40.0:\n    dependencies:\n      micromark: 4.0.2\n      micromark-core-commonmark: 2.0.3\n      micromark-extension-directive: 4.0.0\n      micromark-extension-gfm-autolink-literal: 2.1.0\n      micromark-extension-gfm-footnote: 2.1.0\n      micromark-extension-gfm-table: 2.1.1\n      micromark-extension-math: 3.1.0\n      micromark-util-types: 2.0.2\n      string-width: 8.1.0\n    transitivePeerDependencies:\n      - supports-color\n\n  micromark-core-commonmark@2.0.3:\n    dependencies:\n      decode-named-character-reference: 1.2.0\n      devlop: 1.1.0\n      micromark-factory-destination: 2.0.1\n      micromark-factory-label: 2.0.1\n      micromark-factory-space: 2.0.1\n      micromark-factory-title: 2.0.1\n      micromark-factory-whitespace: 2.0.1\n      micromark-util-character: 2.1.1\n      micromark-util-chunked: 2.0.1\n      micromark-util-classify-character: 2.0.1\n      micromark-util-html-tag-name: 2.0.1\n      micromark-util-normalize-identifier: 2.0.1\n      micromark-util-resolve-all: 2.0.1\n      micromark-util-subtokenize: 2.1.0\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-extension-directive@4.0.0:\n    dependencies:\n      devlop: 1.1.0\n      micromark-factory-space: 2.0.1\n      micromark-factory-whitespace: 2.0.1\n      micromark-util-character: 2.1.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n      parse-entities: 4.0.2\n\n  micromark-extension-gfm-autolink-literal@2.1.0:\n    dependencies:\n      micromark-util-character: 2.1.1\n      micromark-util-sanitize-uri: 2.0.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-extension-gfm-footnote@2.1.0:\n    dependencies:\n      devlop: 1.1.0\n      micromark-core-commonmark: 2.0.3\n      micromark-factory-space: 2.0.1\n      micromark-util-character: 2.1.1\n      micromark-util-normalize-identifier: 2.0.1\n      micromark-util-sanitize-uri: 2.0.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-extension-gfm-table@2.1.1:\n    dependencies:\n      devlop: 1.1.0\n      micromark-factory-space: 2.0.1\n      micromark-util-character: 2.1.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-extension-math@3.1.0:\n    dependencies:\n      '@types/katex': 0.16.7\n      devlop: 1.1.0\n      katex: 0.16.22\n      micromark-factory-space: 2.0.1\n      micromark-util-character: 2.1.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-factory-destination@2.0.1:\n    dependencies:\n      micromark-util-character: 2.1.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-factory-label@2.0.1:\n    dependencies:\n      devlop: 1.1.0\n      micromark-util-character: 2.1.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-factory-space@2.0.1:\n    dependencies:\n      micromark-util-character: 2.1.1\n      micromark-util-types: 2.0.2\n\n  micromark-factory-title@2.0.1:\n    dependencies:\n      micromark-factory-space: 2.0.1\n      micromark-util-character: 2.1.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-factory-whitespace@2.0.1:\n    dependencies:\n      micromark-factory-space: 2.0.1\n      micromark-util-character: 2.1.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-util-character@2.1.1:\n    dependencies:\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-util-chunked@2.0.1:\n    dependencies:\n      micromark-util-symbol: 2.0.1\n\n  micromark-util-classify-character@2.0.1:\n    dependencies:\n      micromark-util-character: 2.1.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-util-combine-extensions@2.0.1:\n    dependencies:\n      micromark-util-chunked: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-util-decode-numeric-character-reference@2.0.2:\n    dependencies:\n      micromark-util-symbol: 2.0.1\n\n  micromark-util-encode@2.0.1: {}\n\n  micromark-util-html-tag-name@2.0.1: {}\n\n  micromark-util-normalize-identifier@2.0.1:\n    dependencies:\n      micromark-util-symbol: 2.0.1\n\n  micromark-util-resolve-all@2.0.1:\n    dependencies:\n      micromark-util-types: 2.0.2\n\n  micromark-util-sanitize-uri@2.0.1:\n    dependencies:\n      micromark-util-character: 2.1.1\n      micromark-util-encode: 2.0.1\n      micromark-util-symbol: 2.0.1\n\n  micromark-util-subtokenize@2.1.0:\n    dependencies:\n      devlop: 1.1.0\n      micromark-util-chunked: 2.0.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-util-symbol@2.0.1: {}\n\n  micromark-util-types@2.0.2: {}\n\n  micromark@4.0.2:\n    dependencies:\n      '@types/debug': 4.1.12\n      debug: 4.4.1(supports-color@8.1.1)\n      decode-named-character-reference: 1.2.0\n      devlop: 1.1.0\n      micromark-core-commonmark: 2.0.3\n      micromark-factory-space: 2.0.1\n      micromark-util-character: 2.1.1\n      micromark-util-chunked: 2.0.1\n      micromark-util-combine-extensions: 2.0.1\n      micromark-util-decode-numeric-character-reference: 2.0.2\n      micromark-util-encode: 2.0.1\n      micromark-util-normalize-identifier: 2.0.1\n      micromark-util-resolve-all: 2.0.1\n      micromark-util-sanitize-uri: 2.0.1\n      micromark-util-subtokenize: 2.1.0\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n    transitivePeerDependencies:\n      - supports-color\n\n  minimatch@10.2.4:\n    dependencies:\n      brace-expansion: 5.0.4\n\n  minimatch@9.0.5:\n    dependencies:\n      brace-expansion: 2.0.2\n\n  minipass@7.1.2: {}\n\n  mocha@11.7.5:\n    dependencies:\n      browser-stdout: 1.3.1\n      chokidar: 4.0.3\n      debug: 4.4.1(supports-color@8.1.1)\n      diff: 7.0.0\n      escape-string-regexp: 4.0.0\n      find-up: 5.0.0\n      glob: 10.4.5\n      he: 1.2.0\n      is-path-inside: 3.0.3\n      js-yaml: 4.1.1\n      log-symbols: 4.1.0\n      minimatch: 9.0.5\n      ms: 2.1.3\n      picocolors: 1.1.1\n      serialize-javascript: 6.0.2\n      strip-json-comments: 3.1.1\n      supports-color: 8.1.1\n      workerpool: 9.3.4\n      yargs: 17.7.2\n      yargs-parser: 21.1.1\n      yargs-unparser: 2.0.0\n\n  ms@2.1.3: {}\n\n  p-limit@3.1.0:\n    dependencies:\n      yocto-queue: 0.1.0\n\n  p-locate@5.0.0:\n    dependencies:\n      p-limit: 3.1.0\n\n  package-json-from-dist@1.0.1: {}\n\n  parse-entities@4.0.2:\n    dependencies:\n      '@types/unist': 2.0.11\n      character-entities-legacy: 3.0.0\n      character-reference-invalid: 2.0.1\n      decode-named-character-reference: 1.2.0\n      is-alphanumerical: 2.0.1\n      is-decimal: 2.0.1\n      is-hexadecimal: 2.0.1\n\n  path-exists@4.0.0: {}\n\n  path-key@3.1.1: {}\n\n  path-scurry@1.11.1:\n    dependencies:\n      lru-cache: 10.4.3\n      minipass: 7.1.2\n\n  picocolors@1.1.1: {}\n\n  randombytes@2.1.0:\n    dependencies:\n      safe-buffer: 5.2.1\n\n  readdirp@4.1.2: {}\n\n  require-directory@2.1.1: {}\n\n  safe-buffer@5.2.1: {}\n\n  serialize-javascript@6.0.2:\n    dependencies:\n      randombytes: 2.1.0\n\n  shebang-command@2.0.0:\n    dependencies:\n      shebang-regex: 3.0.0\n\n  shebang-regex@3.0.0: {}\n\n  signal-exit@4.1.0: {}\n\n  string-width@4.2.3:\n    dependencies:\n      emoji-regex: 8.0.0\n      is-fullwidth-code-point: 3.0.0\n      strip-ansi: 6.0.1\n\n  string-width@5.1.2:\n    dependencies:\n      eastasianwidth: 0.2.0\n      emoji-regex: 9.2.2\n      strip-ansi: 7.1.2\n\n  string-width@8.1.0:\n    dependencies:\n      get-east-asian-width: 1.4.0\n      strip-ansi: 7.1.2\n\n  strip-ansi@6.0.1:\n    dependencies:\n      ansi-regex: 5.0.1\n\n  strip-ansi@7.1.2:\n    dependencies:\n      ansi-regex: 6.2.2\n\n  strip-json-comments@3.1.1: {}\n\n  supports-color@7.2.0:\n    dependencies:\n      has-flag: 4.0.0\n\n  supports-color@8.1.1:\n    dependencies:\n      has-flag: 4.0.0\n\n  vscode-jsonrpc@8.2.0: {}\n\n  vscode-languageserver-protocol@3.17.5:\n    dependencies:\n      vscode-jsonrpc: 8.2.0\n      vscode-languageserver-types: 3.17.5\n\n  vscode-languageserver-textdocument@1.0.12: {}\n\n  vscode-languageserver-types@3.17.5: {}\n\n  vscode-languageserver@9.0.1:\n    dependencies:\n      vscode-languageserver-protocol: 3.17.5\n\n  which@2.0.2:\n    dependencies:\n      isexe: 2.0.0\n\n  workerpool@9.3.4: {}\n\n  wrap-ansi@7.0.0:\n    dependencies:\n      ansi-styles: 4.3.0\n      string-width: 4.2.3\n      strip-ansi: 6.0.1\n\n  wrap-ansi@8.1.0:\n    dependencies:\n      ansi-styles: 6.2.3\n      string-width: 5.1.2\n      strip-ansi: 7.1.2\n\n  y18n@5.0.8: {}\n\n  yargs-parser@21.1.1: {}\n\n  yargs-unparser@2.0.0:\n    dependencies:\n      camelcase: 6.3.0\n      decamelize: 4.0.0\n      flat: 5.0.2\n      is-plain-obj: 2.1.0\n\n  yargs@17.7.2:\n    dependencies:\n      cliui: 8.0.1\n      escalade: 3.2.0\n      get-caller-file: 2.0.5\n      require-directory: 2.1.1\n      string-width: 4.2.3\n      y18n: 5.0.8\n      yargs-parser: 21.1.1\n\n  yocto-queue@0.1.0: {}\n",
+              "after": "lockfileVersion: '9.0'\n\nsettings:\n  autoInstallPeers: true\n  excludeLinksFromLockfile: false\n\nimporters:\n\n  .:\n    dependencies:\n      js-yaml:\n        specifier: ^4.1.1\n        version: 4.1.1\n      markdownlint:\n        specifier: ^0.40.0\n        version: 0.40.0\n      minimatch:\n        specifier: ^10.2.4\n        version: 10.2.4\n      vscode-languageserver:\n        specifier: ^9.0.1\n        version: 9.0.1\n      vscode-languageserver-textdocument:\n        specifier: ^1.0.12\n        version: 1.0.12\n    devDependencies:\n      '@biomejs/biome':\n        specifier: 2.4.7\n        version: 2.4.7\n      '@types/chai':\n        specifier: ^5.2.3\n        version: 5.2.3\n      '@types/mocha':\n        specifier: ^10.0.10\n        version: 10.0.10\n      chai:\n        specifier: ^6.2.2\n        version: 6.2.2\n      mocha:\n        specifier: ^11.7.5\n        version: 11.7.5\n\npackages:\n\n  '@biomejs/biome@2.4.7':\n    resolution: {integrity: REDACTED/7mF3ogJFbIwFFSOL3wT92Zzxia/d5/ng==}\n    engines: {node: '>=14.21.3'}\n    hasBin: true\n\n  '@biomejs/cli-darwin-arm64@2.4.7':\n    resolution: {integrity: REDACTED/HxyMdZMruMO3nfpDsrlar/EQWe41r1qrwKiCa2QDYHDzWA==}\n    engines: {node: '>=14.21.3'}\n    cpu: [arm64]\n    os: [darwin]\n\n  '@biomejs/cli-darwin-x64@2.4.7':\n    resolution: {integrity: sha512-I+cOG3sd/REDACTED}\n    engines: {node: '>=14.21.3'}\n    cpu: [x64]\n    os: [darwin]\n\n  '@biomejs/cli-linux-arm64-musl@2.4.7':\n    resolution: {integrity: sha512-I2NvM9KPb09jWml93O2/REDACTED}\n    engines: {node: '>=14.21.3'}\n    cpu: [arm64]\n    os: [linux]\n\n  '@biomejs/cli-linux-arm64@2.4.7':\n    resolution: {integrity: sha512-om6FugwmibzfP/REDACTED}\n    engines: {node: '>=14.21.3'}\n    cpu: [arm64]\n    os: [linux]\n\n  '@biomejs/cli-linux-x64-musl@2.4.7':\n    resolution: {integrity: REDACTED/REDACTED}\n    engines: {node: '>=14.21.3'}\n    cpu: [x64]\n    os: [linux]\n\n  '@biomejs/cli-linux-x64@2.4.7':\n    resolution: {integrity: sha512-bV8/REDACTED/REDACTED}\n    engines: {node: '>=14.21.3'}\n    cpu: [x64]\n    os: [linux]\n\n  '@biomejs/cli-win32-arm64@2.4.7':\n    resolution: {integrity: REDACTED/xBM7CBYB7WgwqboetzFEVDnMxelyw==}\n    engines: {node: '>=14.21.3'}\n    cpu: [arm64]\n    os: [win32]\n\n  '@biomejs/cli-win32-x64@2.4.7':\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=14.21.3'}\n    cpu: [x64]\n    os: [win32]\n\n  '@isaacs/cliui@8.0.2':\n    resolution: {integrity: REDACTED/REDACTED}\n    engines: {node: '>=12'}\n\n  '@pkgjs/parseargs@0.11.0':\n    resolution: {integrity: REDACTED/tVSshMR6loPMn8U+dPg==}\n    engines: {node: '>=14'}\n\n  '@types/chai@5.2.3':\n    resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/REDACTED}\n\n  '@types/debug@4.1.12':\n    resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/REDACTED}\n\n  '@types/deep-eql@4.0.2':\n    resolution: {integrity: REDACTED}\n\n  '@types/katex@0.16.7':\n    resolution: {integrity: REDACTED}\n\n  '@types/mocha@10.0.10':\n    resolution: {integrity: REDACTED}\n\n  '@types/ms@2.1.0':\n    resolution: {integrity: sha512-GsCCIZDE/REDACTED}\n\n  '@types/unist@2.0.11':\n    resolution: {integrity: sha512-CmBKiL6NNo/REDACTED}\n\n  ansi-regex@5.0.1:\n    resolution: {integrity: REDACTED/ZZJMlMWv37qOOb9pdJlMUEKFQ==}\n    engines: {node: '>=8'}\n\n  ansi-regex@6.2.2:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=12'}\n\n  ansi-styles@4.3.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=8'}\n\n  ansi-styles@6.2.3:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=12'}\n\n  argparse@2.0.1:\n    resolution: {integrity: REDACTED/PXw1EjAZ+q2/bEBg3DvurK3Q==}\n\n  assertion-error@2.0.1:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=12'}\n\n  balanced-match@1.0.2:\n    resolution: {integrity: REDACTED}\n\n  balanced-match@4.0.4:\n    resolution: {integrity: REDACTED}\n    engines: {node: 18 || 20 || >=22}\n\n  brace-expansion@2.0.2:\n    resolution: {integrity: REDACTED}\n\n  brace-expansion@5.0.4:\n    resolution: {integrity: REDACTED}\n    engines: {node: 18 || 20 || >=22}\n\n  browser-stdout@1.3.1:\n    resolution: {integrity: REDACTED/fXaBSmW/REDACTED}\n\n  camelcase@6.3.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=10'}\n\n  chai@6.2.2:\n    resolution: {integrity: REDACTED/UpSJTnlRg==}\n    engines: {node: '>=18'}\n\n  chalk@4.1.2:\n    resolution: {integrity: REDACTED/wy9kY7/REDACTED}\n    engines: {node: '>=10'}\n\n  character-entities-legacy@3.0.0:\n    resolution: {integrity: sha512-RpPp0asT/6ufRm//AJVwpViZbGM/MkjQFxJccQRHmISF/22NBtsHqAWmL+/pmkPWoIUJdWyeVleTl1wydHATVQ==}\n\n  character-entities@2.0.2:\n    resolution: {integrity: sha512-shx7oQ0Awen/BRIdkjkvz54PnEEI/EjwXDSIZp86/KKdbafHh1Df/REDACTED}\n\n  character-reference-invalid@2.0.1:\n    resolution: {integrity: REDACTED/tlibRvjoWX027ypmG/n0HtO5t7unw==}\n\n  chokidar@4.0.3:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>= 14.16.0'}\n\n  cliui@8.0.1:\n    resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/REDACTED/oQV73hnVK+sR+5PVRMd+Dr7YQ==}\n    engines: {node: '>=12'}\n\n  color-convert@2.0.1:\n    resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/REDACTED/U584fMg38ZHCaElKQ==}\n    engines: {node: '>=7.0.0'}\n\n  color-name@1.1.4:\n    resolution: {integrity: REDACTED/uBL/REDACTED}\n\n  commander@8.3.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>= 12'}\n\n  cross-spawn@7.0.6:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>= 8'}\n\n  debug@4.4.1:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=6.0'}\n    peerDependencies:\n      supports-color: '*'\n    peerDependenciesMeta:\n      supports-color:\n        optional: true\n\n  decamelize@4.0.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=10'}\n\n  decode-named-character-reference@1.2.0:\n    resolution: {integrity: REDACTED}\n\n  dequal@2.0.3:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=6'}\n\n  devlop@1.1.0:\n    resolution: {integrity: REDACTED/7/ns2jbpp1+PalgE/REDACTED}\n\n  diff@7.0.0:\n    resolution: {integrity: REDACTED/veA1xzRKP6ISBw==}\n    engines: {node: '>=0.3.1'}\n\n  eastasianwidth@0.2.0:\n    resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/REDACTED}\n\n  emoji-regex@8.0.0:\n    resolution: {integrity: REDACTED/RPgnr1/REDACTED}\n\n  emoji-regex@9.2.2:\n    resolution: {integrity: REDACTED/Vyg==}\n\n  escalade@3.2.0:\n    resolution: {integrity: REDACTED/jA==}\n    engines: {node: '>=6'}\n\n  escape-string-regexp@4.0.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=10'}\n\n  find-up@5.0.0:\n    resolution: {integrity: sha512-78/REDACTED}\n    engines: {node: '>=10'}\n\n  flat@5.0.2:\n    resolution: {integrity: sha512-b6suED+5/REDACTED}\n    hasBin: true\n\n  foreground-child@3.3.1:\n    resolution: {integrity: REDACTED/REDACTED}\n    engines: {node: '>=14'}\n\n  get-caller-file@2.0.5:\n    resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/REDACTED}\n    engines: {node: 6.* || 8.* || >= 10.*}\n\n  get-east-asian-width@1.4.0:\n    resolution: {integrity: REDACTED/piRdJy/D2um6hM1UP7ZEeQ4EkP+Q==}\n    engines: {node: '>=18'}\n\n  glob@10.4.5:\n    resolution: {integrity: sha512-7Bv8RF0k6xjo7d4A/PxYLbUCfb6c+Vpd2/REDACTED/sHg==}\n    hasBin: true\n\n  has-flag@4.0.0:\n    resolution: {integrity: sha512-EykJT/REDACTED/ZxU3EvlMPQ==}\n    engines: {node: '>=8'}\n\n  he@1.2.0:\n    resolution: {integrity: sha512-F/REDACTED/REDACTED}\n    hasBin: true\n\n  is-alphabetical@2.0.1:\n    resolution: {integrity: REDACTED/9kD40mD/REDACTED}\n\n  is-alphanumerical@2.0.1:\n    resolution: {integrity: sha512-hmbYhX/9MUMF5uh7tOXyK/REDACTED/whAnSwveW/LtZw==}\n\n  is-decimal@2.0.1:\n    resolution: {integrity: REDACTED/3XHR5JyEZChOyTWe2oayKnsSsr/kcGqF+z6yuH6HHpN0A==}\n\n  is-fullwidth-code-point@3.0.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=8'}\n\n  is-hexadecimal@2.0.1:\n    resolution: {integrity: REDACTED/y/7rHvlOZLZtgJ/4ttYGZg==}\n\n  is-path-inside@3.0.3:\n    resolution: {integrity: REDACTED/vd0cD2qc4HL07OjCeuHMr8Ro4CoMaeCKDB0/ECBOVWjTwUvPQ==}\n    engines: {node: '>=8'}\n\n  is-plain-obj@2.1.0:\n    resolution: {integrity: sha512-YWnfyRwxL/REDACTED}\n    engines: {node: '>=8'}\n\n  is-unicode-supported@0.1.0:\n    resolution: {integrity: REDACTED/8S6mgXgPFPw==}\n    engines: {node: '>=10'}\n\n  isexe@2.0.0:\n    resolution: {integrity: REDACTED}\n\n  jackspeak@3.4.3:\n    resolution: {integrity: sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/REDACTED/npPWugM+RQBw==}\n\n  js-yaml@4.1.1:\n    resolution: {integrity: REDACTED/REDACTED/55JZ0rmy3myCT5lsA==}\n    hasBin: true\n\n  katex@0.16.22:\n    resolution: {integrity: REDACTED}\n    hasBin: true\n\n  locate-path@6.0.0:\n    resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/REDACTED}\n    engines: {node: '>=10'}\n\n  log-symbols@4.1.0:\n    resolution: {integrity: REDACTED/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}\n    engines: {node: '>=10'}\n\n  lru-cache@10.4.3:\n    resolution: {integrity: REDACTED}\n\n  markdownlint@0.40.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=20'}\n\n  micromark-core-commonmark@2.0.3:\n    resolution: {integrity: REDACTED}\n\n  micromark-extension-directive@4.0.0:\n    resolution: {integrity: sha512-/REDACTED/Kvi34WQXg==}\n\n  micromark-extension-gfm-autolink-literal@2.1.0:\n    resolution: {integrity: REDACTED}\n\n  micromark-extension-gfm-footnote@2.1.0:\n    resolution: {integrity: sha512-/REDACTED/gqw==}\n\n  micromark-extension-gfm-table@2.1.1:\n    resolution: {integrity: sha512-t2OU/REDACTED}\n\n  micromark-extension-math@3.1.0:\n    resolution: {integrity: sha512-lvEqd+fHjATVs+2v/REDACTED}\n\n  micromark-factory-destination@2.0.1:\n    resolution: {integrity: REDACTED//tqOdY/DxhjdCiJnIA==}\n\n  micromark-factory-label@2.0.1:\n    resolution: {integrity: REDACTED/7Vg==}\n\n  micromark-factory-space@2.0.1:\n    resolution: {integrity: REDACTED/ZSGj9/REDACTED/LQg==}\n\n  micromark-factory-title@2.0.1:\n    resolution: {integrity: REDACTED}\n\n  micromark-factory-whitespace@2.0.1:\n    resolution: {integrity: sha512-Ob0nuZ3PKt/REDACTED}\n\n  micromark-util-character@2.1.1:\n    resolution: {integrity: REDACTED}\n\n  micromark-util-chunked@2.0.1:\n    resolution: {integrity: REDACTED/REDACTED}\n\n  micromark-util-classify-character@2.0.1:\n    resolution: {integrity: sha512-K0kHzM6afW/REDACTED/EaagNzCm7T/REDACTED}\n\n  micromark-util-combine-extensions@2.0.1:\n    resolution: {integrity: REDACTED/Bg==}\n\n  micromark-util-decode-numeric-character-reference@2.0.2:\n    resolution: {integrity: REDACTED}\n\n  micromark-util-encode@2.0.1:\n    resolution: {integrity: sha512-c3cVx2y4KqUnwopcO9b/SCdo2O67LwJJ/REDACTED}\n\n  micromark-util-html-tag-name@2.0.1:\n    resolution: {integrity: REDACTED}\n\n  micromark-util-normalize-identifier@2.0.1:\n    resolution: {integrity: REDACTED/Q+/GIe3WKl0Ijb/GyH9lOpUkRAO2wp0GVkLvS9Q==}\n\n  micromark-util-resolve-all@2.0.1:\n    resolution: {integrity: sha512-VdQyxFWFT2/REDACTED}\n\n  micromark-util-sanitize-uri@2.0.1:\n    resolution: {integrity: sha512-9N9IomZ/REDACTED}\n\n  micromark-util-subtokenize@2.1.0:\n    resolution: {integrity: REDACTED}\n\n  micromark-util-symbol@2.0.1:\n    resolution: {integrity: REDACTED}\n\n  micromark-util-types@2.0.2:\n    resolution: {integrity: REDACTED}\n\n  micromark@4.0.2:\n    resolution: {integrity: REDACTED}\n\n  minimatch@10.2.4:\n    resolution: {integrity: sha512-oRjTw/REDACTED/REDACTED}\n    engines: {node: 18 || 20 || >=22}\n\n  minimatch@9.0.5:\n    resolution: {integrity: REDACTED//REDACTED/wfCabAtAFWhhBow==}\n    engines: {node: '>=16 || 14 >=14.17'}\n\n  minipass@7.1.2:\n    resolution: {integrity: REDACTED/REDACTED}\n    engines: {node: '>=16 || 14 >=14.17'}\n\n  mocha@11.7.5:\n    resolution: {integrity: REDACTED/REDACTED}\n    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}\n    hasBin: true\n\n  ms@2.1.3:\n    resolution: {integrity: sha512-6FlzubTLZG3J2a/REDACTED/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}\n\n  p-limit@3.1.0:\n    resolution: {integrity: REDACTED/REDACTED}\n    engines: {node: '>=10'}\n\n  p-locate@5.0.0:\n    resolution: {integrity: sha512-LaNjtRWUBY++zB5nE/REDACTED/tl/REDACTED}\n    engines: {node: '>=10'}\n\n  package-json-from-dist@1.0.1:\n    resolution: {integrity: sha512-UEZIS3/REDACTED/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==}\n\n  parse-entities@4.0.2:\n    resolution: {integrity: REDACTED}\n\n  path-exists@4.0.0:\n    resolution: {integrity: REDACTED/REDACTED/w==}\n    engines: {node: '>=8'}\n\n  path-key@3.1.1:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=8'}\n\n  path-scurry@1.11.1:\n    resolution: {integrity: REDACTED/v1HA==}\n    engines: {node: '>=16 || 14 >=14.18'}\n\n  picocolors@1.1.1:\n    resolution: {integrity: REDACTED/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}\n\n  randombytes@2.1.0:\n    resolution: {integrity: REDACTED}\n\n  readdirp@4.1.2:\n    resolution: {integrity: REDACTED/A3DBaYGEj2H/HFZCn/kMfim73FXxEJTw06WtxQwg==}\n    engines: {node: '>= 14.18.0'}\n\n  require-directory@2.1.1:\n    resolution: {integrity: REDACTED/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}\n    engines: {node: '>=0.10.0'}\n\n  safe-buffer@5.2.1:\n    resolution: {integrity: REDACTED}\n\n  serialize-javascript@6.0.2:\n    resolution: {integrity: REDACTED}\n\n  shebang-command@2.0.0:\n    resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/REDACTED/yZp6YuDY77YtvbN0dmDA==}\n    engines: {node: '>=8'}\n\n  shebang-regex@3.0.0:\n    resolution: {integrity: REDACTED/yhz8ekcb1A==}\n    engines: {node: '>=8'}\n\n  signal-exit@4.1.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=14'}\n\n  string-width@4.2.3:\n    resolution: {integrity: REDACTED/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}\n    engines: {node: '>=8'}\n\n  string-width@5.1.2:\n    resolution: {integrity: REDACTED/REDACTED}\n    engines: {node: '>=12'}\n\n  string-width@8.1.0:\n    resolution: {integrity: sha512-Kxl3KJGb/REDACTED/REDACTED}\n    engines: {node: '>=20'}\n\n  strip-ansi@6.0.1:\n    resolution: {integrity: REDACTED/0ooI7KrPuUSztUdU5A==}\n    engines: {node: '>=8'}\n\n  strip-ansi@7.1.2:\n    resolution: {integrity: REDACTED/n8aIFhN/jCE/REDACTED}\n    engines: {node: '>=12'}\n\n  strip-json-comments@3.1.1:\n    resolution: {integrity: sha512-6fPc+R4ihwqP6N/REDACTED/mEHLp7Vehlt3ql6lEig==}\n    engines: {node: '>=8'}\n\n  supports-color@7.2.0:\n    resolution: {integrity: REDACTED/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}\n    engines: {node: '>=8'}\n\n  supports-color@8.1.1:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=10'}\n\n  vscode-jsonrpc@8.2.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=14.0.0'}\n\n  vscode-languageserver-protocol@3.17.5:\n    resolution: {integrity: REDACTED/b07H7Ecg0I3OgXDuLdn307rl/J3A9YD6/eYOssqhecL27hK1IPZAsaqh00i/Jljg==}\n\n  vscode-languageserver-textdocument@1.0.12:\n    resolution: {integrity: sha512-cxWNPesCnQCcMPeenjKKsOCKQZ/L6Tv19DTRIGuLWe32lyzWhihGVJ/rcckZXJxfdKCFvRLS3fpBIsV/ZGX4zA==}\n\n  vscode-languageserver-types@3.17.5:\n    resolution: {integrity: REDACTED}\n\n  vscode-languageserver@9.0.1:\n    resolution: {integrity: REDACTED/JPTtd4/uN0/REDACTED}\n    hasBin: true\n\n  which@2.0.2:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>= 8'}\n    hasBin: true\n\n  workerpool@9.3.4:\n    resolution: {integrity: sha512-TmPRQYYSAnnDiEB0P/REDACTED/REDACTED}\n\n  wrap-ansi@7.0.0:\n    resolution: {integrity: REDACTED/Fi7D16Q==}\n    engines: {node: '>=10'}\n\n  wrap-ansi@8.1.0:\n    resolution: {integrity: REDACTED}\n    engines: {node: '>=12'}\n\n  y18n@5.0.8:\n    resolution: {integrity: REDACTED/0LhANUS6/+7SCb98YOfA==}\n    engines: {node: '>=10'}\n\n  yargs-parser@21.1.1:\n    resolution: {integrity: REDACTED/REDACTED/LBw==}\n    engines: {node: '>=12'}\n\n  yargs-unparser@2.0.0:\n    resolution: {integrity: REDACTED/n7xwKOdzOA==}\n    engines: {node: '>=10'}\n\n  yargs@17.7.2:\n    resolution: {integrity: sha512-7dSzzRQ++CKnNI/REDACTED}\n    engines: {node: '>=12'}\n\n  yocto-queue@0.1.0:\n    resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/REDACTED}\n    engines: {node: '>=10'}\n\nsnapshots:\n\n  '@biomejs/biome@2.4.7':\n    optionalDependencies:\n      '@biomejs/cli-darwin-arm64': 2.4.7\n      '@biomejs/cli-darwin-x64': 2.4.7\n      '@biomejs/cli-linux-arm64': 2.4.7\n      '@biomejs/cli-linux-arm64-musl': 2.4.7\n      '@biomejs/cli-linux-x64': 2.4.7\n      '@biomejs/cli-linux-x64-musl': 2.4.7\n      '@biomejs/cli-win32-arm64': 2.4.7\n      '@biomejs/cli-win32-x64': 2.4.7\n\n  '@biomejs/cli-darwin-arm64@2.4.7':\n    optional: true\n\n  '@biomejs/cli-darwin-x64@2.4.7':\n    optional: true\n\n  '@biomejs/cli-linux-arm64-musl@2.4.7':\n    optional: true\n\n  '@biomejs/cli-linux-arm64@2.4.7':\n    optional: true\n\n  '@biomejs/cli-linux-x64-musl@2.4.7':\n    optional: true\n\n  '@biomejs/cli-linux-x64@2.4.7':\n    optional: true\n\n  '@biomejs/cli-win32-arm64@2.4.7':\n    optional: true\n\n  '@biomejs/cli-win32-x64@2.4.7':\n    optional: true\n\n  '@isaacs/cliui@8.0.2':\n    dependencies:\n      string-width: 5.1.2\n      string-width-cjs: string-width@4.2.3\n      strip-ansi: 7.1.2\n      strip-ansi-cjs: strip-ansi@6.0.1\n      wrap-ansi: 8.1.0\n      wrap-ansi-cjs: wrap-ansi@7.0.0\n\n  '@pkgjs/parseargs@0.11.0':\n    optional: true\n\n  '@types/chai@5.2.3':\n    dependencies:\n      '@types/deep-eql': 4.0.2\n      assertion-error: 2.0.1\n\n  '@types/debug@4.1.12':\n    dependencies:\n      '@types/ms': 2.1.0\n\n  '@types/deep-eql@4.0.2': {}\n\n  '@types/katex@0.16.7': {}\n\n  '@types/mocha@10.0.10': {}\n\n  '@types/ms@2.1.0': {}\n\n  '@types/unist@2.0.11': {}\n\n  ansi-regex@5.0.1: {}\n\n  ansi-regex@6.2.2: {}\n\n  ansi-styles@4.3.0:\n    dependencies:\n      color-convert: 2.0.1\n\n  ansi-styles@6.2.3: {}\n\n  argparse@2.0.1: {}\n\n  assertion-error@2.0.1: {}\n\n  balanced-match@1.0.2: {}\n\n  balanced-match@4.0.4: {}\n\n  brace-expansion@2.0.2:\n    dependencies:\n      balanced-match: 1.0.2\n\n  brace-expansion@5.0.4:\n    dependencies:\n      balanced-match: 4.0.4\n\n  browser-stdout@1.3.1: {}\n\n  camelcase@6.3.0: {}\n\n  chai@6.2.2: {}\n\n  chalk@4.1.2:\n    dependencies:\n      ansi-styles: 4.3.0\n      supports-color: 7.2.0\n\n  character-entities-legacy@3.0.0: {}\n\n  character-entities@2.0.2: {}\n\n  character-reference-invalid@2.0.1: {}\n\n  chokidar@4.0.3:\n    dependencies:\n      readdirp: 4.1.2\n\n  cliui@8.0.1:\n    dependencies:\n      string-width: 4.2.3\n      strip-ansi: 6.0.1\n      wrap-ansi: 7.0.0\n\n  color-convert@2.0.1:\n    dependencies:\n      color-name: 1.1.4\n\n  color-name@1.1.4: {}\n\n  commander@8.3.0: {}\n\n  cross-spawn@7.0.6:\n    dependencies:\n      path-key: 3.1.1\n      shebang-command: 2.0.0\n      which: 2.0.2\n\n  debug@4.4.1(supports-color@8.1.1):\n    dependencies:\n      ms: 2.1.3\n    optionalDependencies:\n      supports-color: 8.1.1\n\n  decamelize@4.0.0: {}\n\n  decode-named-character-reference@1.2.0:\n    dependencies:\n      character-entities: 2.0.2\n\n  dequal@2.0.3: {}\n\n  devlop@1.1.0:\n    dependencies:\n      dequal: 2.0.3\n\n  diff@7.0.0: {}\n\n  eastasianwidth@0.2.0: {}\n\n  emoji-regex@8.0.0: {}\n\n  emoji-regex@9.2.2: {}\n\n  escalade@3.2.0: {}\n\n  escape-string-regexp@4.0.0: {}\n\n  find-up@5.0.0:\n    dependencies:\n      locate-path: 6.0.0\n      path-exists: 4.0.0\n\n  flat@5.0.2: {}\n\n  foreground-child@3.3.1:\n    dependencies:\n      cross-spawn: 7.0.6\n      signal-exit: 4.1.0\n\n  get-caller-file@2.0.5: {}\n\n  get-east-asian-width@1.4.0: {}\n\n  glob@10.4.5:\n    dependencies:\n      foreground-child: 3.3.1\n      jackspeak: 3.4.3\n      minimatch: 9.0.5\n      minipass: 7.1.2\n      package-json-from-dist: 1.0.1\n      path-scurry: 1.11.1\n\n  has-flag@4.0.0: {}\n\n  he@1.2.0: {}\n\n  is-alphabetical@2.0.1: {}\n\n  is-alphanumerical@2.0.1:\n    dependencies:\n      is-alphabetical: 2.0.1\n      is-decimal: 2.0.1\n\n  is-decimal@2.0.1: {}\n\n  is-fullwidth-code-point@3.0.0: {}\n\n  is-hexadecimal@2.0.1: {}\n\n  is-path-inside@3.0.3: {}\n\n  is-plain-obj@2.1.0: {}\n\n  is-unicode-supported@0.1.0: {}\n\n  isexe@2.0.0: {}\n\n  jackspeak@3.4.3:\n    dependencies:\n      '@isaacs/cliui': 8.0.2\n    optionalDependencies:\n      '@pkgjs/parseargs': 0.11.0\n\n  js-yaml@4.1.1:\n    dependencies:\n      argparse: 2.0.1\n\n  katex@0.16.22:\n    dependencies:\n      commander: 8.3.0\n\n  locate-path@6.0.0:\n    dependencies:\n      p-locate: 5.0.0\n\n  log-symbols@4.1.0:\n    dependencies:\n      chalk: 4.1.2\n      is-unicode-supported: 0.1.0\n\n  lru-cache@10.4.3: {}\n\n  markdownlint@0.40.0:\n    dependencies:\n      micromark: 4.0.2\n      micromark-core-commonmark: 2.0.3\n      micromark-extension-directive: 4.0.0\n      micromark-extension-gfm-autolink-literal: 2.1.0\n      micromark-extension-gfm-footnote: 2.1.0\n      micromark-extension-gfm-table: 2.1.1\n      micromark-extension-math: 3.1.0\n      micromark-util-types: 2.0.2\n      string-width: 8.1.0\n    transitivePeerDependencies:\n      - supports-color\n\n  micromark-core-commonmark@2.0.3:\n    dependencies:\n      decode-named-character-reference: 1.2.0\n      devlop: 1.1.0\n      micromark-factory-destination: 2.0.1\n      micromark-factory-label: 2.0.1\n      micromark-factory-space: 2.0.1\n      micromark-factory-title: 2.0.1\n      micromark-factory-whitespace: 2.0.1\n      micromark-util-character: 2.1.1\n      micromark-util-chunked: 2.0.1\n      micromark-util-classify-character: 2.0.1\n      micromark-util-html-tag-name: 2.0.1\n      micromark-util-normalize-identifier: 2.0.1\n      micromark-util-resolve-all: 2.0.1\n      micromark-util-subtokenize: 2.1.0\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-extension-directive@4.0.0:\n    dependencies:\n      devlop: 1.1.0\n      micromark-factory-space: 2.0.1\n      micromark-factory-whitespace: 2.0.1\n      micromark-util-character: 2.1.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n      parse-entities: 4.0.2\n\n  micromark-extension-gfm-autolink-literal@2.1.0:\n    dependencies:\n      micromark-util-character: 2.1.1\n      micromark-util-sanitize-uri: 2.0.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-extension-gfm-footnote@2.1.0:\n    dependencies:\n      devlop: 1.1.0\n      micromark-core-commonmark: 2.0.3\n      micromark-factory-space: 2.0.1\n      micromark-util-character: 2.1.1\n      micromark-util-normalize-identifier: 2.0.1\n      micromark-util-sanitize-uri: 2.0.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-extension-gfm-table@2.1.1:\n    dependencies:\n      devlop: 1.1.0\n      micromark-factory-space: 2.0.1\n      micromark-util-character: 2.1.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-extension-math@3.1.0:\n    dependencies:\n      '@types/katex': 0.16.7\n      devlop: 1.1.0\n      katex: 0.16.22\n      micromark-factory-space: 2.0.1\n      micromark-util-character: 2.1.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-factory-destination@2.0.1:\n    dependencies:\n      micromark-util-character: 2.1.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-factory-label@2.0.1:\n    dependencies:\n      devlop: 1.1.0\n      micromark-util-character: 2.1.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-factory-space@2.0.1:\n    dependencies:\n      micromark-util-character: 2.1.1\n      micromark-util-types: 2.0.2\n\n  micromark-factory-title@2.0.1:\n    dependencies:\n      micromark-factory-space: 2.0.1\n      micromark-util-character: 2.1.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-factory-whitespace@2.0.1:\n    dependencies:\n      micromark-factory-space: 2.0.1\n      micromark-util-character: 2.1.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-util-character@2.1.1:\n    dependencies:\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-util-chunked@2.0.1:\n    dependencies:\n      micromark-util-symbol: 2.0.1\n\n  micromark-util-classify-character@2.0.1:\n    dependencies:\n      micromark-util-character: 2.1.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-util-combine-extensions@2.0.1:\n    dependencies:\n      micromark-util-chunked: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-util-decode-numeric-character-reference@2.0.2:\n    dependencies:\n      micromark-util-symbol: 2.0.1\n\n  micromark-util-encode@2.0.1: {}\n\n  micromark-util-html-tag-name@2.0.1: {}\n\n  micromark-util-normalize-identifier@2.0.1:\n    dependencies:\n      micromark-util-symbol: 2.0.1\n\n  micromark-util-resolve-all@2.0.1:\n    dependencies:\n      micromark-util-types: 2.0.2\n\n  micromark-util-sanitize-uri@2.0.1:\n    dependencies:\n      micromark-util-character: 2.1.1\n      micromark-util-encode: 2.0.1\n      micromark-util-symbol: 2.0.1\n\n  micromark-util-subtokenize@2.1.0:\n    dependencies:\n      devlop: 1.1.0\n      micromark-util-chunked: 2.0.1\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n\n  micromark-util-symbol@2.0.1: {}\n\n  micromark-util-types@2.0.2: {}\n\n  micromark@4.0.2:\n    dependencies:\n      '@types/debug': 4.1.12\n      debug: 4.4.1(supports-color@8.1.1)\n      decode-named-character-reference: 1.2.0\n      devlop: 1.1.0\n      micromark-core-commonmark: 2.0.3\n      micromark-factory-space: 2.0.1\n      micromark-util-character: 2.1.1\n      micromark-util-chunked: 2.0.1\n      micromark-util-combine-extensions: 2.0.1\n      micromark-util-decode-numeric-character-reference: 2.0.2\n      micromark-util-encode: 2.0.1\n      micromark-util-normalize-identifier: 2.0.1\n      micromark-util-resolve-all: 2.0.1\n      micromark-util-sanitize-uri: 2.0.1\n      micromark-util-subtokenize: 2.1.0\n      micromark-util-symbol: 2.0.1\n      micromark-util-types: 2.0.2\n    transitivePeerDependencies:\n      - supports-color\n\n  minimatch@10.2.4:\n    dependencies:\n      brace-expansion: 5.0.4\n\n  minimatch@9.0.5:\n    dependencies:\n      brace-expansion: 2.0.2\n\n  minipass@7.1.2: {}\n\n  mocha@11.7.5:\n    dependencies:\n      browser-stdout: 1.3.1\n      chokidar: 4.0.3\n      debug: 4.4.1(supports-color@8.1.1)\n      diff: 7.0.0\n      escape-string-regexp: 4.0.0\n      find-up: 5.0.0\n      glob: 10.4.5\n      he: 1.2.0\n      is-path-inside: 3.0.3\n      js-yaml: 4.1.1\n      log-symbols: 4.1.0\n      minimatch: 9.0.5\n      ms: 2.1.3\n      picocolors: 1.1.1\n      serialize-javascript: 6.0.2\n      strip-json-comments: 3.1.1\n      supports-color: 8.1.1\n      workerpool: 9.3.4\n      yargs: 17.7.2\n      yargs-parser: 21.1.1\n      yargs-unparser: 2.0.0\n\n  ms@2.1.3: {}\n\n  p-limit@3.1.0:\n    dependencies:\n      yocto-queue: 0.1.0\n\n  p-locate@5.0.0:\n    dependencies:\n      p-limit: 3.1.0\n\n  package-json-from-dist@1.0.1: {}\n\n  parse-entities@4.0.2:\n    dependencies:\n      '@types/unist': 2.0.11\n      character-entities-legacy: 3.0.0\n      character-reference-invalid: 2.0.1\n      decode-named-character-reference: 1.2.0\n      is-alphanumerical: 2.0.1\n      is-decimal: 2.0.1\n      is-hexadecimal: 2.0.1\n\n  path-exists@4.0.0: {}\n\n  path-key@3.1.1: {}\n\n  path-scurry@1.11.1:\n    dependencies:\n      lru-cache: 10.4.3\n      minipass: 7.1.2\n\n  picocolors@1.1.1: {}\n\n  randombytes@2.1.0:\n    dependencies:\n      safe-buffer: 5.2.1\n\n  readdirp@4.1.2: {}\n\n  require-directory@2.1.1: {}\n\n  safe-buffer@5.2.1: {}\n\n  serialize-javascript@6.0.2:\n    dependencies:\n      randombytes: 2.1.0\n\n  shebang-command@2.0.0:\n    dependencies:\n      shebang-regex: 3.0.0\n\n  shebang-regex@3.0.0: {}\n\n  signal-exit@4.1.0: {}\n\n  string-width@4.2.3:\n    dependencies:\n      emoji-regex: 8.0.0\n      is-fullwidth-code-point: 3.0.0\n      strip-ansi: 6.0.1\n\n  string-width@5.1.2:\n    dependencies:\n      eastasianwidth: 0.2.0\n      emoji-regex: 9.2.2\n      strip-ansi: 7.1.2\n\n  string-width@8.1.0:\n    dependencies:\n      get-east-asian-width: 1.4.0\n      strip-ansi: 7.1.2\n\n  strip-ansi@6.0.1:\n    dependencies:\n      ansi-regex: 5.0.1\n\n  strip-ansi@7.1.2:\n    dependencies:\n      ansi-regex: 6.2.2\n\n  strip-json-comments@3.1.1: {}\n\n  supports-color@7.2.0:\n    dependencies:\n      has-flag: 4.0.0\n\n  supports-color@8.1.1:\n    dependencies:\n      has-flag: 4.0.0\n\n  vscode-jsonrpc@8.2.0: {}\n\n  vscode-languageserver-protocol@3.17.5:\n    dependencies:\n      vscode-jsonrpc: 8.2.0\n      vscode-languageserver-types: 3.17.5\n\n  vscode-languageserver-textdocument@1.0.12: {}\n\n  vscode-languageserver-types@3.17.5: {}\n\n  vscode-languageserver@9.0.1:\n    dependencies:\n      vscode-languageserver-protocol: 3.17.5\n\n  which@2.0.2:\n    dependencies:\n      isexe: 2.0.0\n\n  workerpool@9.3.4: {}\n\n  wrap-ansi@7.0.0:\n    dependencies:\n      ansi-styles: 4.3.0\n      string-width: 4.2.3\n      strip-ansi: 6.0.1\n\n  wrap-ansi@8.1.0:\n    dependencies:\n      ansi-styles: 6.2.3\n      string-width: 5.1.2\n      strip-ansi: 7.1.2\n\n  y18n@5.0.8: {}\n\n  yargs-parser@21.1.1: {}\n\n  yargs-unparser@2.0.0:\n    dependencies:\n      camelcase: 6.3.0\n      decamelize: 4.0.0\n      flat: 5.0.2\n      is-plain-obj: 2.1.0\n\n  yargs@17.7.2:\n    dependencies:\n      cliui: 8.0.1\n      escalade: 3.2.0\n      get-caller-file: 2.0.5\n      require-directory: 2.1.1\n      string-width: 4.2.3\n      y18n: 5.0.8\n      yargs-parser: 21.1.1\n\n  yocto-queue@0.1.0: {}\n",
+              "additions": 37,
+              "deletions": 37,
+              "status": "modified"
+            }
+          ]
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "openai",
+          "modelID": "gpt-5.3-codex"
+        },
+        "id": "REDACTED",
+        "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "update it",
+          "id": "REDACTED",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "assistant",
+        "time": {
+          "created": 1773746866794,
+          "completed": 1773746873179
+        },
+        "parentID": "REDACTED",
+        "modelID": "gpt-5.3-codex",
+        "providerID": "openai",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/vslobodin/Development/markdownlint-lsp",
+          "root": "/Users/vslobodin/Development/markdownlint-lsp"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 11802,
+          "input": 288,
+          "output": 122,
+          "reasoning": 73,
+          "cache": {
+            "read": 11392,
+            "write": 0
+          }
+        },
+        "finish": "tool-calls",
+        "id": "REDACTED",
+        "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "snapshot": "b7a63fe3d7e107b0aea808622acbfc96beb52c59",
+          "id": "prt_cfb8d4c060011L7TY43HTh10YS",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        },
+        {
+          "type": "reasoning",
+          "text": "**Updating biome dependency with pnpm**",
+          "metadata": {
+            "openai": {
+              "itemId": "rs_0fe721adb4d011d30169b93ab4d5008191bb192bcbf76327b6",
+              "reasoningEncryptedContent": "REDACTED"
+            }
+          },
+          "time": {
+            "start": 1773746868910,
+            "end": 1773746870521
+          },
+          "id": "prt_cfb8d52ae001ik6uy58PrkL1T5",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        },
+        {
+          "type": "tool",
+          "callID": "call_0t4x1vlzIWo40X3IEWhbH6Oj",
+          "tool": "bash",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "pnpm up -D @biomejs/biome@latest && pnpm outdated",
+              "description": "Updates Biome dev dependency and verifies outdated packages"
+            },
+            "output": "Progress: resolved 0, reused 1, downloaded 0, added 0\nPackages: +2 -2\n++--\nProgress: resolved 144, reused 103, downloaded 34, added 2, done\n\ndependencies: skipped\n\noptionalDependencies: skipped\n\ndevDependencies:\n- @biomejs/biome 2.4.6\n+ @biomejs/biome 2.4.7\n\nDone in 1.2s using pnpm v10.28.1\n",
+            "title": "Updates Biome dev dependency and verifies outdated packages",
+            "metadata": {
+              "output": "Progress: resolved 0, reused 1, downloaded 0, added 0\nPackages: +2 -2\n++--\nProgress: resolved 144, reused 103, downloaded 34, added 2, done\n\ndependencies: skipped\n\noptionalDependencies: skipped\n\ndevDependencies:\n- @biomejs/biome 2.4.6\n+ @biomejs/biome 2.4.7\n\nDone in 1.2s using pnpm v10.28.1\n",
+              "exit": 0,
+              "description": "Updates Biome dev dependency and verifies outdated packages",
+              "truncated": false
+            },
+            "time": {
+              "start": 1773746871109,
+              "end": 1773746873115
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_0fe721adb4d011d30169b93ab682b8819199ac466c0b107ba1"
+            }
+          },
+          "id": "REDACTED",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        },
+        {
+          "type": "step-finish",
+          "reason": "tool-calls",
+          "snapshot": "7c6e571b7e99866f965790594cab776d03e9ff67",
+          "cost": 0,
+          "tokens": {
+            "total": 11802,
+            "input": 288,
+            "output": 122,
+            "reasoning": 73,
+            "cache": {
+              "read": 11392,
+              "write": 0
+            }
+          },
+          "id": "prt_cfb8d631c00145m11NXSavw3Wr",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        },
+        {
+          "type": "patch",
+          "hash": "b7a63fe3d7e107b0aea808622acbfc96beb52c59",
+          "files": [
+            "/Users/vslobodin/Development/markdownlint-lsp/package.json",
+            "/Users/vslobodin/Development/markdownlint-lsp/pnpm-lock.yaml"
+          ],
+          "id": "REDACTED",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "assistant",
+        "time": {
+          "created": 1773746873180,
+          "completed": 1773746875785
+        },
+        "parentID": "REDACTED",
+        "modelID": "gpt-5.3-codex",
+        "providerID": "openai",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/vslobodin/Development/markdownlint-lsp",
+          "root": "/Users/vslobodin/Development/markdownlint-lsp"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 11997,
+          "input": 271,
+          "output": 78,
+          "reasoning": 46,
+          "cache": {
+            "read": 11648,
+            "write": 0
+          }
+        },
+        "finish": "tool-calls",
+        "id": "REDACTED",
+        "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "snapshot": "7c6e571b7e99866f965790594cab776d03e9ff67",
+          "id": "prt_cfb8d65cb001dhd50e2tFZptx5",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        },
+        {
+          "type": "reasoning",
+          "text": "**Checking package updates**",
+          "metadata": {
+            "openai": {
+              "itemId": "rs_0fcfb96d012c222a0169b93aba31b48191b2d12b1eec69deaf",
+              "reasoningEncryptedContent": "REDACTED"
+            }
+          },
+          "time": {
+            "start": 1773746874196,
+            "end": 1773746875378
+          },
+          "id": "prt_cfb8d6754001FCoNVcKo67C1Dd",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        },
+        {
+          "type": "tool",
+          "callID": "REDACTED",
+          "tool": "bash",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "git status --short",
+              "description": "Shows modified files after dependency update"
+            },
+            "output": " M package.json\n M pnpm-lock.yaml\n?? .claude/\n?? .entire/\n?? .husky/\n?? .opencode/\n?? TODO.md\n?? codebook.toml\n",
+            "title": "Shows modified files after dependency update",
+            "metadata": {
+              "output": " M package.json\n M pnpm-lock.yaml\n?? .claude/\n?? .entire/\n?? .husky/\n?? .opencode/\n?? TODO.md\n?? codebook.toml\n",
+              "exit": 0,
+              "description": "Shows modified files after dependency update",
+              "truncated": false
+            },
+            "time": {
+              "start": 1773746875688,
+              "end": 1773746875714
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_0fcfb96d012c222a0169b93abb5ea481919c7cbb4fa862a7bc"
+            }
+          },
+          "id": "prt_cfb8d6bf4001xo6vbCwIuUH0fL",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        },
+        {
+          "type": "step-finish",
+          "reason": "tool-calls",
+          "snapshot": "7c6e571b7e99866f965790594cab776d03e9ff67",
+          "cost": 0,
+          "tokens": {
+            "total": 11997,
+            "input": 271,
+            "output": 78,
+            "reasoning": 46,
+            "cache": {
+              "read": 11648,
+              "write": 0
+            }
+          },
+          "id": "REDACTED",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "assistant",
+        "time": {
+          "created": 1773746875787,
+          "completed": 1773746883210
+        },
+        "parentID": "REDACTED",
+        "modelID": "gpt-5.3-codex",
+        "providerID": "openai",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/vslobodin/Development/markdownlint-lsp",
+          "root": "/Users/vslobodin/Development/markdownlint-lsp"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 12118,
+          "input": 272,
+          "output": 70,
+          "reasoning": 18,
+          "cache": {
+            "read": 11776,
+            "write": 0
+          }
+        },
+        "finish": "stop",
+        "id": "REDACTED",
+        "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "snapshot": "7c6e571b7e99866f965790594cab776d03e9ff67",
+          "id": "prt_cfb8d6faa001nsQTvriUrr3VCx",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        },
+        {
+          "type": "reasoning",
+          "text": "**Confirming no commit needed**",
+          "metadata": {
+            "openai": {
+              "itemId": "rs_028f7e2d0085d1cc0169b93abcc6b48191af61d0f2e8cd901a",
+              "reasoningEncryptedContent": "REDACTED"
+            }
+          },
+          "time": {
+            "start": 1773746876795,
+            "end": 1773746877542
+          },
+          "id": "REDACTED",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        },
+        {
+          "type": "text",
+          "text": "Done — updated `@biomejs/biome` to `2.4.7`.\n\nChanged files:\n- `package.json`\n- `pnpm-lock.yaml`\n\n`pnpm outdated` now returns no outdated deps.",
+          "time": {
+            "start": 1773746878099,
+            "end": 1773746878099
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_028f7e2d0085d1cc0169b93abd874481918ba8306a11f5d981"
+            }
+          },
+          "id": "prt_cfb8d7467001zw14RxGvsqGjXG",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        },
+        {
+          "type": "step-finish",
+          "reason": "stop",
+          "snapshot": "7c6e571b7e99866f965790594cab776d03e9ff67",
+          "cost": 0,
+          "tokens": {
+            "total": 12118,
+            "input": 272,
+            "output": 70,
+            "reasoning": 18,
+            "cache": {
+              "read": 11776,
+              "write": 0
+            }
+          },
+          "id": "prt_cfb8d8a47001UjYkg68FLdK0aq",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1773746885657
+        },
+        "summary": {
+          "diffs": []
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "openai",
+          "modelID": "gpt-5.3-codex"
+        },
+        "id": "msg_cfb8d940f001JhQi2zy0TQvHzM",
+        "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "make conventional commit and push",
+          "id": "prt_cfb8d9410001P7dJwKmGyL7PGU",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "msg_cfb8d940f001JhQi2zy0TQvHzM"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "assistant",
+        "time": {
+          "created": 1773746885661,
+          "completed": 1773746891128
+        },
+        "parentID": "msg_cfb8d940f001JhQi2zy0TQvHzM",
+        "modelID": "gpt-5.3-codex",
+        "providerID": "openai",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/vslobodin/Development/markdownlint-lsp",
+          "root": "/Users/vslobodin/Development/markdownlint-lsp"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 12232,
+          "input": 466,
+          "output": 246,
+          "reasoning": 140,
+          "cache": {
+            "read": 11520,
+            "write": 0
+          }
+        },
+        "finish": "tool-calls",
+        "id": "msg_cfb8d941d001NldYU2zKj5H8y8",
+        "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "snapshot": "7c6e571b7e99866f965790594cab776d03e9ff67",
+          "id": "prt_cfb8d95f5001vfnQ0IXfXIBxPb",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "msg_cfb8d941d001NldYU2zKj5H8y8"
+        },
+        {
+          "type": "reasoning",
+          "text": "**Preparing staged commit with safe changes**",
+          "metadata": {
+            "openai": {
+              "itemId": "rs_00ba7d66673a71420169b93ac6883c81919a7986ece1764090",
+              "reasoningEncryptedContent": "REDACTED"
+            }
+          },
+          "time": {
+            "start": 1773746886536,
+            "end": 1773746891030
+          },
+          "id": "prt_cfb8d9788001f916J0QkquLfRW",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "msg_cfb8d941d001NldYU2zKj5H8y8"
+        },
+        {
+          "type": "tool",
+          "callID": "call_5SO8kgik3m51hdjudE08OcR5",
+          "tool": "bash",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "git status --short",
+              "description": "Shows tracked and untracked file changes"
+            },
+            "output": " M package.json\n M pnpm-lock.yaml\n?? .claude/\n?? .entire/\n?? .husky/\n?? .opencode/\n?? TODO.md\n?? codebook.toml\n",
+            "title": "Shows tracked and untracked file changes",
+            "metadata": {
+              "output": " M package.json\n M pnpm-lock.yaml\n?? .claude/\n?? .entire/\n?? .husky/\n?? .opencode/\n?? TODO.md\n?? codebook.toml\n",
+              "exit": 0,
+              "description": "Shows tracked and untracked file changes",
+              "truncated": false
+            },
+            "time": {
+              "start": 1773746891038,
+              "end": 1773746891066
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_00ba7d66673a71420169b93acaf968819194be1127cac2bc19"
+            }
+          },
+          "id": "prt_cfb8da919001XkJ3A5i1YFbyE1",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "msg_cfb8d941d001NldYU2zKj5H8y8"
+        },
+        {
+          "type": "tool",
+          "callID": "call_o9mMBT64uRM6ft93rQqGT4RF",
+          "tool": "bash",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "git diff -- package.json pnpm-lock.yaml",
+              "description": "Shows dependency update changes"
+            },
+            "output": "diff --git i/package.json w/package.json\nindex dd5865c..cfaffd3 100644\n--- i/package.json\n+++ w/package.json\n@@ -28,7 +28,7 @@\n \t\t\"vscode-languageserver-textdocument\": \"^1.0.12\"\n \t},\n \t\"devDependencies\": {\n-\t\t\"@biomejs/biome\": \"2.4.6\",\n+\t\t\"@biomejs/biome\": \"2.4.7\",\n \t\t\"@types/chai\": \"^5.2.3\",\n \t\t\"@types/mocha\": \"^10.0.10\",\n \t\t\"chai\": \"^6.2.2\",\ndiff --git i/pnpm-lock.yaml w/pnpm-lock.yaml\nindex 0c78886..93428e8 100644\n--- i/pnpm-lock.yaml\n+++ w/pnpm-lock.yaml\n@@ -25,8 +25,8 @@ importers:\n         version: 1.0.12\n     devDependencies:\n       '@biomejs/biome':\n-        specifier: 2.4.6\n-        version: 2.4.6\n+        specifier: 2.4.7\n+        version: 2.4.7\n       '@types/chai':\n         specifier: ^5.2.3\n         version: 5.2.3\n@@ -42,55 +42,55 @@ importers:\n \n packages:\n \n-  '@biomejs/biome@2.4.6':\n-    resolution: {integrity: REDACTED/3R9M6b5daArWMMtEfP52/n174RKnwRIf3oT8+wc9ihSfQ==}\n+  '@biomejs/biome@2.4.7':\n+    resolution: {integrity: REDACTED/7mF3ogJFbIwFFSOL3wT92Zzxia/d5/ng==}\n     engines: {node: '>=14.21.3'}\n     hasBin: true\n \n-  '@biomejs/cli-darwin-arm64@2.4.6':\n-    resolution: {integrity: REDACTED}\n+  '@biomejs/cli-darwin-arm64@2.4.7':\n+    resolution: {integrity: REDACTED/HxyMdZMruMO3nfpDsrlar/EQWe41r1qrwKiCa2QDYHDzWA==}\n     engines: {node: '>=14.21.3'}\n     cpu: [arm64]\n     os: [darwin]\n \n-  '@biomejs/cli-darwin-x64@2.4.6':\n-    resolution: {integrity: sha512-4uiE/REDACTED/mt+rUzMasYeZ+0R/U1Mw==}\n+  '@biomejs/cli-darwin-x64@2.4.7':\n+    resolution: {integrity: sha512-I+cOG3sd/REDACTED}\n     engines: {node: '>=14.21.3'}\n     cpu: [x64]\n     os: [darwin]\n \n-  '@biomejs/cli-linux-arm64-musl@2.4.6':\n-    resolution: {integrity: sha512-F/REDACTED}\n+  '@biomejs/cli-linux-arm64-musl@2.4.7':\n+    resolution: {integrity: sha512-I2NvM9KPb09jWml93O2/REDACTED}\n     engines: {node: '>=14.21.3'}\n     cpu: [arm64]\n     os: [linux]\n \n-  '@biomejs/cli-linux-arm64@2.4.6':\n-    resolution: {integrity: REDACTED}\n+  '@biomejs/cli-linux-arm64@2.4.7':\n+    resolution: {integrity: sha512-om6FugwmibzfP/REDACTED}\n     engines: {node: '>=14.21.3'}\n     cpu: [arm64]\n     os: [linux]\n \n-  '@biomejs/cli-linux-x64-musl@2.4.6':\n-    resolution: {integrity: REDACTED}\n+  '@biomejs/cli-linux-x64-musl@2.4.7':\n+    resolution: {integrity: REDACTED/REDACTED}\n     engines: {node: '>=14.21.3'}\n     cpu: [x64]\n     os: [linux]\n \n-  '@biomejs/cli-linux-x64@2.4.6':\n-    resolution: {integrity: REDACTED/REDACTED}\n+  '@biomejs/cli-linux-x64@2.4.7':\n+    resolution: {integrity: sha512-bV8/REDACTED/REDACTED}\n     engines: {node: '>=14.21.3'}\n     cpu: [x64]\n     os: [linux]\n \n-  '@biomejs/cli-win32-arm64@2.4.6':\n-    resolution: {integrity: REDACTED}\n+  '@biomejs/cli-win32-arm64@2.4.7':\n+    resolution: {integrity: REDACTED/xBM7CBYB7WgwqboetzFEVDnMxelyw==}\n     engines: {node: '>=14.21.3'}\n     cpu: [arm64]\n     os: [win32]\n \n-  '@biomejs/cli-win32-x64@2.4.6':\n-    resolution: {integrity: REDACTED}\n+  '@biomejs/cli-win32-x64@2.4.7':\n+    resolution: {integrity: REDACTED}\n     engines: {node: '>=14.21.3'}\n     cpu: [x64]\n     os: [win32]\n@@ -581,39 +581,39 @@ packages:\n \n snapshots:\n \n-  '@biomejs/biome@2.4.6':\n+  '@biomejs/biome@2.4.7':\n     optionalDependencies:\n-      '@biomejs/cli-darwin-arm64': 2.4.6\n-      '@biomejs/cli-darwin-x64': 2.4.6\n-      '@biomejs/cli-linux-arm64': 2.4.6\n-      '@biomejs/cli-linux-arm64-musl': 2.4.6\n-      '@biomejs/cli-linux-x64': 2.4.6\n-      '@biomejs/cli-linux-x64-musl': 2.4.6\n-      '@biomejs/cli-win32-arm64': 2.4.6\n-      '@biomejs/cli-win32-x64': 2.4.6\n+      '@biomejs/cli-darwin-arm64': 2.4.7\n+      '@biomejs/cli-darwin-x64': 2.4.7\n+      '@biomejs/cli-linux-arm64': 2.4.7\n+      '@biomejs/cli-linux-arm64-musl': 2.4.7\n+      '@biomejs/cli-linux-x64': 2.4.7\n+      '@biomejs/cli-linux-x64-musl': 2.4.7\n+      '@biomejs/cli-win32-arm64': 2.4.7\n+      '@biomejs/cli-win32-x64': 2.4.7\n \n-  '@biomejs/cli-darwin-arm64@2.4.6':\n+  '@biomejs/cli-darwin-arm64@2.4.7':\n     optional: true\n \n-  '@biomejs/cli-darwin-x64@2.4.6':\n+  '@biomejs/cli-darwin-x64@2.4.7':\n     optional: true\n \n-  '@biomejs/cli-linux-arm64-musl@2.4.6':\n+  '@biomejs/cli-linux-arm64-musl@2.4.7':\n     optional: true\n \n-  '@biomejs/cli-linux-arm64@2.4.6':\n+  '@biomejs/cli-linux-arm64@2.4.7':\n     optional: true\n \n-  '@biomejs/cli-linux-x64-musl@2.4.6':\n+  '@biomejs/cli-linux-x64-musl@2.4.7':\n     optional: true\n \n-  '@biomejs/cli-linux-x64@2.4.6':\n+  '@biomejs/cli-linux-x64@2.4.7':\n     optional: true\n \n-  '@biomejs/cli-win32-arm64@2.4.6':\n+  '@biomejs/cli-win32-arm64@2.4.7':\n     optional: true\n \n-  '@biomejs/cli-win32-x64@2.4.6':\n+  '@biomejs/cli-win32-x64@2.4.7':\n     optional: true\n \n   '@isaacs/cliui@8.0.2':\n",
+            "title": "Shows dependency update changes",
+            "metadata": {
+              "output": "diff --git i/package.json w/package.json\nindex dd5865c..cfaffd3 100644\n--- i/package.json\n+++ w/package.json\n@@ -28,7 +28,7 @@\n \t\t\"vscode-languageserver-textdocument\": \"^1.0.12\"\n \t},\n \t\"devDependencies\": {\n-\t\t\"@biomejs/biome\": \"2.4.6\",\n+\t\t\"@biomejs/biome\": \"2.4.7\",\n \t\t\"@types/chai\": \"^5.2.3\",\n \t\t\"@types/mocha\": \"^10.0.10\",\n \t\t\"chai\": \"^6.2.2\",\ndiff --git i/pnpm-lock.yaml w/pnpm-lock.yaml\nindex 0c78886..93428e8 100644\n--- i/pnpm-lock.yaml\n+++ w/pnpm-lock.yaml\n@@ -25,8 +25,8 @@ importers:\n         version: 1.0.12\n     devDependencies:\n       '@biomejs/biome':\n-        specifier: 2.4.6\n-        version: 2.4.6\n+        specifier: 2.4.7\n+        version: 2.4.7\n       '@types/chai':\n         specifier: ^5.2.3\n         version: 5.2.3\n@@ -42,55 +42,55 @@ importers:\n \n packages:\n \n-  '@biomejs/biome@2.4.6':\n-    resolution: {integrity: REDACTED/3R9M6b5daArWMMtEfP52/n174RKnwRIf3oT8+wc9ihSfQ==}\n+  '@biomejs/biome@2.4.7':\n+    resolution: {integrity: REDACTED/7mF3ogJFbIwFFSOL3wT92Zzxia/d5/ng==}\n     engines: {node: '>=14.21.3'}\n     hasBin: true\n \n-  '@biomejs/cli-darwin-arm64@2.4.6':\n-    resolution: {integrity: REDACTED}\n+  '@biomejs/cli-darwin-arm64@2.4.7':\n+    resolution: {integrity: REDACTED/HxyMdZMruMO3nfpDsrlar/EQWe41r1qrwKiCa2QDYHDzWA==}\n     engines: {node: '>=14.21.3'}\n     cpu: [arm64]\n     os: [darwin]\n \n-  '@biomejs/cli-darwin-x64@2.4.6':\n-    resolution: {integrity: sha512-4uiE/REDACTED/mt+rUzMasYeZ+0R/U1Mw==}\n+  '@biomejs/cli-darwin-x64@2.4.7':\n+    resolution: {integrity: sha512-I+cOG3sd/REDACTED}\n     engines: {node: '>=14.21.3'}\n     cpu: [x64]\n     os: [darwin]\n \n-  '@biomejs/cli-linux-arm64-musl@2.4.6':\n-    resolution: {integrity: sha512-F/REDACTED}\n+  '@biomejs/cli-linux-arm64-musl@2.4.7':\n+    resolution: {integrity: sha512-I2NvM9KPb09jWml93O2/REDACTED}\n     engines: {node: '>=14.21.3'}\n     cpu: [arm64]\n     os: [linux]\n \n-  '@biomejs/cli-linux-arm64@2.4.6':\n-    resolution: {integrity: REDACTED}\n+  '@biomejs/cli-linux-arm64@2.4.7':\n+    resolution: {integrity: sha512-om6FugwmibzfP/REDACTED}\n     engines: {node: '>=14.21.3'}\n     cpu: [arm64]\n     os: [linux]\n \n-  '@biomejs/cli-linux-x64-musl@2.4.6':\n-    resolution: {integrity: REDACTED}\n+  '@biomejs/cli-linux-x64-musl@2.4.7':\n+    resolution: {integrity: REDACTED/REDACTED}\n     engines: {node: '>=14.21.3'}\n     cpu: [x64]\n     os: [linux]\n \n-  '@biomejs/cli-linux-x64@2.4.6':\n-    resolution: {integrity: REDACTED/REDACTED}\n+  '@biomejs/cli-linux-x64@2.4.7':\n+    resolution: {integrity: sha512-bV8/REDACTED/REDACTED}\n     engines: {node: '>=14.21.3'}\n     cpu: [x64]\n     os: [linux]\n \n-  '@biomejs/cli-win32-arm64@2.4.6':\n-    resolution: {integrity: REDACTED}\n+  '@biomejs/cli-win32-arm64@2.4.7':\n+    resolution: {integrity: REDACTED/xBM7CBYB7WgwqboetzFEVDnMxelyw==}\n     engines: {node: '>=14.21.3'}\n     cpu: [arm64]\n     os: [win32]\n \n-  '@biomejs/cli-win32-x64@2.4.6':\n-    resolution: {integrity: REDACTED}\n+  '@biomejs/cli-win32-x64@2.4.7':\n+    resolution: {integrity: REDACTED}\n     engines: {node: '>=14.21.3'}\n     cpu: [x64]\n     os: [win32]\n@@ -581,39 +581,39 @@ packages:\n \n snapshots:\n \n-  '@biomejs/biome@2.4.6':\n+  '@biomejs/biome@2.4.7':\n     optionalDependencies:\n-      '@biomejs/cli-darwin-arm64': 2.4.6\n-      '@biomejs/cli-darwin-x64': 2.4.6\n-      '@biomejs/cli-linux-arm64': 2.4.6\n-      '@biomejs/cli-linux-arm64-musl': 2.4.6\n-      '@biomejs/cli-linux-x64': 2.4.6\n-      '@biomejs/cli-linux-x64-musl': 2.4.6\n-      '@biomejs/cli-win32-arm64': 2.4.6\n-      '@biomejs/cli-win32-x64': 2.4.6\n+      '@biomejs/cli-darwin-arm64': 2.4.7\n+      '@biomejs/cli-darwin-x64': 2.4.7\n+      '@biomejs/cli-linux-arm64': 2.4.7\n+      '@biomejs/cli-linux-arm64-musl': 2.4.7\n+      '@biomejs/cli-linux-x64': 2.4.7\n+      '@biomejs/cli-linux-x64-musl': 2.4.7\n+      '@biomejs/cli-win32-arm64': 2.4.7\n+      '@biomejs/cli-win32-x64': 2.4.7\n \n-  '@biomejs/cli-darwin-arm64@2.4.6':\n+  '@biomejs/cli-darwin-arm64@2.4.7':\n     optional: true\n \n-  '@biomejs/cli-darwin-x64@2.4.6':\n+  '@biomejs/cli-darwin-x64@2.4.7':\n     optional: true\n \n-  '@biomejs/cli-linux-arm64-musl@2.4.6':\n+  '@biomejs/cli-linux-arm64-musl@2.4.7':\n     optional: true\n \n-  '@biomejs/cli-linux-arm64@2.4.6':\n+  '@biomejs/cli-linux-arm64@2.4.7':\n     optional: true\n \n-  '@biomejs/cli-linux-x64-musl@2.4.6':\n+  '@biomejs/cli-linux-x64-musl@2.4.7':\n     optional: true\n \n-  '@biomejs/cli-linux-x64@2.4.6':\n+  '@biomejs/cli-linux-x64@2.4.7':\n     optional: true\n \n-  '@biomejs/cli-win32-arm64@2.4.6':\n+  '@biomejs/cli-win32-arm64@2.4.7':\n     optional: true\n \n-  '@biomejs/cli-win32-x64@2.4.6':\n+  '@biomejs/cli-win32-x64@2.4.7':\n     optional: true\n \n   '@isaacs/cliui@8.0.2':\n",
+              "exit": 0,
+              "description": "Shows dependency update changes",
+              "truncated": false
+            },
+            "time": {
+              "start": 1773746891043,
+              "end": 1773746891065
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_00ba7d66673a71420169b93acaf9748191ac8ebf02e68300d6"
+            }
+          },
+          "id": "REDACTED",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "msg_cfb8d941d001NldYU2zKj5H8y8"
+        },
+        {
+          "type": "tool",
+          "callID": "REDACTED",
+          "tool": "bash",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "git log --oneline -10",
+              "description": "Shows recent commit message style"
+            },
+            "output": "8fa916a fix(server): restore ignores precedence and settings support\n2d9e210 test: isolate configuration state in integration tests\ndda2607 test: harden diagnostics waiting in test client\n0feb950 feat(server): respect ignores glob patterns from config\n0c52583 chore(deps): update biome to v2.4.6\n0f4076e chore: release v0.7.0\n06a1bb3 style: run biome\na1bbe0b fix(server): apply fix-all edits\ndf086fa fix(config): load js configs\nfaa39b4 fix(config): redact sensitive logs\n",
+            "title": "Shows recent commit message style",
+            "metadata": {
+              "output": "8fa916a fix(server): restore ignores precedence and settings support\n2d9e210 test: isolate configuration state in integration tests\ndda2607 test: harden diagnostics waiting in test client\n0feb950 feat(server): respect ignores glob patterns from config\n0c52583 chore(deps): update biome to v2.4.6\n0f4076e chore: release v0.7.0\n06a1bb3 style: run biome\na1bbe0b fix(server): apply fix-all edits\ndf086fa fix(config): load js configs\nfaa39b4 fix(config): redact sensitive logs\n",
+              "exit": 0,
+              "description": "Shows recent commit message style",
+              "truncated": false
+            },
+            "time": {
+              "start": 1773746891047,
+              "end": 1773746891067
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_00ba7d66673a71420169b93acaf97c81918af2effeb3975649"
+            }
+          },
+          "id": "REDACTED",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "msg_cfb8d941d001NldYU2zKj5H8y8"
+        },
+        {
+          "type": "step-finish",
+          "reason": "tool-calls",
+          "snapshot": "7c6e571b7e99866f965790594cab776d03e9ff67",
+          "cost": 0,
+          "tokens": {
+            "total": 12232,
+            "input": 466,
+            "output": 246,
+            "reasoning": 140,
+            "cache": {
+              "read": 11520,
+              "write": 0
+            }
+          },
+          "id": "REDACTED",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "msg_cfb8d941d001NldYU2zKj5H8y8"
+        }
+      ]
+    },
+    {
+      "info": {
+        "role": "assistant",
+        "time": {
+          "created": 1773746891131
+        },
+        "parentID": "msg_cfb8d940f001JhQi2zy0TQvHzM",
+        "modelID": "gpt-5.3-codex",
+        "providerID": "openai",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/vslobodin/Development/markdownlint-lsp",
+          "root": "/Users/vslobodin/Development/markdownlint-lsp"
+        },
+        "cost": 0,
+        "tokens": {
+          "input": 0,
+          "output": 0,
+          "reasoning": 0,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        },
+        "id": "REDACTED",
+        "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "snapshot": "7c6e571b7e99866f965790594cab776d03e9ff67",
+          "id": "prt_cfb8dab72001Ky0O7CPg8cnZT6",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        },
+        {
+          "type": "reasoning",
+          "text": "**Planning commit and push sequence**",
+          "metadata": {
+            "openai": {
+              "itemId": "rs_02c55d1d389370a20169b93acc316c8191921f1c6dcbdc8f1f",
+              "reasoningEncryptedContent": "REDACTED"
+            }
+          },
+          "time": {
+            "start": 1773746892196,
+            "end": 1773746895461
+          },
+          "id": "REDACTED",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        },
+        {
+          "type": "tool",
+          "callID": "call_q3tD0ET2BB1R37fB7idKkxcM",
+          "tool": "bash",
+          "state": {
+            "status": "running",
+            "input": {
+              "command": "git add package.json pnpm-lock.yaml && git commit -m \"chore(deps): update biome to v2.4.7\"",
+              "description": "Stages dependency files and creates commit"
+            },
+            "metadata": {
+              "output": "",
+              "description": "Stages dependency files and creates commit"
+            },
+            "time": {
+              "start": 1773746896192
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_02c55d1d389370a20169b93acf73bc81919e0e291d4a80f456"
+            }
+          },
+          "id": "prt_cfb8dba66001QtLAn43socEtir",
+          "sessionID": "ses_30472d4b8ffex25Rpoa8CpXVUs",
+          "messageID": "REDACTED"
+        }
+      ]
+    }
+  ]
+}
