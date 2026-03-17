@@ -229,6 +229,37 @@ no-duplicate-heading:
 			expect(md013).to.be.undefined;
 		});
 
+		it("should suppress diagnostics for files matching ignores patterns", async () => {
+			const testDir = await prepareTestDir("cli2-ignores");
+			const subDir = path.join(testDir, "generated");
+			await fs.mkdir(subDir, { recursive: true });
+
+			const configContent = JSON.stringify({
+				config: { default: true },
+				ignores: ["generated/**"],
+			});
+			await fs.writeFile(
+				path.join(testDir, ".markdownlint-cli2.jsonc"),
+				configContent,
+			);
+
+			// File inside ignored dir — should get no diagnostics
+			const ignoredUri = `file://${path.join(subDir, "CHANGELOG.md")}`;
+			// File outside ignored dir — should still get diagnostics
+			const lintedUri = `file://${path.join(testDir, "README.md")}`;
+			const badContent =
+				"# Hello\n## Bad heading increment skipped\n### skip\n";
+
+			await client.openTextDocument(ignoredUri, badContent);
+			const ignoredDiagnostics =
+				await client.waitForDiagnosticsArray(ignoredUri);
+			expect(ignoredDiagnostics).to.have.length(0);
+
+			await client.openTextDocument(lintedUri, badContent);
+			const lintedDiagnostics = await client.waitForDiagnosticsArray(lintedUri);
+			expect(lintedDiagnostics.length).to.be.greaterThan(0);
+		});
+
 		it("should load .markdownlint-cli2.yaml configuration", async () => {
 			const configContent = `config:
   default: true
@@ -361,6 +392,37 @@ no-duplicate-heading:
 			// CLI2 config should take precedence
 			const md041 = publishedDiagnostics.find((d) => d.code === "MD041");
 			expect(md041).to.be.undefined;
+		});
+
+		it("should let nested CLI2 config clear parent ignores", async () => {
+			const baseDir = await prepareTestDir("ignore-override");
+			const nestedDir = path.join(baseDir, "nested");
+			const generatedDir = path.join(nestedDir, "generated");
+			await fs.mkdir(generatedDir, { recursive: true });
+
+			await fs.writeFile(
+				path.join(baseDir, ".markdownlint-cli2.jsonc"),
+				JSON.stringify({
+					config: { default: true },
+					ignores: ["nested/generated/**"],
+				}),
+			);
+
+			await fs.writeFile(
+				path.join(nestedDir, ".markdownlint-cli2.jsonc"),
+				JSON.stringify({
+					config: { default: true },
+					ignores: [],
+				}),
+			);
+
+			const uri = `file://${path.join(generatedDir, "CHANGELOG.md")}`;
+			const badContent =
+				"# Hello\n## Bad heading increment skipped\n### skip\n";
+
+			await client.openTextDocument(uri, badContent);
+			const diagnostics = await client.waitForDiagnosticsArray(uri);
+			expect(diagnostics.length).to.be.greaterThan(0);
 		});
 	});
 

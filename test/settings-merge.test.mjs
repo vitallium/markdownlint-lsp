@@ -31,3 +31,30 @@ This is a very long line that should trigger MD013 even though the inline config
 		expect(md013).to.exist;
 	});
 });
+
+describe("Initialization Settings ignores", () => {
+	let client;
+
+	before(async () => {
+		client = new TestLanguageClient({
+			initializationOptions: {
+				ignores: ["ignored-by-settings.md"],
+			},
+		});
+		await client.start();
+	});
+
+	after(async () => {
+		await client.stop();
+	});
+
+	it("should honor ignores from initialization options", async () => {
+		const uri = createTestDocumentUri("ignored-by-settings.md");
+		const content = "Not a heading\n\n# Heading\n";
+
+		await client.openTextDocument(uri, content);
+		const diagnostics = await client.waitForDiagnosticsArray(uri);
+
+		expect(diagnostics).to.have.length(0);
+	});
+});
