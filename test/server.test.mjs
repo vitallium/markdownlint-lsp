@@ -317,6 +317,66 @@ describe("Markdownlint Language Server", () => {
 				await fs.promises.rm(tempRoot, { recursive: true, force: true });
 			}
 		});
+
+		it("should prefer the most specific matching workspace folder", async () => {
+			const tempRoot = path.join(
+				os.tmpdir(),
+				"markdownlint-lsp-nested-workspaces",
+			);
+			const parentFolder = path.join(tempRoot, "parent");
+			const nestedFolder = path.join(parentFolder, "nested");
+			const docPath = path.join(nestedFolder, "workspace.md");
+			const docUri = pathToFileURL(docPath).href;
+			const isolatedClient = new TestLanguageClient({
+				rootUri: pathToFileURL(parentFolder).href,
+				workspaceFolders: [
+					{
+						uri: pathToFileURL(parentFolder).href,
+						name: "parent",
+					},
+					{
+						uri: pathToFileURL(nestedFolder).href,
+						name: "nested",
+					},
+				],
+			});
+
+			await fs.promises.rm(tempRoot, { recursive: true, force: true });
+			await fs.promises.mkdir(nestedFolder, { recursive: true });
+			await fs.promises.writeFile(
+				path.join(parentFolder, ".markdownlint.json"),
+				JSON.stringify({
+					default: true,
+					MD041: true,
+				}),
+				"utf8",
+			);
+			await fs.promises.writeFile(
+				path.join(nestedFolder, ".markdownlint.json"),
+				JSON.stringify({
+					default: true,
+					MD041: false,
+				}),
+				"utf8",
+			);
+
+			try {
+				await isolatedClient.start();
+				await isolatedClient.openTextDocument(
+					docUri,
+					"Not a heading\n\n# Heading\n",
+				);
+
+				const { diagnostics } = await isolatedClient.waitForDiagnostics(docUri);
+				const md041 = diagnostics.find(
+					(diagnostic) => diagnostic.code === "MD041",
+				);
+				expect(md041).to.be.undefined;
+			} finally {
+				await isolatedClient.stop();
+				await fs.promises.rm(tempRoot, { recursive: true, force: true });
+			}
+		});
 	});
 
 	describe("Multiple Documents", () => {
