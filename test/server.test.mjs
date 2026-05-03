@@ -420,6 +420,79 @@ describe("Markdownlint Language Server", () => {
 		});
 	});
 
+	describe("Code Actions", () => {
+		it("should clear stale fixes when a document becomes ignored", async () => {
+			const tempDir = path.join(__dirname, "fixtures", "temp-ignored-actions");
+			const configPath = path.join(tempDir, ".markdownlint-cli2.jsonc");
+			const docPath = path.join(tempDir, "ignored.md");
+			const docUri = pathToFileURL(docPath).href;
+			const content = "#No space\n";
+
+			await fs.promises.rm(tempDir, { recursive: true, force: true });
+			await fs.promises.mkdir(tempDir, { recursive: true });
+			await fs.promises.writeFile(docPath, content, "utf8");
+
+			try {
+				await client.openTextDocument(docUri, content);
+				let { diagnostics } = await client.waitForDiagnostics(docUri);
+				expect(diagnostics.length).to.be.greaterThan(0);
+
+				let actions = await client.requestCodeActions(
+					docUri,
+					diagnostics[0].range,
+					diagnostics,
+				);
+				expect(actions.length).to.be.greaterThan(0);
+
+				await fs.promises.writeFile(
+					configPath,
+					JSON.stringify({
+						config: { default: true },
+						ignores: ["ignored.md"],
+					}),
+					"utf8",
+				);
+
+				const diagnosticsPromise = client.waitForDiagnostics(docUri);
+				await client.sendRawNotification("workspace/didChangeWatchedFiles", {
+					changes: [
+						{
+							uri: pathToFileURL(configPath).href,
+							type: 2,
+						},
+					],
+				});
+
+				({ diagnostics } = await diagnosticsPromise);
+				expect(diagnostics).to.have.lengthOf(0);
+
+				actions = await client.requestCodeActions(
+					docUri,
+					{
+						start: { line: 0, character: 0 },
+						end: { line: 0, character: 9 },
+					},
+					[
+						{
+							range: {
+								start: { line: 0, character: 0 },
+								end: { line: 0, character: 9 },
+							},
+							code: "MD018",
+							message: "no-missing-space-atx",
+							source: "markdownlint",
+							severity: 2,
+						},
+					],
+				);
+				expect(actions).to.have.lengthOf(0);
+			} finally {
+				await client.closeTextDocument(docUri);
+				await fs.promises.rm(tempDir, { recursive: true, force: true });
+			}
+		});
+	});
+
 	describe("Error Handling", () => {
 		it("should handle malformed markdown gracefully", async () => {
 			const uri = createTestDocumentUri("malformed.md");
