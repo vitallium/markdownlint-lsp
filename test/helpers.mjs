@@ -167,6 +167,14 @@ class MockLanguageClient extends EventEmitter {
 			validationDelay: 0,
 			...this.options.initializationOptions,
 		};
+		const rootUri =
+			this.options.rootUri ?? `file://${path.join(__dirname, "fixtures")}`;
+		const workspaceFolders = this.options.workspaceFolders ?? [
+			{
+				uri: rootUri,
+				name: "test-fixtures",
+			},
+		];
 
 		// Send initialize request
 		const result = await this.sendRequest("initialize", {
@@ -175,14 +183,9 @@ class MockLanguageClient extends EventEmitter {
 				name: "markdownlint-test-client",
 				version: "1.0.0",
 			},
-			rootUri: `file://${path.join(__dirname, "fixtures")}`,
+			rootUri,
 			capabilities,
-			workspaceFolders: [
-				{
-					uri: `file://${path.join(__dirname, "fixtures")}`,
-					name: "test-fixtures",
-				},
-			],
+			workspaceFolders,
 			initializationOptions,
 		});
 

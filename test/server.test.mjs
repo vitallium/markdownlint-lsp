@@ -1,4 +1,5 @@
 import * as fs from "node:fs";
+import os from "node:os";
 import * as path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { expect } from "chai";
@@ -251,6 +252,70 @@ describe("Markdownlint Language Server", () => {
 
 			await client.closeTextDocument(documentUri);
 			await fs.promises.rm(tempDir, { recursive: true, force: true });
+		});
+	});
+
+	describe("Workspace Folders", () => {
+		it("should revalidate when a workspace folder is added", async () => {
+			const tempRoot = path.join(
+				os.tmpdir(),
+				"markdownlint-lsp-workspace-folders",
+			);
+			const addedFolder = path.join(tempRoot, "added-workspace");
+			const docPath = path.join(addedFolder, "workspace.md");
+			const docUri = pathToFileURL(docPath).href;
+			const isolatedClient = new TestLanguageClient({
+				workspaceFolders: [],
+				rootUri: `file://${path.join(__dirname, "fixtures")}`,
+			});
+
+			await fs.promises.rm(tempRoot, { recursive: true, force: true });
+			await fs.promises.mkdir(addedFolder, { recursive: true });
+			await fs.promises.writeFile(
+				path.join(addedFolder, ".markdownlint.json"),
+				JSON.stringify({
+					default: true,
+					MD041: false,
+				}),
+				"utf8",
+			);
+
+			try {
+				await isolatedClient.start();
+				await isolatedClient.openTextDocument(
+					docUri,
+					"Not a heading\n\n# Heading\n",
+				);
+
+				let { diagnostics } = await isolatedClient.waitForDiagnostics(docUri);
+				let md041 = diagnostics.find(
+					(diagnostic) => diagnostic.code === "MD041",
+				);
+				expect(md041).to.exist;
+
+				const diagnosticsPromise = isolatedClient.waitForDiagnostics(docUri);
+				await isolatedClient.sendRawNotification(
+					"workspace/didChangeWorkspaceFolders",
+					{
+						event: {
+							added: [
+								{
+									uri: pathToFileURL(addedFolder).href,
+									name: "added-workspace",
+								},
+							],
+							removed: [],
+						},
+					},
+				);
+
+				({ diagnostics } = await diagnosticsPromise);
+				md041 = diagnostics.find((diagnostic) => diagnostic.code === "MD041");
+				expect(md041).to.be.undefined;
+			} finally {
+				await isolatedClient.stop();
+				await fs.promises.rm(tempRoot, { recursive: true, force: true });
+			}
 		});
 	});
 
