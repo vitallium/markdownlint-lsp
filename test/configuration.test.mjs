@@ -166,38 +166,77 @@ no-duplicate-heading:
 		});
 
 		it("should load .markdownlint.cjs configuration", async () => {
+			const trustedClient = new TestLanguageClient({
+				initializationOptions: {
+					allowJavaScriptConfig: true,
+				},
+			});
+			await trustedClient.start();
 			const testDir = await prepareTestDir("cjs");
-			await fs.writeFile(
-				path.join(testDir, ".markdownlint.cjs"),
-				"module.exports = { default: true, MD013: false };",
-			);
+			try {
+				await fs.writeFile(
+					path.join(testDir, ".markdownlint.cjs"),
+					"module.exports = { default: true, MD013: false };",
+				);
 
-			const uri = `file://${path.join(testDir, "test-cjs.md")}`;
-			const content =
-				"This is a very long line that would normally trigger line length violations\n";
+				const uri = `file://${path.join(testDir, "test-cjs.md")}`;
+				const content =
+					"This is a very long line that would normally trigger line length violations\n";
 
-			await client.openTextDocument(uri, content);
-			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
+				await trustedClient.openTextDocument(uri, content);
+				const publishedDiagnostics =
+					await trustedClient.waitForDiagnosticsArray(uri);
 
-			const md013 = publishedDiagnostics.find((d) => d.code === "MD013");
-			expect(md013).to.be.undefined;
+				const md013 = publishedDiagnostics.find((d) => d.code === "MD013");
+				expect(md013).to.be.undefined;
+			} finally {
+				await trustedClient.stop();
+			}
 		});
 
 		it("should load .markdownlint.mjs configuration", async () => {
+			const trustedClient = new TestLanguageClient({
+				initializationOptions: {
+					allowJavaScriptConfig: true,
+				},
+			});
+			await trustedClient.start();
 			const testDir = await prepareTestDir("mjs");
+			try {
+				await fs.writeFile(
+					path.join(testDir, ".markdownlint.mjs"),
+					"export default { default: true, MD041: false };",
+				);
+
+				const uri = `file://${path.join(testDir, "test-mjs.md")}`;
+				const content = "Not a heading\n\n# Heading\n";
+
+				await trustedClient.openTextDocument(uri, content);
+				const publishedDiagnostics =
+					await trustedClient.waitForDiagnosticsArray(uri);
+
+				const md041 = publishedDiagnostics.find((d) => d.code === "MD041");
+				expect(md041).to.be.undefined;
+			} finally {
+				await trustedClient.stop();
+			}
+		});
+
+		it("should ignore JavaScript config by default", async () => {
+			const testDir = await prepareTestDir("js-config-disabled");
 			await fs.writeFile(
-				path.join(testDir, ".markdownlint.mjs"),
-				"export default { default: true, MD041: false };",
+				path.join(testDir, ".markdownlint.cjs"),
+				"module.exports = { default: true, MD041: false };",
 			);
 
-			const uri = `file://${path.join(testDir, "test-mjs.md")}`;
+			const uri = `file://${path.join(testDir, "test-cjs-disabled.md")}`;
 			const content = "Not a heading\n\n# Heading\n";
 
 			await client.openTextDocument(uri, content);
 			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
 
 			const md041 = publishedDiagnostics.find((d) => d.code === "MD041");
-			expect(md041).to.be.undefined;
+			expect(md041).to.exist;
 		});
 	});
 
@@ -289,38 +328,60 @@ no-duplicate-heading:
 		});
 
 		it("should load .markdownlint-cli2.cjs configuration", async () => {
+			const trustedClient = new TestLanguageClient({
+				initializationOptions: {
+					allowJavaScriptConfig: true,
+				},
+			});
+			await trustedClient.start();
 			const testDir = await prepareTestDir("cli2-cjs");
-			await fs.writeFile(
-				path.join(testDir, ".markdownlint-cli2.cjs"),
-				"module.exports = { config: { default: true, MD013: false } };",
-			);
+			try {
+				await fs.writeFile(
+					path.join(testDir, ".markdownlint-cli2.cjs"),
+					"module.exports = { config: { default: true, MD013: false } };",
+				);
 
-			const uri = `file://${path.join(testDir, "test-cli2-cjs.md")}`;
-			const content =
-				"This is a very long line that would normally trigger line length violations\n";
+				const uri = `file://${path.join(testDir, "test-cli2-cjs.md")}`;
+				const content =
+					"This is a very long line that would normally trigger line length violations and definitely exceeds the default maximum line length for markdownlint\n";
 
-			await client.openTextDocument(uri, content);
-			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
+				await trustedClient.openTextDocument(uri, content);
+				const publishedDiagnostics =
+					await trustedClient.waitForDiagnosticsArray(uri);
 
-			const md013 = publishedDiagnostics.find((d) => d.code === "MD013");
-			expect(md013).to.be.undefined;
+				const md013 = publishedDiagnostics.find((d) => d.code === "MD013");
+				expect(md013).to.be.undefined;
+			} finally {
+				await trustedClient.stop();
+			}
 		});
 
 		it("should load .markdownlint-cli2.mjs configuration", async () => {
+			const trustedClient = new TestLanguageClient({
+				initializationOptions: {
+					allowJavaScriptConfig: true,
+				},
+			});
+			await trustedClient.start();
 			const testDir = await prepareTestDir("cli2-mjs");
-			await fs.writeFile(
-				path.join(testDir, ".markdownlint-cli2.mjs"),
-				"export default { config: { default: true, MD041: false } };",
-			);
+			try {
+				await fs.writeFile(
+					path.join(testDir, ".markdownlint-cli2.mjs"),
+					"export default { config: { default: true, MD041: false } };",
+				);
 
-			const uri = `file://${path.join(testDir, "test-cli2-mjs.md")}`;
-			const content = "Not a heading\n\n# Heading\n";
+				const uri = `file://${path.join(testDir, "test-cli2-mjs.md")}`;
+				const content = "Not a heading\n\n# Heading\n";
 
-			await client.openTextDocument(uri, content);
-			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
+				await trustedClient.openTextDocument(uri, content);
+				const publishedDiagnostics =
+					await trustedClient.waitForDiagnosticsArray(uri);
 
-			const md041 = publishedDiagnostics.find((d) => d.code === "MD041");
-			expect(md041).to.be.undefined;
+				const md041 = publishedDiagnostics.find((d) => d.code === "MD041");
+				expect(md041).to.be.undefined;
+			} finally {
+				await trustedClient.stop();
+			}
 		});
 	});
 
