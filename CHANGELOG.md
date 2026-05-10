@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.8.0] - 2026-05-10
+
+### Features
+
+- *(server)* Respect ignores glob patterns from config
+
+### Bug Fixes
+
+- *(server)* Restore ignores precedence and settings support
+- *(config)* Require opt-in for JavaScript configs
+- *(server)* Register workspace folder updates
+- *(server)* Prefer nested workspace roots
+- *(server)* Clear ignored document fixes
+
+### Refactor
+
+- *(server)* Split lifecycle and validation services
+
+### Testing
+
+- Harden diagnostics waiting in test client
+- Isolate configuration state in integration tests
+
+### Miscellaneous Tasks
+
+- *(deps)* Update biome to v2.4.6
+- *(deps)* Update biome to v2.4.7
+- *(deps)* Update minimatch to v10.2.5
+
 ## [0.7.0] - 2026-02-15
 
 ### Features
@@ -48,6 +77,7 @@ All notable changes to this project will be documented in this file.
 - *(deps)* Enable `pnpm` via corepack
 - Remove `pnpm` version
 - Log skipped fix-all overlaps
+- Release v0.7.0
 
 ## [0.6.0] - 2025-10-26
 
