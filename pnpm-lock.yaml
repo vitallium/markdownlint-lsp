@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       js-yaml:
-        specifier: ^4.1.1
-        version: 4.1.1
+        specifier: ^5.2.1
+        version: 5.2.1
       markdownlint:
         specifier: ^0.41.0
         version: 0.41.0
@@ -320,6 +320,10 @@ packages:
 
   js-yaml@4.1.1:
     resolution: {integrity: sha512-qQKT4zQxXl8lLwBtHMWwaTcGfFOZviOJet3Oy/xmGk2gZH677CJM9EvtfdSkgWcATZhj/55JZ0rmy3myCT5lsA==}
+    hasBin: true
+
+  js-yaml@5.2.1:
+    resolution: {integrity: sha512-zfLtNfQqxVqq3uaTqSkh4x4hZw3KHobGUA0fJUj4wawW8bsQLTVqpHdXSIzidh7o+4lEW36tANuAGdaFx6Zgnw==}
     hasBin: true
 
   katex@0.16.22:
@@ -801,6 +805,10 @@ snapshots:
       '@pkgjs/parseargs': 0.11.0
 
   js-yaml@4.1.1:
+    dependencies:
+      argparse: 2.0.1
+
+  js-yaml@5.2.1:
     dependencies:
       argparse: 2.0.1
 
