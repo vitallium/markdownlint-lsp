@@ -487,6 +487,75 @@ no-duplicate-heading:
 		});
 	});
 
+	describe(".markdownlintignore", () => {
+		it("should suppress diagnostics for files listed in .markdownlintignore", async () => {
+			const testDir = await prepareTestDir("markdownlintignore");
+			const subDir = path.join(testDir, "generated");
+			await fs.mkdir(subDir, { recursive: true });
+
+			await fs.writeFile(
+				path.join(testDir, ".markdownlintignore"),
+				"generated/\nCHANGELOG.md\n",
+			);
+
+			const ignoredInDirUri = `file://${path.join(subDir, "notes.md")}`;
+			const ignoredFileUri = `file://${path.join(testDir, "CHANGELOG.md")}`;
+			const lintedUri = `file://${path.join(testDir, "README.md")}`;
+			const badContent =
+				"# Hello\n## Bad heading increment skipped\n### skip\n";
+
+			await client.openTextDocument(ignoredInDirUri, badContent);
+			expect(
+				await client.waitForDiagnosticsArray(ignoredInDirUri),
+			).to.have.length(0);
+
+			await client.openTextDocument(ignoredFileUri, badContent);
+			expect(
+				await client.waitForDiagnosticsArray(ignoredFileUri),
+			).to.have.length(0);
+
+			await client.openTextDocument(lintedUri, badContent);
+			expect(
+				await client.waitForDiagnosticsArray(lintedUri),
+			).to.have.length.greaterThan(0);
+		});
+
+		it("should apply nested .markdownlintignore files", async () => {
+			const baseDir = await prepareTestDir("markdownlintignore-nested");
+			const nestedDir = path.join(baseDir, "docs");
+			await fs.mkdir(nestedDir, { recursive: true });
+
+			await fs.writeFile(
+				path.join(baseDir, ".markdownlintignore"),
+				"docs/legacy/**\n",
+			);
+			await fs.writeFile(
+				path.join(nestedDir, ".markdownlintignore"),
+				"drafts/**\n",
+			);
+
+			const legacyUri = `file://${path.join(nestedDir, "legacy", "old.md")}`;
+			const draftUri = `file://${path.join(nestedDir, "drafts", "wip.md")}`;
+			const lintedUri = `file://${path.join(nestedDir, "published.md")}`;
+			const badContent =
+				"# Hello\n## Bad heading increment skipped\n### skip\n";
+
+			await fs.mkdir(path.join(nestedDir, "legacy"), { recursive: true });
+			await fs.mkdir(path.join(nestedDir, "drafts"), { recursive: true });
+
+			await client.openTextDocument(legacyUri, badContent);
+			expect(await client.waitForDiagnosticsArray(legacyUri)).to.have.length(0);
+
+			await client.openTextDocument(draftUri, badContent);
+			expect(await client.waitForDiagnosticsArray(draftUri)).to.have.length(0);
+
+			await client.openTextDocument(lintedUri, badContent);
+			expect(
+				await client.waitForDiagnosticsArray(lintedUri),
+			).to.have.length.greaterThan(0);
+		});
+	});
+
 	describe("RC-style Configuration", () => {
 		it("should load .markdownlintrc configuration", async () => {
 			const testDir = await prepareTestDir("rc");
