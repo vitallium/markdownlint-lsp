@@ -299,6 +299,37 @@ no-duplicate-heading:
 			expect(lintedDiagnostics.length).to.be.greaterThan(0);
 		});
 
+		it("should suppress diagnostics for files matching bare directory ignores patterns", async () => {
+			const testDir = await prepareTestDir("cli2-ignores-bare-dir");
+			const subDir = path.join(testDir, "dist");
+			await fs.mkdir(subDir, { recursive: true });
+
+			const configContent = JSON.stringify({
+				config: { default: true },
+				ignores: ["dist"],
+			});
+			await fs.writeFile(
+				path.join(testDir, ".markdownlint-cli2.jsonc"),
+				configContent,
+			);
+
+			// File inside the bare-named ignored dir — should get no diagnostics
+			const ignoredUri = `file://${path.join(subDir, "CHANGELOG.md")}`;
+			// File outside ignored dir — should still get diagnostics
+			const lintedUri = `file://${path.join(testDir, "README.md")}`;
+			const badContent =
+				"# Hello\n## Bad heading increment skipped\n### skip\n";
+
+			await client.openTextDocument(ignoredUri, badContent);
+			const ignoredDiagnostics =
+				await client.waitForDiagnosticsArray(ignoredUri);
+			expect(ignoredDiagnostics).to.have.length(0);
+
+			await client.openTextDocument(lintedUri, badContent);
+			const lintedDiagnostics = await client.waitForDiagnosticsArray(lintedUri);
+			expect(lintedDiagnostics.length).to.be.greaterThan(0);
+		});
+
 		it("should load .markdownlint-cli2.yaml configuration", async () => {
 			const configContent = `config:
   default: true
