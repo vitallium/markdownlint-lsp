@@ -62,6 +62,29 @@ provides real-time linting for Markdown files in editors and IDEs.
 All configuration files are watched for changes, triggering re-validation of all
 open documents.
 
+### `ignores` Glob Semantics
+
+The `ignores` option (from CLI2-style config files and the `ignores` LSP
+setting) is matched with `minimatch`, using `markdownlint-cli2`'s own
+globby-style semantics as a baseline (see
+[DavidAnson/markdownlint-cli2#1](https://github.com/DavidAnson/markdownlint-cli2/issues/1)
+for background on why bare directory names don't recurse by default in
+globby/minimatch).
+
+However, `DocumentValidator#matchesIgnorePattern` (in
+`lib/document-validator.mjs`) intentionally supplements plain `minimatch`
+with directory-prefix/equality checks, so that a bare directory name (e.g.
+`"dist"`) *does* recursively ignore everything under `dist/`, matching the
+more common `.gitignore`-style expectation. This is a deliberate divergence
+from `markdownlint-cli2`'s own CLI behavior (which requires an explicit
+`"dist/**"`), traded off for better UX in the editor. Keep this in mind when
+comparing lint results between this LSP and the `markdownlint-cli2` CLI on the
+same config.
+
+`.markdownlintignore` files are handled separately in
+`lib/markdownlint-ignore.mjs` via the `ignore` package, which already
+implements real `.gitignore` semantics (including directory recursion).
+
 ## Development Notes
 
 ### Dependencies
