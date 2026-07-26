@@ -21,7 +21,7 @@
 	},
 	"homepage": "https://github.com/vitallium/markdownlint-lsp#readme",
 	"dependencies": {
-		"ignore": "^7.0.5",
+		"ignore": "^7.0.6",
 		"js-yaml": "^5.2.1",
 		"markdownlint": "^0.41.1",
 		"minimatch": "^10.2.5",
