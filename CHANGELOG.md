@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.9.0] - 2026-07-31
+
+### Features
+
+- *(server)* Support .markdownlintignore files
+
+### Bug Fixes
+
+- *(server)* Normalize relative paths to forward slashes for minimatch
+- *(server)* Recursively match bare directory names in ignores patterns
+
+### Miscellaneous Tasks
+
+- Stop testing on Node.js v20
+- *(deps)* Update markdownlint to v0.41.0
+- Pin GitHub actions to SHAs to prevent tag hijacking
+- *(deps)* Update js-yaml to v5.2.1
+- Add Biome linting job to CI workflow
+- *(deps)* Update `mocha` to v11.7.6
+- *(deps)* Update `biome` to v2.5.3
+- *(deps)* Update `markdownlint` to v0.41.1
+- *(deps)* Update biome to v2.5.5
+- *(deps)* Update ignore to v7.0.6
+- *(deps)* Update js-yaml to v5.2.2
+
 ## [0.8.0] - 2026-05-10
 
 ### Features
@@ -30,6 +55,7 @@ All notable changes to this project will be documented in this file.
 - *(deps)* Update biome to v2.4.6
 - *(deps)* Update biome to v2.4.7
 - *(deps)* Update minimatch to v10.2.5
+- Release v0.8.0
 
 ## [0.7.0] - 2026-02-15
 
