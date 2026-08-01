@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.9.1] - 2026-08-01
+
+### Bug Fixes
+
+- Resolve race condition in validation queue
+
 ## [0.9.0] - 2026-07-31
 
 ### Features
@@ -26,6 +32,7 @@ All notable changes to this project will be documented in this file.
 - *(deps)* Update biome to v2.5.5
 - *(deps)* Update ignore to v7.0.6
 - *(deps)* Update js-yaml to v5.2.2
+- Release 0.9.0
 
 ## [0.8.0] - 2026-05-10
 
