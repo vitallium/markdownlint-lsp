@@ -3,6 +3,7 @@ import * as path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { expect } from "chai";
 import { after, afterEach, before, describe, it } from "mocha";
+import { loadConfig } from "../lib/config.mjs";
 import { TestLanguageClient } from "./helpers.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -418,12 +419,10 @@ no-duplicate-heading:
 
 	describe("Configuration Hierarchy", () => {
 		it("should use closest configuration file", async () => {
-			// Create nested directory structure
 			const baseDir = await prepareTestDir("hierarchy");
 			const nestedDir = path.join(baseDir, "nested");
 			await fs.mkdir(nestedDir, { recursive: true });
 
-			// Root config - strict
 			await fs.writeFile(
 				path.join(baseDir, ".markdownlint.json"),
 				JSON.stringify({
@@ -431,8 +430,6 @@ no-duplicate-heading:
 					MD013: { line_length: 80 },
 				}),
 			);
-
-			// Nested config - relaxed
 			await fs.writeFile(
 				path.join(nestedDir, ".markdownlint.json"),
 				JSON.stringify({
@@ -441,7 +438,6 @@ no-duplicate-heading:
 				}),
 			);
 
-			// Test file in nested directory
 			const uri = `file://${path.join(nestedDir, "test.md")}`;
 			const content =
 				"This is a very long line that exceeds 80 characters but should not trigger an error\n";
@@ -449,20 +445,18 @@ no-duplicate-heading:
 			await client.openTextDocument(uri, content);
 			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
 
-			// Should use nested config (MD013 disabled)
 			const md013 = publishedDiagnostics.find((d) => d.code === "MD013");
 			expect(md013).to.be.undefined;
 		});
 
 		it("should respect configuration precedence", async () => {
-			// Create both .markdownlint-cli2.jsonc and .markdownlint.json
 			const testDir = await prepareTestDir("precedence");
 			await fs.writeFile(
 				path.join(testDir, ".markdownlint-cli2.jsonc"),
 				JSON.stringify({
 					config: {
 						default: true,
-						MD041: false, // Disable in CLI2 config
+						MD041: false,
 					},
 				}),
 			);
@@ -471,7 +465,7 @@ no-duplicate-heading:
 				path.join(testDir, ".markdownlint.json"),
 				JSON.stringify({
 					default: true,
-					MD041: true, // Enable in standard config
+					MD041: true,
 				}),
 			);
 
@@ -481,9 +475,63 @@ no-duplicate-heading:
 			await client.openTextDocument(uri, content);
 			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
 
-			// CLI2 config should take precedence
 			const md041 = publishedDiagnostics.find((d) => d.code === "MD041");
-			expect(md041).to.be.undefined;
+			expect(md041).to.not.be.undefined;
+		});
+
+		it("should merge both CLI2 and markdownlint configs when both are present", async () => {
+			const testDir = await prepareTestDir("both-configs");
+
+			await fs.writeFile(
+				path.join(testDir, ".markdownlint-cli2.jsonc"),
+				JSON.stringify({
+					fix: true,
+					noProgress: true,
+					config: {
+						default: true,
+						MD001: false,
+						MD009: true,
+					},
+				}),
+			);
+
+			await fs.writeFile(
+				path.join(testDir, ".markdownlint.json"),
+				JSON.stringify({
+					default: true,
+					MD001: true,
+					MD013: false,
+				}),
+			);
+
+			const options = await loadConfig(
+				pathToFileURL(path.join(testDir, "test-both.md")).href,
+				testDir,
+			);
+			expect(options).to.deep.equal({
+				fix: true,
+				noProgress: true,
+				config: {
+					default: true,
+					MD001: true,
+					MD013: false,
+				},
+			});
+
+			const uri = `file://${path.join(testDir, "test-both.md")}`;
+			const content = "# Heading 1\n\n### Heading 3\n";
+
+			await client.openTextDocument(uri, content);
+			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
+
+			const md001 = publishedDiagnostics.find((d) => d.code === "MD001");
+			expect(md001).to.not.be.undefined;
+
+			const md009 = publishedDiagnostics.find((d) => d.code === "MD009");
+			expect(md009).to.be.undefined;
+
+			const md013 = publishedDiagnostics.find((d) => d.code === "MD013");
+			expect(md013).to.be.undefined;
 		});
 
 		it("should let nested CLI2 config clear parent ignores", async () => {
@@ -610,6 +658,25 @@ no-duplicate-heading:
 	});
 
 	describe("Package.json Configuration", () => {
+		it("should prefer a CLI2 config file over package.json", async () => {
+			const testDir = await prepareTestDir("package-precedence");
+			await fs.writeFile(
+				path.join(testDir, ".markdownlint-cli2.jsonc"),
+				JSON.stringify({ config: { MD013: false } }),
+			);
+			await fs.writeFile(
+				path.join(testDir, "package.json"),
+				JSON.stringify({ "markdownlint-cli2": { config: { MD013: true } } }),
+			);
+
+			const options = await loadConfig(
+				pathToFileURL(path.join(testDir, "readme.md")).href,
+				testDir,
+			);
+
+			expect(options.config.MD013).to.be.false;
+		});
+
 		it("should load configuration from package.json", async () => {
 			const packageContent = JSON.stringify(
 				{
