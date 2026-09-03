@@ -49,9 +49,7 @@
 		"test:watch": "mocha test/**/*.test.mjs --watch",
 		"test:server": "mocha test/server.test.mjs",
 		"test:config": "mocha test/configuration.test.mjs",
-		"test:edge": "mocha test/edge-cases.test.mjs",
-		"test:runner": "node test/run-tests.mjs",
-		"test:dev": "node test/run-tests.mjs --watch"
+		"test:edge": "mocha test/edge-cases.test.mjs"
 	},
 	"packageManager": "pnpm@11.18.0"
 }
