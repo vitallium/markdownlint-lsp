@@ -2,11 +2,38 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.9.2] - 2026-09-03
+
+### Bug Fixes
+
+- Load both markdownlint-cli2 and markdownlint configs when both present
+- Make packaged server executable
+- Mark `lib/index.mjs` as executable
+- Address linting issues in IgnorePatternSet refactor
+
+### Refactor
+
+- *(document-runtime)* Consolidate per-URI state into DocumentState class
+- *(ignore)* Create unified IgnorePatternSet for consolidated ignore matching
+
+### Documentation
+
+- Overhaul README with installation, usage, configuration, and features
+
+### Miscellaneous Tasks
+
+- *(deps)* Update pnpm to v11.18.0
+- Remove redundant test tooling
+
 ## [0.9.1] - 2026-08-01
 
 ### Bug Fixes
 
 - Resolve race condition in validation queue
+
+### Miscellaneous Tasks
+
+- Release v0.9.1
 
 ## [0.9.0] - 2026-07-31
 
