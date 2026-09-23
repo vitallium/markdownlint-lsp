@@ -105,6 +105,80 @@ describe("Configuration Loading", function () {
 			expect(md041).to.be.undefined;
 		});
 
+		it("should parse comments in .markdownlint.jsonc configuration", async () => {
+			const configContent = `{
+				"default": true,
+				// Disable the first-line heading rule.
+				"MD041": false,
+			}`;
+
+			const testDir = await prepareTestDir("jsonc-comments");
+
+			await fs.writeFile(
+				path.join(testDir, ".markdownlint.jsonc"),
+				configContent,
+			);
+
+			const uri = `file://${path.join(testDir, "test-jsonc-comments.md")}`;
+			const content = "Not a heading on first line  \n\n# Heading";
+
+			await client.openTextDocument(uri, content);
+			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
+
+			const md041 = publishedDiagnostics.find((d) => d.code === "MD041");
+			expect(md041).to.be.undefined;
+			expect(publishedDiagnostics.find((d) => d.code === "MD047")).to.exist;
+		});
+
+		it("should extend YAML configuration from standard JSONC", async () => {
+			const testDir = await prepareTestDir("jsonc-extends-yaml");
+			await fs.writeFile(
+				path.join(testDir, "base.yaml"),
+				"default: true\nMD013: false\n",
+			);
+			await fs.writeFile(
+				path.join(testDir, ".markdownlint.jsonc"),
+				`{
+					"extends": "./base.yaml",
+					"MD041": false,
+				}`,
+			);
+
+			const uri = `file://${path.join(testDir, "test-jsonc-extends.md")}`;
+			const content =
+				"Not a heading on first line\nThis is an intentionally very long line that should be ignored by the inherited YAML configuration because it exceeds the default line-length limit";
+
+			await client.openTextDocument(uri, content);
+			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
+
+			expect(publishedDiagnostics.find((d) => d.code === "MD013")).to.be
+				.undefined;
+			expect(publishedDiagnostics.find((d) => d.code === "MD041")).to.be
+				.undefined;
+			expect(publishedDiagnostics.find((d) => d.code === "MD047")).to.exist;
+		});
+
+		it("should parse BOM-prefixed standard JSONC configuration", async () => {
+			const testDir = await prepareTestDir("jsonc-bom");
+			await fs.writeFile(
+				path.join(testDir, ".markdownlint.jsonc"),
+				`\ufeff{
+					"default": true,
+					"MD041": false
+				}`,
+			);
+
+			const uri = `file://${path.join(testDir, "test-jsonc-bom.md")}`;
+			const content = "Not a heading on first line\n# Heading";
+
+			await client.openTextDocument(uri, content);
+			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
+
+			expect(publishedDiagnostics.find((d) => d.code === "MD041")).to.be
+				.undefined;
+			expect(publishedDiagnostics.find((d) => d.code === "MD047")).to.exist;
+		});
+
 		it("should load .markdownlint.yaml configuration", async () => {
 			const configContent = `# YAML configuration
 default: true
@@ -267,6 +341,35 @@ no-duplicate-heading:
 
 			const md013 = publishedDiagnostics.find((d) => d.code === "MD013");
 			expect(md013).to.be.undefined;
+		});
+
+		it("should parse comments and trailing commas in CLI2 JSONC configuration", async () => {
+			const configContent = `// CLI2 JSONC configuration
+			{
+				"config": {
+					"default": true,
+					// Disable the line length rule.
+					"MD013": false,
+				},
+			}`;
+
+			const testDir = await prepareTestDir("cli2-jsonc-comments");
+
+			await fs.writeFile(
+				path.join(testDir, ".markdownlint-cli2.jsonc"),
+				configContent,
+			);
+
+			const uri = `file://${path.join(testDir, "test-cli2-jsonc-comments.md")}`;
+			const content =
+				"This is a very long line that would normally trigger the line length rule and should be reported when the JSONC comment is misparsed";
+
+			await client.openTextDocument(uri, content);
+			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
+
+			const md013 = publishedDiagnostics.find((d) => d.code === "MD013");
+			expect(md013).to.be.undefined;
+			expect(publishedDiagnostics.find((d) => d.code === "MD047")).to.exist;
 		});
 
 		it("should suppress diagnostics for files matching ignores patterns", async () => {
