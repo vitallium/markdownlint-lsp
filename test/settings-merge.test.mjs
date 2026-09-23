@@ -32,6 +32,31 @@ This is a very long line that should trigger MD013 even though the inline config
 	});
 });
 
+describe("Client configuration on startup", () => {
+	it("uses pulled settings before validating a document opened immediately", async () => {
+		const client = new TestLanguageClient({
+			configurationSettings: { config: { MD013: false } },
+			configurationResponseDelay: 100,
+		});
+		const uri = createTestDocumentUri("cold-start-settings.md");
+		const content = `# Title
+
+${Array(26).fill("word").join(" ")}
+`;
+
+		try {
+			await client.start();
+			await client.openTextDocument(uri, content);
+			const diagnostics = await client.waitForDiagnosticsArray(uri);
+			expect(diagnostics.map((diagnostic) => diagnostic.code)).not.to.include(
+				"MD013",
+			);
+		} finally {
+			await client.stop();
+		}
+	});
+});
+
 describe("Initialization Settings ignores", () => {
 	let client;
 

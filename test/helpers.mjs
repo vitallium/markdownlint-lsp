@@ -81,6 +81,19 @@ class MockLanguageClient extends EventEmitter {
 			for (const handler of this.diagnosticsHandlers) {
 				handler(message.params, this.diagnosticsSequence);
 			}
+		} else if (message.method === "workspace/configuration") {
+			const respond = () => {
+				this.sendMessage({
+					jsonrpc: "2.0",
+					id: message.id,
+					result: [this.options.configurationSettings ?? {}],
+				});
+			};
+			if (this.options.configurationResponseDelay) {
+				setTimeout(respond, this.options.configurationResponseDelay);
+			} else {
+				respond();
+			}
 		}
 	}
 

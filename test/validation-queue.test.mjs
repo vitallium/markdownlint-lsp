@@ -6,7 +6,9 @@ describe("Validation Queue", () => {
 	let client;
 
 	before(async () => {
-		client = new TestLanguageClient();
+		client = new TestLanguageClient({
+			capabilities: { workspace: { configuration: false } },
+		});
 		await client.start();
 	});
 
