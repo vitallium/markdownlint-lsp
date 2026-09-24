@@ -25,6 +25,7 @@ class MockLanguageClient extends EventEmitter {
 		this.diagnosticsHandlers = [];
 		this.lastDiagnostics = new Map();
 		this.diagnosticsSequence = 0;
+		this.logMessages = [];
 	}
 
 	async sendRequest(method, params) {
@@ -72,6 +73,8 @@ class MockLanguageClient extends EventEmitter {
 			} else {
 				resolve(message.result);
 			}
+		} else if (message.method === "window/logMessage") {
+			this.logMessages.push(message.params);
 		} else if (message.method === "textDocument/publishDiagnostics") {
 			this.diagnosticsSequence += 1;
 			this.lastDiagnostics.set(message.params.uri, {
@@ -248,6 +251,10 @@ export class TestLanguageClient {
 
 	get capabilities() {
 		return this.#client.initializeResult?.capabilities;
+	}
+
+	get logMessages() {
+		return this.#client.logMessages;
 	}
 
 	async start() {
