@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.10.0] - 2026-09-24
+
+### Features
+
+- Log config loading outcomes
+
+### Bug Fixes
+
+- *(config)* Parse JSONC comments
+- Apply client settings on cold start
+- *(ci)* Avoid yielding when startup settings are absent
+- Preserve code action lookup semantics
+
+### Performance
+
+- *(code-actions)* Use Map for O(1) diagnostic fix pair lookup
+
+### Styling
+
+- Apply formatting
+
+### Miscellaneous Tasks
+
+- Update `js-yaml` to v5.4.2
+
 ## [0.9.2] - 2026-09-03
 
 ### Bug Fixes
@@ -24,6 +49,7 @@ All notable changes to this project will be documented in this file.
 
 - *(deps)* Update pnpm to v11.18.0
 - Remove redundant test tooling
+- Release 0.9.2
 
 ## [0.9.1] - 2026-08-01
 
