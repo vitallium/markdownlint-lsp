@@ -56,6 +56,22 @@ The server supports hierarchical configuration loading, searching from the file 
 
 The `.markdownlintignore` file is also supported for ignoring specific files or directories, following standard `.gitignore` semantics. Bare directory names (e.g., `dist`) will recursively ignore everything under that directory.
 
+### Custom Rules and markdown-it Plugins
+
+CLI2-style configs can list `customRules` and `markdownItPlugins` just like [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2#markdownlint-cli2jsonc). Entries can be paths (relative to the config file that lists them) or package names, and `modulePaths` adds extra directories to search. Custom rules that use markdown-it tokens work too, since the server provides a `markdownItFactory`.
+
+```yaml
+customRules:
+  - ./.vscode/markdownlint-custom-rules/no-unicode-bullets.js
+  - markdownlint-rule-search-replace
+markdownItPlugins:
+  - - markdown-it-footnote
+```
+
+Loading these modules runs JavaScript from your workspace, so it's only enabled when the `allowJavaScriptConfig` initialization option is `true` (the same option that enables `.cjs` and `.mjs` config files). When it's off, the server logs a warning, skips those entries, and keeps linting with the built-in rules. If a custom rule turns out to be invalid, the server logs an error and falls back to the built-in rules instead of dropping all diagnostics.
+
+Modules are cached once they're loaded, so restart the server after editing a custom rule's source.
+
 ### Example Configuration
 
 ```jsonc
