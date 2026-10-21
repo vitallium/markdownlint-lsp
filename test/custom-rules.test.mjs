@@ -270,6 +270,57 @@ describe("Custom rules", function () {
 		).to.equal(true);
 	});
 
+	it("ignores invalid modulePaths when JavaScript config is disabled", async () => {
+		// An empty YAML list item parses as `null`
+		await write(
+			"invalid-module-paths/.markdownlint-cli2.yaml",
+			"customRules: []\nmodulePaths:\n  -\n",
+		);
+
+		const { codes } = await lintIn(untrustedClient, "invalid-module-paths");
+
+		expect(codes).to.include("MD025");
+	});
+
+	it("skips invalid modulePaths entries and loads the rest", async () => {
+		await write(
+			"mixed-module-paths/.markdownlint-cli2.jsonc",
+			JSON.stringify({
+				customRules: ["markdownlint-rule-pkg"],
+				modulePaths: [null, 42, "../node_modules"],
+			}),
+		);
+
+		const { codes, logs } = await lintIn(trustedClient, "mixed-module-paths");
+
+		expect(codes).to.include.members(["MD025", "pkg-one"]);
+		const warnings = logs.filter(
+			(log) =>
+				log.type === 2 && log.message.includes("invalid modulePaths entry"),
+		);
+		expect(warnings).to.have.lengthOf(2);
+	});
+
+	it("skips invalid modulePaths entries from settings", async () => {
+		const client = new TestLanguageClient({
+			rootUri: pathToFileURL(tempDir).href,
+			initializationOptions: {
+				allowJavaScriptConfig: true,
+				customRules: ["./rules/no-todo.cjs"],
+				modulePaths: [null],
+			},
+		});
+		await client.start();
+		try {
+			const first = await lintIn(client, "settings-module-paths");
+			const second = await lintIn(client, "settings-module-paths");
+			expect(first.codes).to.include.members(["MD025", "no-todo"]);
+			expect(second.codes).to.include.members(["MD025", "no-todo"]);
+		} finally {
+			await client.stop();
+		}
+	});
+
 	it("falls back to built-in rules when a custom rule is invalid", async () => {
 		await write(
 			"invalid/.markdownlint-cli2.yaml",
