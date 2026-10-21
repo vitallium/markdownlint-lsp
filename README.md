@@ -58,7 +58,7 @@ The `.markdownlintignore` file is also supported for ignoring specific files or 
 
 ### Custom Rules and markdown-it Plugins
 
-CLI2-style configs can list `customRules` and `markdownItPlugins` just like [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2#markdownlint-cli2jsonc). Entries can be paths (relative to the config file that lists them) or package names, and `modulePaths` adds extra directories to search. Custom rules that use markdown-it tokens work too, since the server provides a `markdownItFactory`.
+CLI2-style configs can list `customRules` and `markdownItPlugins` just like [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2#markdownlint-cli2jsonc). Entries can be paths (relative to the config file that lists them) or package names, and `modulePaths` adds extra directories to search. Custom rules that use markdown-it tokens work too, since the server provides a `markdownItFactory`. If a JavaScript config sets its own `markdownItFactory`, the server uses that one instead and `markdownItPlugins` doesn't apply.
 
 ```yaml
 customRules:

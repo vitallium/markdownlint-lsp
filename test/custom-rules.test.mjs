@@ -199,6 +199,30 @@ describe("Custom rules", function () {
 		expect(codes).to.include("mdit-heading");
 	});
 
+	it("keeps a markdownItFactory set by a JavaScript config", async () => {
+		// The temp workspace has no markdown-it, so borrow this project's copy
+		const markdownItUrl = import.meta.resolve("markdown-it");
+		await write(
+			"js-factory/.markdownlint-cli2.mjs",
+			[
+				'import markerPlugin from "../rules/marker-plugin.cjs";',
+				'import markerRule from "../rules/marker-rule.cjs";',
+				"export default {",
+				"	customRules: [markerRule],",
+				"	markdownItFactory: async () => {",
+				`		const { default: markdownIt } = await import(${JSON.stringify(markdownItUrl)});`,
+				'		return markdownIt().use(markerPlugin, "hello");',
+				"	},",
+				"};",
+				"",
+			].join("\n"),
+		);
+
+		const { codes } = await lintIn(trustedClient, "js-factory");
+
+		expect(codes).to.include("plugin-marker");
+	});
+
 	it("lets a nested config replace its parent's custom rules", async () => {
 		await write(
 			"nested/.markdownlint-cli2.yaml",
