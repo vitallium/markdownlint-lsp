@@ -45,10 +45,14 @@ provides real-time linting for Markdown files in editors and IDEs.
 5. `.markdownlint.cjs`
 6. `.markdownlint.mjs`
 
-#### RC-style Configuration (following npm rc package standards)
+#### RC-style Configuration
 
 1. `.markdownlintrc`
 2. `.markdownlint/config`
+
+RC files must contain a JSON or YAML object (JSON is a subset of YAML).
+INI-format content (e.g. `MD013=false`) is not supported: it logs a
+warning and no configuration is applied.
 
 ### Configuration Loading Logic
 
@@ -56,6 +60,8 @@ provides real-time linting for Markdown files in editors and IDEs.
 - CLI2 configs are merged using `mergeOptions`
 - Standard markdownlint configs override parent configs (set as `config` property)
 - RC-style configs follow markdownlint behavior (set as `config` property)
+- String entries in a CLI2 config's `customRules` and `markdownItPlugins` are resolved to modules (`lib/module-loader.mjs`, ported from cli2) relative to that config's directory plus `modulePaths`, *before* merging. The same entries in LSP settings resolve relative to the workspace root. Importing is gated behind `allowJavaScriptConfig`, because it executes workspace code.
+- `DocumentValidator` always passes a lazy `markdownItFactory` (markdown-it with `html: true` plus plugins, matching cli2), and retries without `customRules` if `lint()` throws so built-in diagnostics survive a bad rule.
 
 ### File Watching
 

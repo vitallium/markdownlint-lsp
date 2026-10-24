@@ -1,1 +1,3 @@
 node_modules/
+.worktrees/
+test/fixtures/temp*

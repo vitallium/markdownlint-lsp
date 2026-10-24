@@ -1,6 +1,6 @@
 {
 	"name": "markdownlint-lsp",
-	"version": "0.9.1",
+	"version": "0.10.0",
 	"main": "lib/index.mjs",
 	"type": "module",
 	"author": "Vitaly Slobodin <vitaliy.slobodin@gmail.com>",
@@ -22,7 +22,9 @@
 	"homepage": "https://github.com/vitallium/markdownlint-lsp#readme",
 	"dependencies": {
 		"ignore": "^7.0.6",
-		"js-yaml": "^5.2.2",
+		"js-yaml": "^5.4.2",
+		"jsonc-parser": "^3.3.1",
+		"markdown-it": "^14.3.3",
 		"markdownlint": "^0.41.1",
 		"minimatch": "^10.2.5",
 		"vscode-languageserver": "^9.0.1",
@@ -49,9 +51,7 @@
 		"test:watch": "mocha test/**/*.test.mjs --watch",
 		"test:server": "mocha test/server.test.mjs",
 		"test:config": "mocha test/configuration.test.mjs",
-		"test:edge": "mocha test/edge-cases.test.mjs",
-		"test:runner": "node test/run-tests.mjs",
-		"test:dev": "node test/run-tests.mjs --watch"
+		"test:edge": "mocha test/edge-cases.test.mjs"
 	},
-	"packageManager": "pnpm@10.28.1+sha512.7d7dbbca9e99447b7c3bf7a73286afaaf6be99251eb9498baefa7d406892f67b879adb3a1d7e687fc4ccc1a388c7175fbaae567a26ab44d1067b54fcb0d6a316"
+	"packageManager": "pnpm@11.18.0"
 }

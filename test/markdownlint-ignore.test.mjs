@@ -2,12 +2,9 @@ import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
 import { expect } from "chai";
-import ignore from "ignore";
 import { after, before, describe, it } from "mocha";
-import {
-	isIgnoredByMarkdownlintIgnore,
-	loadMarkdownlintIgnoreEntries,
-} from "../lib/markdownlint-ignore.mjs";
+import { IgnorePatternSet } from "../lib/ignore-pattern-set.mjs";
+import { loadMarkdownlintIgnoreEntries } from "../lib/markdownlint-ignore.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,7 +15,10 @@ describe("markdownlint-ignore", () => {
 	before(async () => {
 		await fs.rm(baseDir, { recursive: true, force: true });
 		await fs.mkdir(path.join(baseDir, "nested"), { recursive: true });
-		await fs.writeFile(path.join(baseDir, ".markdownlintignore"), "root.md\n");
+		await fs.writeFile(
+			path.join(baseDir, ".markdownlintignore"),
+			"generated/\nCHANGELOG.md\n",
+		);
 		await fs.writeFile(
 			path.join(baseDir, "nested", ".markdownlintignore"),
 			"nested.md\n",
@@ -29,25 +29,21 @@ describe("markdownlint-ignore", () => {
 		await fs.rm(baseDir, { recursive: true, force: true });
 	});
 
-	it("should match gitignore-style patterns relative to the ignore file", () => {
-		const ignoreEntries = [
-			{
-				dir: baseDir,
-				ignoreInstance: ignore().add("generated/\nCHANGELOG.md\n"),
-			},
-		];
+	it("should match gitignore-style patterns relative to the ignore file", async () => {
+		const ignoreEntries = await loadMarkdownlintIgnoreEntries([baseDir]);
+		const ignorePatternSet = new IgnorePatternSet({
+			markdownlintIgnoreEntries: ignoreEntries,
+			workspaceRoot: baseDir,
+		});
 
 		expect(
-			isIgnoredByMarkdownlintIgnore(
+			ignorePatternSet.matches(
 				path.join(baseDir, "generated", "notes.md"),
-				ignoreEntries,
+				baseDir,
 			),
 		).to.equal(true);
 		expect(
-			isIgnoredByMarkdownlintIgnore(
-				path.join(baseDir, "README.md"),
-				ignoreEntries,
-			),
+			ignorePatternSet.matches(path.join(baseDir, "README.md"), baseDir),
 		).to.equal(false);
 	});
 

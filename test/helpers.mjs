@@ -2,6 +2,7 @@ import { spawn } from "node:child_process";
 import { EventEmitter } from "node:events";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
+import { minimatch } from "minimatch";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,6 +26,10 @@ class MockLanguageClient extends EventEmitter {
 		this.diagnosticsHandlers = [];
 		this.lastDiagnostics = new Map();
 		this.diagnosticsSequence = 0;
+		this.logMessages = [];
+		this.registrations = new Map();
+		this.registrationRequests = [];
+		this.traceMessages = [];
 	}
 
 	async sendRequest(method, params) {
@@ -72,6 +77,34 @@ class MockLanguageClient extends EventEmitter {
 			} else {
 				resolve(message.result);
 			}
+		} else if (message.method === "client/registerCapability") {
+			this.registrationRequests.push(message.params);
+			if (this.options.failRegistrationRequests) {
+				this.sendMessage({
+					jsonrpc: "2.0",
+					id: message.id,
+					error: {
+						code: -32601,
+						message: "Client rejected watcher registration",
+					},
+				});
+				return;
+			}
+			for (const registration of message.params.registrations) {
+				this.registrations.set(registration.id, registration);
+			}
+			this.sendMessage({ jsonrpc: "2.0", id: message.id, result: null });
+			this.emit("watchersChanged");
+		} else if (message.method === "client/unregisterCapability") {
+			for (const registration of message.params.unregisterations) {
+				this.registrations.delete(registration.id);
+			}
+			this.sendMessage({ jsonrpc: "2.0", id: message.id, result: null });
+			this.emit("watchersChanged");
+		} else if (message.method === "window/logMessage") {
+			this.logMessages.push(message.params);
+		} else if (message.method === "$/logTrace") {
+			this.traceMessages.push(message.params);
 		} else if (message.method === "textDocument/publishDiagnostics") {
 			this.diagnosticsSequence += 1;
 			this.lastDiagnostics.set(message.params.uri, {
@@ -81,12 +114,27 @@ class MockLanguageClient extends EventEmitter {
 			for (const handler of this.diagnosticsHandlers) {
 				handler(message.params, this.diagnosticsSequence);
 			}
+		} else if (message.method === "workspace/configuration") {
+			const respond = () => {
+				const { configurationSettings = {} } = this.options;
+				this.sendMessage({
+					jsonrpc: "2.0",
+					id: message.id,
+					result: [configurationSettings],
+				});
+			};
+			if (this.options.configurationResponseDelay) {
+				setTimeout(respond, this.options.configurationResponseDelay);
+			} else {
+				respond();
+			}
 		}
 	}
 
 	async start() {
 		this.state = 1;
-		const serverPath = path.join(__dirname, "..", "lib", "index.mjs");
+		const serverPath =
+			this.options.serverPath ?? path.join(__dirname, "..", "lib", "index.mjs");
 		this.process = spawn("node", [serverPath, "--stdio"], {
 			cwd: path.join(__dirname, ".."),
 			env: process.env,
@@ -187,6 +235,7 @@ class MockLanguageClient extends EventEmitter {
 			capabilities,
 			workspaceFolders,
 			initializationOptions,
+			trace: this.options.trace ?? "off",
 		});
 
 		this.initializeResult = result;
@@ -248,6 +297,82 @@ export class TestLanguageClient {
 
 	get capabilities() {
 		return this.#client.initializeResult?.capabilities;
+	}
+
+	get logMessages() {
+		return this.#client.logMessages;
+	}
+
+	get registrations() {
+		return [...this.#client.registrations.values()];
+	}
+
+	get registrationRequests() {
+		return this.#client.registrationRequests;
+	}
+
+	isWatched(filePath) {
+		const normalizedPath = filePath.split(path.sep).join("/");
+		const isInside = (base) => {
+			const relative = path.relative(base, filePath);
+			return !relative.startsWith("..") && !path.isAbsolute(relative);
+		};
+		const workspaceFolders = this.#client.options.workspaceFolders ?? [
+			{ uri: this.#client.options.rootUri ?? createTestDocumentUri("") },
+		];
+		return this.registrations.some(
+			(registration) =>
+				registration.method === "workspace/didChangeWatchedFiles" &&
+				registration.registerOptions.watchers.some(({ globPattern }) => {
+					if (typeof globPattern !== "string") {
+						const base = fileURLToPath(globPattern.baseUri);
+						return (
+							isInside(base) &&
+							minimatch(
+								path.relative(base, filePath).split(path.sep).join("/"),
+								globPattern.pattern,
+								{ dot: true },
+							)
+						);
+					}
+					if (path.isAbsolute(globPattern)) {
+						return minimatch(normalizedPath, globPattern, { dot: true });
+					}
+					return workspaceFolders.some(({ uri }) => {
+						const base = fileURLToPath(uri);
+						return (
+							isInside(base) &&
+							minimatch(
+								path.relative(base, filePath).split(path.sep).join("/"),
+								globPattern,
+								{ dot: true },
+							)
+						);
+					});
+				}),
+		);
+	}
+
+	async waitForWatchers(predicate, timeout = 5000) {
+		if (predicate()) return;
+		await new Promise((resolve, reject) => {
+			const check = () => {
+				if (predicate()) {
+					clearTimeout(timer);
+					this.#client.off("watchersChanged", check);
+					resolve();
+				}
+			};
+			const timer = setTimeout(() => {
+				this.#client.off("watchersChanged", check);
+				reject(new Error("Timeout waiting for watcher registrations"));
+			}, timeout);
+			this.#client.on("watchersChanged", check);
+		});
+	}
+
+	get traceMessages() {
+		return this.#client.traceMessages;
 	}
 
 	async start() {
@@ -358,62 +483,3 @@ export class TestLanguageClient {
 export function createTestDocumentUri(filename) {
 	return `file://${path.join(__dirname, "fixtures", filename)}`;
 }
-
-export function wait(ms) {
-	return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-export const markdownlintRules = {
-	MD001: "heading-increment",
-	MD002: "first-heading-h1",
-	MD003: "heading-style",
-	MD004: "ul-style",
-	MD005: "list-indent",
-	MD006: "ul-start-left",
-	MD007: "ul-indent",
-	MD009: "no-trailing-spaces",
-	MD010: "no-hard-tabs",
-	MD011: "no-reversed-links",
-	MD012: "no-multiple-blanks",
-	MD013: "line-length",
-	MD014: "commands-show-output",
-	MD018: "no-missing-space-atx",
-	MD019: "no-multiple-space-atx",
-	MD020: "no-missing-space-closed-atx",
-	MD021: "no-multiple-space-closed-atx",
-	MD022: "blanks-around-headings",
-	MD023: "heading-start-left",
-	MD024: "no-duplicate-heading",
-	MD025: "single-title",
-	MD026: "no-trailing-punctuation",
-	MD027: "no-multiple-space-blockquote",
-	MD028: "no-blanks-blockquote",
-	MD029: "ol-prefix",
-	MD030: "list-marker-space",
-	MD031: "blanks-around-fences",
-	MD032: "blanks-around-lists",
-	MD033: "no-inline-html",
-	MD034: "no-bare-urls",
-	MD035: "hr-style",
-	MD036: "no-emphasis-as-heading",
-	MD037: "no-space-in-emphasis",
-	MD038: "no-space-in-code",
-	MD039: "no-space-in-links",
-	MD040: "fenced-code-language",
-	MD041: "first-line-heading",
-	MD042: "no-empty-links",
-	MD043: "required-headings",
-	MD044: "proper-names",
-	MD045: "no-alt-text",
-	MD046: "code-block-style",
-	MD047: "single-trailing-newline",
-	MD048: "code-fence-style",
-	MD049: "emphasis-style",
-	MD050: "strong-style",
-	MD051: "link-fragments",
-	MD052: "reference-links-images",
-	MD053: "link-image-reference-definitions",
-	MD054: "link-image-style",
-	MD055: "table-pipe-style",
-	MD056: "table-column-count",
-};
