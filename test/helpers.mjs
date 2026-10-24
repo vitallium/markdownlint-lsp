@@ -29,6 +29,7 @@ class MockLanguageClient extends EventEmitter {
 		this.logMessages = [];
 		this.registrations = new Map();
 		this.registrationRequests = [];
+		this.traceMessages = [];
 	}
 
 	async sendRequest(method, params) {
@@ -91,6 +92,8 @@ class MockLanguageClient extends EventEmitter {
 			this.emit("watchersChanged");
 		} else if (message.method === "window/logMessage") {
 			this.logMessages.push(message.params);
+		} else if (message.method === "$/logTrace") {
+			this.traceMessages.push(message.params);
 		} else if (message.method === "textDocument/publishDiagnostics") {
 			this.diagnosticsSequence += 1;
 			this.lastDiagnostics.set(message.params.uri, {
@@ -102,10 +105,11 @@ class MockLanguageClient extends EventEmitter {
 			}
 		} else if (message.method === "workspace/configuration") {
 			const respond = () => {
+				const { configurationSettings = {} } = this.options;
 				this.sendMessage({
 					jsonrpc: "2.0",
 					id: message.id,
-					result: [this.options.configurationSettings ?? {}],
+					result: [configurationSettings],
 				});
 			};
 			if (this.options.configurationResponseDelay) {
@@ -118,7 +122,8 @@ class MockLanguageClient extends EventEmitter {
 
 	async start() {
 		this.state = 1;
-		const serverPath = path.join(__dirname, "..", "lib", "index.mjs");
+		const serverPath =
+			this.options.serverPath ?? path.join(__dirname, "..", "lib", "index.mjs");
 		this.process = spawn("node", [serverPath, "--stdio"], {
 			cwd: path.join(__dirname, ".."),
 			env: process.env,
@@ -219,6 +224,7 @@ class MockLanguageClient extends EventEmitter {
 			capabilities,
 			workspaceFolders,
 			initializationOptions,
+			trace: this.options.trace ?? "off",
 		});
 
 		this.initializeResult = result;
@@ -343,6 +349,10 @@ export class TestLanguageClient {
 			}, timeout);
 			this.#client.on("watchersChanged", check);
 		});
+	}
+
+	get traceMessages() {
+		return this.#client.traceMessages;
 	}
 
 	async start() {
