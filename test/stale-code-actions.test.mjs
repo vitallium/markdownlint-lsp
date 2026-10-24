@@ -2,7 +2,7 @@ import * as fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { expect } from "chai";
 import { describe, it } from "mocha";
 import { TextDocument } from "vscode-languageserver-textdocument";
@@ -14,6 +14,68 @@ const range = {
 };
 
 describe("Code action document versions", () => {
+	it("does not let old completion finish a reopened document's active validation", async () => {
+		const directory = await fs.mkdtemp(
+			path.join(os.tmpdir(), "markdownlint-validation-owner-"),
+		);
+		const client = new TestLanguageClient({
+			serverPath: fileURLToPath(
+				new URL("./fixtures/controlled-validation-server.mjs", import.meta.url),
+			),
+			capabilities: { workspace: { configuration: false } },
+		});
+		const uri = pathToFileURL(path.join(directory, "test.md")).href;
+		const marker = (name, number) => path.join(directory, `${name}-${number}`);
+		const waitForMarker = async (name, number) => {
+			const deadline = Date.now() + 4000;
+			while (true) {
+				try {
+					await fs.access(marker(name, number));
+					return;
+				} catch {
+					if (Date.now() > deadline)
+						throw new Error(`Missing ${name}-${number}`);
+					await delay(10);
+				}
+			}
+		};
+		try {
+			await client.start();
+			await client.openTextDocument(uri, "#Old\n");
+			await waitForMarker("started", 1);
+			await client.closeTextDocument(uri);
+			await client.openTextDocument(uri, "#New\n");
+			await waitForMarker("started", 2);
+			await fs.writeFile(marker("release", 1), "");
+			await waitForMarker("completed", 1);
+			// A request is an event-loop barrier after validation 1 settles.
+			await client.requestCodeActions(uri, range);
+			await client.changeTextDocument(uri, 2, [{ text: "#Changed\n" }]);
+			await client.sendRawNotification("textDocument/didSave", {
+				textDocument: { uri },
+			});
+			await client.requestCodeActions(uri, range);
+			// Validation 2 still owns the reopened document's queue. The save
+			// must queue validation 3, not run it concurrently.
+			let thirdStarted = false;
+			try {
+				await fs.access(marker("started", 3));
+				thirdStarted = true;
+			} catch {}
+			expect(thirdStarted).to.equal(false);
+			await fs.writeFile(marker("release", 2), "");
+			await waitForMarker("started", 3);
+			expect(
+				JSON.parse(await fs.readFile(marker("started", 3), "utf8")).version,
+			).to.equal(2);
+			await fs.writeFile(marker("release", 3), "");
+			await waitForMarker("completed", 3);
+		} finally {
+			await client.stop();
+			await fs.rm(directory, { recursive: true, force: true });
+		}
+	});
+
 	for (const reopen of [false, true]) {
 		it(`discards in-flight results after ${reopen ? "close/reopen" : "a change"}`, async () => {
 			const directory = await fs.mkdtemp(
