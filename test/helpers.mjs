@@ -26,6 +26,7 @@ class MockLanguageClient extends EventEmitter {
 		this.lastDiagnostics = new Map();
 		this.diagnosticsSequence = 0;
 		this.logMessages = [];
+		this.traceMessages = [];
 	}
 
 	async sendRequest(method, params) {
@@ -75,6 +76,8 @@ class MockLanguageClient extends EventEmitter {
 			}
 		} else if (message.method === "window/logMessage") {
 			this.logMessages.push(message.params);
+		} else if (message.method === "$/logTrace") {
+			this.traceMessages.push(message.params);
 		} else if (message.method === "textDocument/publishDiagnostics") {
 			this.diagnosticsSequence += 1;
 			this.lastDiagnostics.set(message.params.uri, {
@@ -203,6 +206,7 @@ class MockLanguageClient extends EventEmitter {
 			capabilities,
 			workspaceFolders,
 			initializationOptions,
+			trace: this.options.trace ?? "off",
 		});
 
 		this.initializeResult = result;
@@ -268,6 +272,10 @@ export class TestLanguageClient {
 
 	get logMessages() {
 		return this.#client.logMessages;
+	}
+
+	get traceMessages() {
+		return this.#client.traceMessages;
 	}
 
 	async start() {
