@@ -28,6 +28,58 @@ const range = {
 };
 
 describe("CodeActions", () => {
+	for (const [name, start, end, expected] of [
+		["cursor at start", 4, 4, 1],
+		["cursor inside", 5, 5, 1],
+		["cursor at exclusive end", 7, 7, 0],
+		["cursor before", 3, 3, 0],
+		["cursor after", 8, 8, 0],
+		["selection ending at start", 0, 4, 0],
+		["selection starting at end", 7, 8, 0],
+		["selection overlapping", 3, 5, 1],
+	]) {
+		it(`matches ${name} without supplied diagnostics`, () => {
+			const doc = TextDocument.create(
+				"file:///test.md",
+				"markdown",
+				1,
+				"# Heading\n\ntext   \n",
+			);
+			const diag = {
+				...diagnostic,
+				code: "MD009",
+				range: {
+					start: { line: 2, character: 4 },
+					end: { line: 2, character: 7 },
+				},
+			};
+			const actions = new CodeActions({ codec }).build({
+				uri: doc.uri,
+				document: doc,
+				params: {
+					range: {
+						start: { line: 2, character: start },
+						end: { line: 2, character: end },
+					},
+					context: { only: ["quickfix"], diagnostics: [] },
+				},
+				diagnosticFixPairs: [
+					{
+						diagnostic: diag,
+						fixInfo: { lineNumber: 3, editColumn: 5, deleteCount: 3 },
+					},
+				],
+				issues: [],
+			});
+			expect(actions).to.have.lengthOf(expected);
+			if (expected) {
+				expect(
+					TextDocument.applyEdits(doc, actions[0].edit.changes[doc.uri]),
+				).to.equal("# Heading\n\ntext\n");
+			}
+		});
+	}
+
 	for (const [name, content, rule, expected] of [
 		["LF blank line", "# Heading\n\n\nText\n", "MD012", "# Heading\n\nText\n"],
 		[
