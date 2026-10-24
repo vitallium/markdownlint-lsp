@@ -183,12 +183,6 @@ describe("Extended configuration watchers", function () {
 	});
 
 	it("covers every document dependency when validations overlap", async () => {
-		// Invariant: once a dependency-watcher sync settles, the registered
-		// watcher set covers every dependency recorded before the call —
-		// including dependencies recorded while an update was already in
-		// flight. The exact microtask window in the old implementation is not
-		// observable through the LSP wire, so this drives overlapping
-		// validations and asserts their dependencies all end up watched.
 		const folders = ["first", "second", "third"];
 		for (const folder of folders) {
 			const dir = path.join(root, folder);
@@ -213,8 +207,6 @@ describe("Extended configuration watchers", function () {
 		}
 		const documents = await Promise.all(reports);
 		for (const [index, folder] of folders.entries()) {
-			// The extended config applied, proving each validation loaded its own
-			// dependency, and that dependency is registered.
 			expect(
 				documents[index].diagnostics.map(({ code }) => code),
 			).not.to.include("MD009");

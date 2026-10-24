@@ -47,7 +47,6 @@ describe("Watcher registration", function () {
 				{ uri: pathToFileURL(rootB).href, name: "workspace-b" },
 			],
 		});
-		// The initial registration request arrives after initialization.
 		await client.waitForWatchers(() =>
 			client.registrations.some(({ registerOptions }) =>
 				registerOptions.watchers.some(
@@ -60,16 +59,11 @@ describe("Watcher registration", function () {
 		);
 		expect(watchers).to.deep.include({ globPattern: "package.json" });
 		expect(watchers).not.to.deep.include({ globPattern: "**/package.json" });
-		// String globs are evaluated per workspace folder, so both roots are
-		// covered without watching nested package.json files (for example
-		// under node_modules during an install).
 		expect(client.isWatched(path.join(rootA, "package.json"))).to.equal(true);
 		expect(client.isWatched(path.join(rootB, "package.json"))).to.equal(true);
 		expect(
 			client.isWatched(path.join(rootA, "node_modules", "pkg", "package.json")),
 		).to.equal(false);
-		// Root-level markdownlint configuration files stay covered by the
-		// remaining `**/` globs.
 		expect(client.isWatched(path.join(rootB, ".markdownlint.json"))).to.equal(
 			true,
 		);
@@ -82,8 +76,6 @@ describe("Watcher registration", function () {
 			rootUri: pathToFileURL(root).href,
 			failRegistrationRequests: true,
 		});
-		// The rejected client/registerCapability request is logged as a
-		// warning instead of escaping as an unhandled rejection.
 		await until(() =>
 			client.logMessages.some(({ message }) =>
 				message.includes("Unable to register configuration file watchers"),
@@ -91,7 +83,6 @@ describe("Watcher registration", function () {
 		);
 		expect(client.registrationRequests).to.have.lengthOf(1);
 		expect(client.registrations).to.have.lengthOf(0);
-		// The server survived the rejection and still lints documents.
 		const uri = pathToFileURL(path.join(root, "doc.md")).href;
 		const report = client.waitForDiagnostics(uri);
 		await client.openTextDocument(uri, "#No space\n");

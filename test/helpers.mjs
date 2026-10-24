@@ -335,8 +335,6 @@ export class TestLanguageClient {
 							)
 						);
 					}
-					// A real client resolves a string glob per workspace folder, unless the
-					// pattern itself is an absolute path, which matches the full path.
 					if (path.isAbsolute(globPattern)) {
 						return minimatch(normalizedPath, globPattern, { dot: true });
 					}
