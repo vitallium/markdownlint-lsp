@@ -296,14 +296,34 @@ export class TestLanguageClient {
 
 	isWatched(filePath) {
 		const normalizedPath = filePath.split(path.sep).join("/");
+		const isInside = (base) => {
+			const relative = path.relative(base, filePath);
+			return !relative.startsWith("..") && !path.isAbsolute(relative);
+		};
+		const workspaceFolders = this.#client.options.workspaceFolders ?? [
+			{ uri: this.#client.options.rootUri ?? createTestDocumentUri("") },
+		];
 		return this.registrations.some(
 			(registration) =>
 				registration.method === "workspace/didChangeWatchedFiles" &&
-				registration.registerOptions.watchers.some(
-					({ globPattern }) =>
-						typeof globPattern === "string" &&
-						minimatch(normalizedPath, globPattern, { dot: true }),
-				),
+				registration.registerOptions.watchers.some(({ globPattern }) => {
+					if (typeof globPattern !== "string") {
+						const base = fileURLToPath(globPattern.baseUri);
+						return (
+							isInside(base) &&
+							minimatch(
+								path.relative(base, filePath).split(path.sep).join("/"),
+								globPattern.pattern,
+								{ dot: true },
+							)
+						);
+					}
+					// VS Code string watchers only receive workspace file events.
+					return (
+						workspaceFolders.some(({ uri }) => isInside(fileURLToPath(uri))) &&
+						minimatch(normalizedPath, globPattern, { dot: true })
+					);
+				}),
 		);
 	}
 

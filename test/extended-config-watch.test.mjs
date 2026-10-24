@@ -28,11 +28,19 @@ describe("Extended configuration watchers", function () {
 		await fs.rm(tempDir, { recursive: true, force: true });
 	});
 
-	async function start(dynamicRegistration = true) {
+	async function start(
+		dynamicRegistration = true,
+		relativePatternSupport = true,
+	) {
 		client = new TestLanguageClient({
 			rootUri: pathToFileURL(root).href,
 			capabilities: {
-				workspace: { didChangeWatchedFiles: { dynamicRegistration } },
+				workspace: {
+					didChangeWatchedFiles: {
+						dynamicRegistration,
+						relativePatternSupport,
+					},
+				},
 			},
 		});
 		await client.start();
@@ -88,6 +96,16 @@ describe("Extended configuration watchers", function () {
 		await fs.writeFile(outsideRules, "MD009: false\n");
 		await start();
 		expect(await open()).not.to.include("MD009");
+		expect(
+			client.registrations.flatMap(
+				({ registerOptions }) => registerOptions.watchers,
+			),
+		).to.deep.include({
+			globPattern: {
+				baseUri: pathToFileURL(path.dirname(outsideRules)).href,
+				pattern: "rules[[]shared[]][{]x[}][*].yaml",
+			},
+		});
 		// Node's package resolver canonicalizes symlinks (including macOS /var).
 		expect(client.isWatched(await fs.realpath(packageRules))).to.equal(true);
 		expect(await change(outsideRules, "MD009: true\n")).to.include("MD009");
@@ -112,6 +130,25 @@ describe("Extended configuration watchers", function () {
 		await start(false);
 		expect(await open()).not.to.include("MD009");
 		expect(client.registrationRequests).to.have.lengthOf(0);
+	});
+
+	it("uses string dependency globs when relative patterns are not supported", async () => {
+		const rules = path.join(root, "rules.yaml");
+		await fs.writeFile(
+			path.join(root, ".markdownlint.json"),
+			JSON.stringify({ extends: "./rules.yaml" }),
+		);
+		await fs.writeFile(rules, "MD009: false\n");
+		await start(true, false);
+		expect(await open()).not.to.include("MD009");
+		expect(await change(rules, "MD009: true\n")).to.include("MD009");
+		expect(
+			client.registrations.every(({ registerOptions }) =>
+				registerOptions.watchers.every(
+					({ globPattern }) => typeof globPattern === "string",
+				),
+			),
+		).to.equal(true);
 	});
 
 	it("deduplicates shared dependencies and releases replaced and closed-document watches", async () => {
