@@ -79,6 +79,17 @@ class MockLanguageClient extends EventEmitter {
 			}
 		} else if (message.method === "client/registerCapability") {
 			this.registrationRequests.push(message.params);
+			if (this.options.failRegistrationRequests) {
+				this.sendMessage({
+					jsonrpc: "2.0",
+					id: message.id,
+					error: {
+						code: -32601,
+						message: "Client rejected watcher registration",
+					},
+				});
+				return;
+			}
 			for (const registration of message.params.registrations) {
 				this.registrations.set(registration.id, registration);
 			}
@@ -324,11 +335,22 @@ export class TestLanguageClient {
 							)
 						);
 					}
-					// VS Code string watchers only receive workspace file events.
-					return (
-						workspaceFolders.some(({ uri }) => isInside(fileURLToPath(uri))) &&
-						minimatch(normalizedPath, globPattern, { dot: true })
-					);
+					// A real client resolves a string glob per workspace folder, unless the
+					// pattern itself is an absolute path, which matches the full path.
+					if (path.isAbsolute(globPattern)) {
+						return minimatch(normalizedPath, globPattern, { dot: true });
+					}
+					return workspaceFolders.some(({ uri }) => {
+						const base = fileURLToPath(uri);
+						return (
+							isInside(base) &&
+							minimatch(
+								path.relative(base, filePath).split(path.sep).join("/"),
+								globPattern,
+								{ dot: true },
+							)
+						);
+					});
 				}),
 		);
 	}

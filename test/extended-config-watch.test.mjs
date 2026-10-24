@@ -182,6 +182,49 @@ describe("Extended configuration watchers", function () {
 		expect(client.registrations).to.have.lengthOf(1);
 	});
 
+	it("covers every document dependency when validations overlap", async () => {
+		// Invariant: once a dependency-watcher sync settles, the registered
+		// watcher set covers every dependency recorded before the call —
+		// including dependencies recorded while an update was already in
+		// flight. The exact microtask window in the old implementation is not
+		// observable through the LSP wire, so this drives overlapping
+		// validations and asserts their dependencies all end up watched.
+		const folders = ["first", "second", "third"];
+		for (const folder of folders) {
+			const dir = path.join(root, folder);
+			await fs.mkdir(dir);
+			await fs.writeFile(
+				path.join(dir, ".markdownlint.json"),
+				JSON.stringify({ extends: `./${folder}.yaml` }),
+			);
+			await fs.writeFile(path.join(dir, `${folder}.yaml`), "MD009: false\n");
+		}
+		await start();
+		const reports = folders.map((folder) =>
+			client.waitForDiagnostics(
+				pathToFileURL(path.join(root, folder, "doc.md")).href,
+			),
+		);
+		for (const folder of folders) {
+			await client.openTextDocument(
+				pathToFileURL(path.join(root, folder, "doc.md")).href,
+				"# Heading\n\nTrailing spaces    \n",
+			);
+		}
+		const documents = await Promise.all(reports);
+		for (const [index, folder] of folders.entries()) {
+			// The extended config applied, proving each validation loaded its own
+			// dependency, and that dependency is registered.
+			expect(
+				documents[index].diagnostics.map(({ code }) => code),
+			).not.to.include("MD009");
+			expect(
+				client.isWatched(path.join(root, folder, `${folder}.yaml`)),
+				`watch coverage for ${folder}.yaml`,
+			).to.equal(true);
+		}
+	});
+
 	it("recomputes dependencies when workspace folders change", async () => {
 		const rules = path.join(root, "rules.yaml");
 		await fs.writeFile(
