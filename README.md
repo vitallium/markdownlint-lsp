@@ -52,6 +52,8 @@ The server supports hierarchical configuration loading, searching from the file 
 1. `.markdownlintrc`
 2. `.markdownlint/config`
 
+RC-style files must contain a JSON or YAML object (JSON is valid YAML, so a `.markdownlintrc` holding a plain JSON object works). INI-format content (e.g. `MD013=false`) is not supported: it logs a warning and no configuration is applied.
+
 ### Ignore Patterns
 
 The `.markdownlintignore` file is also supported for ignoring specific files or directories, following standard `.gitignore` semantics. Bare directory names (e.g., `dist`) will recursively ignore everything under that directory.
@@ -91,7 +93,7 @@ Modules are cached once they're loaded, so restart the server after editing a cu
 - **Multiple formats**: Supports JSON, YAML, and JavaScript configuration files
 - **File watching**: Automatically re-validates all open documents when configuration files change
 - **Full markdownlint compatibility**: Uses the [markdownlint](https://github.com/DavidAnson/markdownlint) library under the hood
-- **RC-style configuration**: Follows npm rc package standards for `.markdownlintrc` files
+- **RC-style configuration**: Supports `.markdownlintrc` and `.markdownlint/config` files containing a JSON or YAML object (INI format is not supported)
 
 ## License
 
