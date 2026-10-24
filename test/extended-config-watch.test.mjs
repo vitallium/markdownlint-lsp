@@ -182,6 +182,41 @@ describe("Extended configuration watchers", function () {
 		expect(client.registrations).to.have.lengthOf(1);
 	});
 
+	it("covers every document dependency when validations overlap", async () => {
+		const folders = ["first", "second", "third"];
+		for (const folder of folders) {
+			const dir = path.join(root, folder);
+			await fs.mkdir(dir);
+			await fs.writeFile(
+				path.join(dir, ".markdownlint.json"),
+				JSON.stringify({ extends: `./${folder}.yaml` }),
+			);
+			await fs.writeFile(path.join(dir, `${folder}.yaml`), "MD009: false\n");
+		}
+		await start();
+		const reports = folders.map((folder) =>
+			client.waitForDiagnostics(
+				pathToFileURL(path.join(root, folder, "doc.md")).href,
+			),
+		);
+		for (const folder of folders) {
+			await client.openTextDocument(
+				pathToFileURL(path.join(root, folder, "doc.md")).href,
+				"# Heading\n\nTrailing spaces    \n",
+			);
+		}
+		const documents = await Promise.all(reports);
+		for (const [index, folder] of folders.entries()) {
+			expect(
+				documents[index].diagnostics.map(({ code }) => code),
+			).not.to.include("MD009");
+			expect(
+				client.isWatched(path.join(root, folder, `${folder}.yaml`)),
+				`watch coverage for ${folder}.yaml`,
+			).to.equal(true);
+		}
+	});
+
 	it("recomputes dependencies when workspace folders change", async () => {
 		const rules = path.join(root, "rules.yaml");
 		await fs.writeFile(
