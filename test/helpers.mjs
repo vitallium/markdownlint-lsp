@@ -2,6 +2,7 @@ import { spawn } from "node:child_process";
 import { EventEmitter } from "node:events";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
+import { minimatch } from "minimatch";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,6 +27,8 @@ class MockLanguageClient extends EventEmitter {
 		this.lastDiagnostics = new Map();
 		this.diagnosticsSequence = 0;
 		this.logMessages = [];
+		this.registrations = new Map();
+		this.registrationRequests = [];
 	}
 
 	async sendRequest(method, params) {
@@ -73,6 +76,19 @@ class MockLanguageClient extends EventEmitter {
 			} else {
 				resolve(message.result);
 			}
+		} else if (message.method === "client/registerCapability") {
+			this.registrationRequests.push(message.params);
+			for (const registration of message.params.registrations) {
+				this.registrations.set(registration.id, registration);
+			}
+			this.sendMessage({ jsonrpc: "2.0", id: message.id, result: null });
+			this.emit("watchersChanged");
+		} else if (message.method === "client/unregisterCapability") {
+			for (const registration of message.params.unregisterations) {
+				this.registrations.delete(registration.id);
+			}
+			this.sendMessage({ jsonrpc: "2.0", id: message.id, result: null });
+			this.emit("watchersChanged");
 		} else if (message.method === "window/logMessage") {
 			this.logMessages.push(message.params);
 		} else if (message.method === "textDocument/publishDiagnostics") {
@@ -268,6 +284,45 @@ export class TestLanguageClient {
 
 	get logMessages() {
 		return this.#client.logMessages;
+	}
+
+	get registrations() {
+		return [...this.#client.registrations.values()];
+	}
+
+	get registrationRequests() {
+		return this.#client.registrationRequests;
+	}
+
+	isWatched(filePath) {
+		const normalizedPath = filePath.split(path.sep).join("/");
+		return this.registrations.some(
+			(registration) =>
+				registration.method === "workspace/didChangeWatchedFiles" &&
+				registration.registerOptions.watchers.some(
+					({ globPattern }) =>
+						typeof globPattern === "string" &&
+						minimatch(normalizedPath, globPattern, { dot: true }),
+				),
+		);
+	}
+
+	async waitForWatchers(predicate, timeout = 5000) {
+		if (predicate()) return;
+		await new Promise((resolve, reject) => {
+			const check = () => {
+				if (predicate()) {
+					clearTimeout(timer);
+					this.#client.off("watchersChanged", check);
+					resolve();
+				}
+			};
+			const timer = setTimeout(() => {
+				this.#client.off("watchersChanged", check);
+				reject(new Error("Timeout waiting for watcher registrations"));
+			}, timeout);
+			this.#client.on("watchersChanged", check);
+		});
 	}
 
 	async start() {
