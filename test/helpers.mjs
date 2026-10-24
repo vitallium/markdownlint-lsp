@@ -106,7 +106,8 @@ class MockLanguageClient extends EventEmitter {
 
 	async start() {
 		this.state = 1;
-		const serverPath = path.join(__dirname, "..", "lib", "index.mjs");
+		const serverPath =
+			this.options.serverPath ?? path.join(__dirname, "..", "lib", "index.mjs");
 		this.process = spawn("node", [serverPath, "--stdio"], {
 			cwd: path.join(__dirname, ".."),
 			env: process.env,
