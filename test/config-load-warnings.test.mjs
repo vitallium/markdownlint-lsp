@@ -37,8 +37,6 @@ describe("Config content validation", () => {
 
 				const { config, logs } = await loadConfigCapturingLogs(tempDir);
 
-				// INI content parses as a YAML string, which must not be silently
-				// normalized to an empty config object.
 				expect(config).to.be.null;
 				const rcWarnings = warnings(logs, rcFilename);
 				expect(rcWarnings).to.have.lengthOf(1);
@@ -86,8 +84,6 @@ describe("Config content validation", () => {
 
 			const { config, logs } = await loadConfigCapturingLogs(tempDir);
 
-			// Valid JSONC that is not an object must warn, not apply an empty
-			// config.
 			expect(config).to.be.null;
 			const jsoncWarnings = warnings(logs, ".markdownlint.jsonc");
 			expect(jsoncWarnings).to.have.lengthOf(1);
