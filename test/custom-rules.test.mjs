@@ -142,6 +142,43 @@ describe("Custom rules", function () {
 		await fs.rm(tempDir, { recursive: true, force: true });
 	});
 
+	it("reloads a CommonJS config without reloading its required custom rule", async () => {
+		const directory = "cjs-reload";
+		const configPath = `${directory}/.markdownlint-cli2.cjs`;
+		const rulePath = `${directory}/rule.cjs`;
+		const writeConfig = (enabled) =>
+			write(
+				configPath,
+				`module.exports = {
+					config: { MD013: ${enabled} },
+					customRules: [require("./rule.cjs")],
+				};\n`,
+			);
+		await write(rulePath, NO_TODO_RULE);
+		await writeConfig(false);
+		const uri = pathToFileURL(path.join(tempDir, directory, "reload.md")).href;
+		const initialDiagnostics = trustedClient.waitForDiagnosticsArray(uri);
+		await trustedClient.openTextDocument(
+			uri,
+			`# Heading\n\nTODO ${"long line ".repeat(20).trimEnd()}\n`,
+		);
+		expect(
+			(await initialDiagnostics).map((diagnostic) => diagnostic.code),
+		).to.deep.equal(["no-todo"]);
+
+		await write(rulePath, NO_TODO_RULE.replaceAll("TODO", "DONE"));
+		await writeConfig(true);
+		const nextDiagnostics = trustedClient.waitForDiagnosticsArray(uri);
+		await trustedClient.sendRawNotification("workspace/didChangeWatchedFiles", {
+			changes: [
+				{ uri: pathToFileURL(path.join(tempDir, configPath)).href, type: 2 },
+			],
+		});
+		expect(
+			(await nextDiagnostics).map((diagnostic) => diagnostic.code),
+		).to.have.members(["MD013", "no-todo"]);
+	});
+
 	it("loads custom rules relative to a YAML config", async () => {
 		await write(
 			"yaml/.markdownlint-cli2.yaml",
