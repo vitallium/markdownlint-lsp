@@ -315,6 +315,61 @@ no-duplicate-heading:
 		});
 	});
 
+	describe("JavaScript configuration reloading", () => {
+		for (const filename of [
+			".markdownlint.cjs",
+			".markdownlint-cli2.cjs",
+			".markdownlint.mjs",
+			".markdownlint-cli2.mjs",
+		]) {
+			it(`reloads ${filename} after watched file changes in the same server`, async () => {
+				const testDir = await prepareTestDir(`reload-${filename}`);
+				const configPath = path.join(testDir, filename);
+				const uri = pathToFileURL(path.join(testDir, "test.md")).href;
+				const trustedClient = new TestLanguageClient({
+					rootUri: pathToFileURL(testDir).href,
+					initializationOptions: { allowJavaScriptConfig: true },
+				});
+				const writeConfig = async (enabled) => {
+					const config = { default: false, MD013: enabled };
+					const options = filename.includes("-cli2") ? { config } : config;
+					const prefix = filename.endsWith(".cjs")
+						? "module.exports = "
+						: "export default ";
+					await fs.writeFile(
+						configPath,
+						`${prefix}${JSON.stringify(options)};\n`,
+					);
+				};
+
+				await writeConfig(false);
+				await trustedClient.start();
+				try {
+					const initialDiagnostics = trustedClient.waitForDiagnosticsArray(uri);
+					await trustedClient.openTextDocument(
+						uri,
+						`# Heading\n\n${"Long line ".repeat(20).trimEnd()}\n`,
+					);
+					expect(await initialDiagnostics).to.be.empty;
+
+					for (const enabled of [true, false]) {
+						await writeConfig(enabled);
+						const nextDiagnostics = trustedClient.waitForDiagnosticsArray(uri);
+						await trustedClient.sendRawNotification(
+							"workspace/didChangeWatchedFiles",
+							{ changes: [{ uri: pathToFileURL(configPath).href, type: 2 }] },
+						);
+						expect(
+							(await nextDiagnostics).map((diagnostic) => diagnostic.code),
+						).to.deep.equal(enabled ? ["MD013"] : []);
+					}
+				} finally {
+					await trustedClient.stop();
+				}
+			});
+		}
+	});
+
 	describe("CLI2-style Configuration", () => {
 		it("should load .markdownlint-cli2.jsonc configuration", async () => {
 			const configContent = `{
