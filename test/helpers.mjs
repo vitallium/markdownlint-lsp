@@ -141,11 +141,11 @@ class MockLanguageClient extends EventEmitter {
 			stdio: ["pipe", "pipe", "inherit"],
 		});
 
-		this.buffer = "";
+		this.buffer = Buffer.alloc(0);
 		this.contentLength = null;
 
 		this.process.stdout.on("data", (data) => {
-			this.buffer += data.toString();
+			this.buffer = Buffer.concat([this.buffer, data]);
 			this.processBuffer();
 		});
 
@@ -247,24 +247,31 @@ class MockLanguageClient extends EventEmitter {
 	processBuffer() {
 		while (true) {
 			if (this.contentLength === null) {
-				const headerMatch = this.buffer.match(/Content-Length: (\d+)\r\n\r\n/);
+				const headerEnd = this.buffer.indexOf("\r\n\r\n");
+				if (headerEnd === -1) {
+					break;
+				}
+				const headerMatch = this.buffer
+					.subarray(0, headerEnd)
+					.toString("ascii")
+					.match(/Content-Length: (\d+)/);
 				if (!headerMatch) {
 					break;
 				}
 				this.contentLength = parseInt(headerMatch[1], 10);
-				this.buffer = this.buffer.slice(headerMatch[0].length);
+				this.buffer = this.buffer.subarray(headerEnd + 4);
 			}
 
 			if (this.buffer.length < this.contentLength) {
 				break;
 			}
 
-			const content = this.buffer.slice(0, this.contentLength);
-			this.buffer = this.buffer.slice(this.contentLength);
+			const content = this.buffer.subarray(0, this.contentLength);
+			this.buffer = this.buffer.subarray(this.contentLength);
 			this.contentLength = null;
 
 			try {
-				const message = JSON.parse(content);
+				const message = JSON.parse(content.toString("utf8"));
 				this.handleMessage(message);
 			} catch (e) {
 				console.error("Failed to parse message:", e);
