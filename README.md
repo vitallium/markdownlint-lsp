@@ -76,10 +76,11 @@ Modules are cached once they're loaded, so restart the server after editing a cu
 
 ### Example Configuration
 
+Save this as `.markdownlint-cli2.jsonc` in your workspace root:
+
 ```jsonc
 {
-  "extends": "default",
-  "rules": {
+  "config": {
     "MD013": false
   },
   "ignores": ["dist", "coverage"]
