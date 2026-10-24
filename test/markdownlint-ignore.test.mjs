@@ -1,4 +1,5 @@
 import * as fs from "node:fs/promises";
+import os from "node:os";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
 import { expect } from "chai";
@@ -47,11 +48,86 @@ describe("markdownlint-ignore", () => {
 		).to.equal(false);
 	});
 
-	it("should load ignore entries from directories on the search path", async () => {
-		const nestedDir = path.join(baseDir, "nested");
-		const entries = await loadMarkdownlintIgnoreEntries([nestedDir, baseDir]);
-		expect(entries).to.have.length(2);
-		expect(entries[0].dir).to.equal(nestedDir);
-		expect(entries[1].dir).to.equal(baseDir);
+	for (const [name, parent, child, filename, expected] of [
+		["child file exception", "*.md\n", "!keep.md\n", "nested/keep.md", false],
+		["unmatched child rule", "*.md\n", "!keep.md\n", "nested/other.md", true],
+		[
+			"excluded parent directory",
+			"nested/\n",
+			"!keep.md\n",
+			"nested/keep.md",
+			true,
+		],
+		[
+			"child directory exception",
+			"nested/*\n",
+			"!sub/\n",
+			"nested/sub/keep.md",
+			false,
+		],
+		["child positive rule", "", "*.md\n", "nested/sub/other.md", true],
+		["root anchored child rule", "", "/keep.md\n", "nested/sub/keep.md", false],
+		["root anchored child match", "", "/keep.md\n", "nested/keep.md", true],
+		["scoped path match", "", "sub/keep.md\n", "nested/sub/keep.md", true],
+		[
+			"scoped path non-match",
+			"",
+			"sub/keep.md\n",
+			"nested/other/sub/keep.md",
+			false,
+		],
+		["sibling scope", "", "*.md\n", "sibling/keep.md", false],
+		[
+			"blank lines and comments",
+			"",
+			"\n   \n# comment\n",
+			"nested/sub/keep.md",
+			false,
+		],
+		[
+			"escaped leading exclamation",
+			"",
+			"\\!keep.md\n",
+			"nested/!keep.md",
+			true,
+		],
+		["escaped leading hash", "", "\\#keep.md\n", "nested/#keep.md", true],
+	]) {
+		it(`honors ${name}`, async () => {
+			const root = await fs.mkdtemp(
+				path.join(os.tmpdir(), "markdownlint-ignore-"),
+			);
+			try {
+				const nested = path.join(root, "nested");
+				await fs.mkdir(nested);
+				await fs.writeFile(path.join(root, ".markdownlintignore"), parent);
+				await fs.writeFile(path.join(nested, ".markdownlintignore"), child);
+				const patterns = new IgnorePatternSet({
+					markdownlintIgnoreEntries: await loadMarkdownlintIgnoreEntries([
+						nested,
+						root,
+					]),
+				});
+				expect(patterns.matches(path.join(root, filename))).to.equal(expected);
+			} finally {
+				await fs.rm(root, { recursive: true, force: true });
+			}
+		});
+	}
+
+	it("treats glob characters in an ignore file's directory as literal", async () => {
+		const nested = path.join(baseDir, "docs[1]");
+		await fs.mkdir(nested);
+		await fs.writeFile(path.join(nested, ".markdownlintignore"), "keep.md\n");
+		const patterns = new IgnorePatternSet({
+			markdownlintIgnoreEntries: await loadMarkdownlintIgnoreEntries([
+				nested,
+				baseDir,
+			]),
+		});
+		expect(patterns.matches(path.join(nested, "keep.md"))).to.equal(true);
+		expect(patterns.matches(path.join(baseDir, "docs1", "keep.md"))).to.equal(
+			false,
+		);
 	});
 });
