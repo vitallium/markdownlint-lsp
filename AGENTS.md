@@ -45,10 +45,14 @@ provides real-time linting for Markdown files in editors and IDEs.
 5. `.markdownlint.cjs`
 6. `.markdownlint.mjs`
 
-#### RC-style Configuration (following npm rc package standards)
+#### RC-style Configuration
 
 1. `.markdownlintrc`
 2. `.markdownlint/config`
+
+RC files must contain a JSON or YAML object (JSON is a subset of YAML).
+INI-format content (e.g. `MD013=false`) is not supported: it logs a
+warning and no configuration is applied.
 
 ### Configuration Loading Logic
 
