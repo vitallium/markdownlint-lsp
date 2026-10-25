@@ -1,3 +1,4 @@
+import os from "node:os";
 import { expect } from "chai";
 import { applyFixes } from "markdownlint";
 import { lint } from "markdownlint/sync";
@@ -133,6 +134,63 @@ describe("CodeActions", () => {
 				issues,
 			});
 
+			expect(actions).to.have.lengthOf(1);
+			const fixed = TextDocument.applyEdits(
+				doc,
+				actions[0].edit.changes[doc.uri],
+			);
+			expect(fixed).to.equal(expected);
+			expect(fixed).to.equal(applyFixes(content, issues));
+		});
+	}
+
+	for (const [name, content, rule, expected] of [
+		[
+			"CRLF blank line",
+			"# Heading\r\nText\r\n",
+			"MD022",
+			"# Heading\r\n\r\nText\r\n",
+		],
+		[
+			"CRLF final newline",
+			"# Heading\r\n\r\ntext",
+			"MD047",
+			"# Heading\r\n\r\ntext\r\n",
+		],
+		["LF blank line", "# Heading\nText\n", "MD022", "# Heading\n\nText\n"],
+		["no existing newline", "# Heading", "MD047", `# Heading${os.EOL}`],
+	]) {
+		it(`preserves line endings when inserting ${name}`, () => {
+			const doc = TextDocument.create(
+				"file:///test.md",
+				"markdown",
+				1,
+				content,
+			);
+			const issues = lint({
+				strings: { content },
+				config: { default: false, [rule]: true },
+			}).content;
+			expect(issues).to.have.lengthOf(1);
+			const issue = issues[0];
+			const diag = {
+				...diagnostic,
+				code: rule,
+				range: {
+					start: { line: issue.lineNumber - 1, character: 0 },
+					end: { line: issue.lineNumber - 1, character: 1 },
+				},
+			};
+			const actions = new CodeActions({ codec }).build({
+				uri: doc.uri,
+				document: doc,
+				params: {
+					range: diag.range,
+					context: { only: ["quickfix"], diagnostics: [diag] },
+				},
+				diagnosticFixPairs: [{ diagnostic: diag, fixInfo: issue.fixInfo }],
+				issues,
+			});
 			expect(actions).to.have.lengthOf(1);
 			const fixed = TextDocument.applyEdits(
 				doc,
