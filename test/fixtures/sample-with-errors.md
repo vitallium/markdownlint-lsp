@@ -6,7 +6,7 @@
 
 This is a paragraph with trailing spaces
 
-    This line has hard tabs
+	This line has hard tabs
 
 This is a [reversed link][text].
 

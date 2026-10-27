@@ -43,7 +43,7 @@ Inline code like `const x = 42` has proper spacing.
 ```javascript
 // Fenced code blocks have language specified
 function example() {
-	return "Hello, World!";
+  return "Hello, World!";
 }
 ```
 
