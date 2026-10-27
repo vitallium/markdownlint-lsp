@@ -398,6 +398,33 @@ no-duplicate-heading:
 			expect(md013).to.be.undefined;
 		});
 
+		it("does not read a declarative CLI2 files path while linting the open buffer", async () => {
+			const testDir = await prepareTestDir("cli2-files-not-read");
+			const outsidePath = path.join(
+				testDir,
+				"..",
+				"missing-cli2-files-marker.md",
+			);
+			await fs.writeFile(
+				path.join(testDir, ".markdownlint-cli2.jsonc"),
+				JSON.stringify({
+					files: [outsidePath],
+					config: { default: true, MD013: true },
+				}),
+			);
+
+			const uri = pathToFileURL(path.join(testDir, "test.md")).href;
+			await client.openTextDocument(
+				uri,
+				`${"Long line ".repeat(20).trimEnd()}\n`,
+			);
+			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
+
+			expect(
+				publishedDiagnostics.map((diagnostic) => diagnostic.code),
+			).to.include("MD013");
+		});
+
 		it("should parse comments and trailing commas in CLI2 JSONC configuration", async () => {
 			const configContent = `// CLI2 JSONC configuration
 			{
