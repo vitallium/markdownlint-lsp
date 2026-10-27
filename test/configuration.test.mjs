@@ -420,9 +420,9 @@ no-duplicate-heading:
 			);
 			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
 
-			expect(publishedDiagnostics.map((diagnostic) => diagnostic.code)).to.include(
-				"MD013",
-			);
+			expect(
+				publishedDiagnostics.map((diagnostic) => diagnostic.code),
+			).to.include("MD013");
 		});
 
 		it("should parse comments and trailing commas in CLI2 JSONC configuration", async () => {
