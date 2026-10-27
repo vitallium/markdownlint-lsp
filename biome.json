@@ -1,0 +1,11 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.6.3/schema.json",
+	"overrides": [
+		{
+			"includes": ["test/fixtures/**/*.md"],
+			"formatter": {
+				"enabled": false
+			}
+		}
+	]
+}
