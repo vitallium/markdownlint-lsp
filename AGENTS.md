@@ -60,7 +60,7 @@ warning and no configuration is applied.
 - CLI2 configs are merged using `mergeOptions`
 - Standard markdownlint configs override parent configs (set as `config` property)
 - RC-style configs follow markdownlint behavior (set as `config` property)
-- String entries in a CLI2 config's `customRules` and `markdownItPlugins` are resolved to modules (`lib/module-loader.mjs`, ported from cli2) relative to that config's directory plus `modulePaths`, *before* merging. The same entries in LSP settings resolve relative to the workspace root. Importing is gated behind `allowJavaScriptConfig`, because it executes workspace code.
+- String entries in a CLI2 config's `customRules` and `markdownItPlugins` are resolved to modules (`lib/module-loader.mjs`, ported from cli2) relative to that config's directory plus `modulePaths`, _before_ merging. The same entries in LSP settings resolve relative to the workspace root. Importing is gated behind `allowJavaScriptConfig`, because it executes workspace code.
 - `DocumentValidator` always passes a lazy `markdownItFactory` (markdown-it with `html: true` plus plugins, matching cli2), and retries without `customRules` if `lint()` throws so built-in diagnostics survive a bad rule.
 
 ### File Watching
@@ -80,7 +80,7 @@ globby/minimatch).
 However, `DocumentValidator#matchesIgnorePattern` (in
 `lib/document-validator.mjs`) intentionally supplements plain `minimatch`
 with directory-prefix/equality checks, so that a bare directory name (e.g.
-`"dist"`) *does* recursively ignore everything under `dist/`, matching the
+`"dist"`) _does_ recursively ignore everything under `dist/`, matching the
 more common `.gitignore`-style expectation. This is a deliberate divergence
 from `markdownlint-cli2`'s own CLI behavior (which requires an explicit
 `"dist/**"`), traded off for better UX in the editor. Keep this in mind when

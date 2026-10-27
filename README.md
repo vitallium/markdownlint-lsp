@@ -2,7 +2,7 @@
 
 > ✨ **This project was entirely vibe coded!** ✨
 > 
-> *No formal planning was harmed in the making of this LSP server. Pure vibes only.*
+> _No formal planning was harmed in the making of this LSP server. Pure vibes only._
 
 [![npm version](https://img.shields.io/npm/v/markdownlint-lsp)](https://www.npmjs.com/package/markdownlint-lsp)
 [![CI](https://github.com/vitallium/markdownlint-lsp/actions/workflows/ci.yml/badge.svg)](https://github.com/vitallium/markdownlint-lsp/actions/workflows/ci.yml)
@@ -37,18 +37,21 @@ Most LSP-compatible editors will automatically detect and use the server via the
 The server supports hierarchical configuration loading, searching from the file being linted up to the workspace root. Configuration files are discovered in the following precedence order:
 
 ### CLI2-style Configuration
+
 1. `.markdownlint-cli2.jsonc`
 2. `.markdownlint-cli2.yaml` / `.markdownlint-cli2.yml`
 3. `.markdownlint-cli2.cjs` / `.markdownlint-cli2.mjs`
 4. `package.json` (with `markdownlint-cli2` key, workspace root only)
 
 ### Standard markdownlint Configuration
+
 1. `.markdownlint.jsonc`
 2. `.markdownlint.json`
 3. `.markdownlint.yaml` / `.markdownlint.yml`
 4. `.markdownlint.cjs` / `.markdownlint.mjs`
 
 ### RC-style Configuration
+
 1. `.markdownlintrc`
 2. `.markdownlint/config`
 
@@ -80,10 +83,10 @@ Save this as `.markdownlint-cli2.jsonc` in your workspace root:
 
 ```jsonc
 {
-  "config": {
-    "MD013": false
-  },
-  "ignores": ["dist", "coverage"]
+	"config": {
+		"MD013": false
+	},
+	"ignores": ["dist", "coverage"]
 }
 ```
 

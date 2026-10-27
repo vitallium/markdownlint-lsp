@@ -10,14 +10,14 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixes
 
-- *(config)* Parse JSONC comments
+- _(config)_ Parse JSONC comments
 - Apply client settings on cold start
-- *(ci)* Avoid yielding when startup settings are absent
+- _(ci)_ Avoid yielding when startup settings are absent
 - Preserve code action lookup semantics
 
 ### Performance
 
-- *(code-actions)* Use Map for O(1) diagnostic fix pair lookup
+- _(code-actions)_ Use Map for O(1) diagnostic fix pair lookup
 
 ### Styling
 
@@ -38,8 +38,8 @@ All notable changes to this project will be documented in this file.
 
 ### Refactor
 
-- *(document-runtime)* Consolidate per-URI state into DocumentState class
-- *(ignore)* Create unified IgnorePatternSet for consolidated ignore matching
+- _(document-runtime)_ Consolidate per-URI state into DocumentState class
+- _(ignore)_ Create unified IgnorePatternSet for consolidated ignore matching
 
 ### Documentation
 
@@ -47,7 +47,7 @@ All notable changes to this project will be documented in this file.
 
 ### Miscellaneous Tasks
 
-- *(deps)* Update pnpm to v11.18.0
+- _(deps)_ Update pnpm to v11.18.0
 - Remove redundant test tooling
 - Release 0.9.2
 
@@ -65,45 +65,45 @@ All notable changes to this project will be documented in this file.
 
 ### Features
 
-- *(server)* Support .markdownlintignore files
+- _(server)_ Support .markdownlintignore files
 
 ### Bug Fixes
 
-- *(server)* Normalize relative paths to forward slashes for minimatch
-- *(server)* Recursively match bare directory names in ignores patterns
+- _(server)_ Normalize relative paths to forward slashes for minimatch
+- _(server)_ Recursively match bare directory names in ignores patterns
 
 ### Miscellaneous Tasks
 
 - Stop testing on Node.js v20
-- *(deps)* Update markdownlint to v0.41.0
+- _(deps)_ Update markdownlint to v0.41.0
 - Pin GitHub actions to SHAs to prevent tag hijacking
-- *(deps)* Update js-yaml to v5.2.1
+- _(deps)_ Update js-yaml to v5.2.1
 - Add Biome linting job to CI workflow
-- *(deps)* Update `mocha` to v11.7.6
-- *(deps)* Update `biome` to v2.5.3
-- *(deps)* Update `markdownlint` to v0.41.1
-- *(deps)* Update biome to v2.5.5
-- *(deps)* Update ignore to v7.0.6
-- *(deps)* Update js-yaml to v5.2.2
+- _(deps)_ Update `mocha` to v11.7.6
+- _(deps)_ Update `biome` to v2.5.3
+- _(deps)_ Update `markdownlint` to v0.41.1
+- _(deps)_ Update biome to v2.5.5
+- _(deps)_ Update ignore to v7.0.6
+- _(deps)_ Update js-yaml to v5.2.2
 - Release 0.9.0
 
 ## [0.8.0] - 2026-05-10
 
 ### Features
 
-- *(server)* Respect ignores glob patterns from config
+- _(server)_ Respect ignores glob patterns from config
 
 ### Bug Fixes
 
-- *(server)* Restore ignores precedence and settings support
-- *(config)* Require opt-in for JavaScript configs
-- *(server)* Register workspace folder updates
-- *(server)* Prefer nested workspace roots
-- *(server)* Clear ignored document fixes
+- _(server)_ Restore ignores precedence and settings support
+- _(config)_ Require opt-in for JavaScript configs
+- _(server)_ Register workspace folder updates
+- _(server)_ Prefer nested workspace roots
+- _(server)_ Clear ignored document fixes
 
 ### Refactor
 
-- *(server)* Split lifecycle and validation services
+- _(server)_ Split lifecycle and validation services
 
 ### Testing
 
@@ -112,9 +112,9 @@ All notable changes to this project will be documented in this file.
 
 ### Miscellaneous Tasks
 
-- *(deps)* Update biome to v2.4.6
-- *(deps)* Update biome to v2.4.7
-- *(deps)* Update minimatch to v10.2.5
+- _(deps)_ Update biome to v2.4.6
+- _(deps)_ Update biome to v2.4.7
+- _(deps)_ Update minimatch to v10.2.5
 - Release v0.8.0
 
 ## [0.7.0] - 2026-02-15
@@ -132,13 +132,13 @@ All notable changes to this project will be documented in this file.
 - Clear stale code action fixes on lint errors
 - Provide quick fixes when diagnostics missing
 - Guard config trace logging
-- *(server)* Negotiate position encodings
-- *(server)* Queue validations
-- *(server)* Merge initialization settings
-- *(server)* Key config cache by directory
-- *(config)* Redact sensitive logs
-- *(config)* Load js configs
-- *(server)* Apply fix-all edits
+- _(server)_ Negotiate position encodings
+- _(server)_ Queue validations
+- _(server)_ Merge initialization settings
+- _(server)_ Key config cache by directory
+- _(config)_ Redact sensitive logs
+- _(config)_ Load js configs
+- _(server)_ Apply fix-all edits
 
 ### Styling
 
@@ -153,14 +153,14 @@ All notable changes to this project will be documented in this file.
 - Remove .npmignore
 - Remove testing documentation files
 - Wrap README description to 72 characters
-- *(deps)* Bump `@biomejs/biome` to v2.3.2
-- *(deps)* Update `js-yaml` to v4.1.1
+- _(deps)_ Bump `@biomejs/biome` to v2.3.2
+- _(deps)_ Update `js-yaml` to v4.1.1
 - Add `lint` and `lint:fix` tasks
 - Initial setup
-- *(deps)* Update `chai` to v6.2.2
-- *(deps)* Update `markdownlint` to v0.40.0
-- *(deps)* Remove redundant pkgs from dev deps
-- *(deps)* Enable `pnpm` via corepack
+- _(deps)_ Update `chai` to v6.2.2
+- _(deps)_ Update `markdownlint` to v0.40.0
+- _(deps)_ Remove redundant pkgs from dev deps
+- _(deps)_ Enable `pnpm` via corepack
 - Remove `pnpm` version
 - Log skipped fix-all overlaps
 - Release v0.7.0
@@ -211,28 +211,28 @@ All notable changes to this project will be documented in this file.
 ### Miscellaneous Tasks
 
 - Add CHANGELOG.md
-- *(deps)* Update markdownlint to v0.39.0
+- _(deps)_ Update markdownlint to v0.39.0
 - Add Zed settings
 - Add AGENTS.md file
 - Remove unused globby dependency
 - Remove empty onWillSave handler
-- *(server)* Remove redundant comments
-- *(agents)* Add note about pnpm package manager
-- *(agents)* Wrap long lines in AGENTS.md
-- *(release)* V0.6.0
+- _(server)_ Remove redundant comments
+- _(agents)_ Add note about pnpm package manager
+- _(agents)_ Wrap long lines in AGENTS.md
+- _(release)_ V0.6.0
 
 ## [0.5.1] - 2025-09-18
 
 ### Bug Fixes
 
-- *(scripts)* Correct main entry point from index.js to index.mjs
-- *(lsp)* Check workspace folders capability properly
-- *(lsp)* Prevent validation of closed documents
-- *(lsp)* Implement tracing correctly
+- _(scripts)_ Correct main entry point from index.js to index.mjs
+- _(lsp)_ Check workspace folders capability properly
+- _(lsp)_ Prevent validation of closed documents
+- _(lsp)_ Implement tracing correctly
 
 ### Refactor
 
-- *(lsp)* Use fileURLToPath for proper URI handling
+- _(lsp)_ Use fileURLToPath for proper URI handling
 
 ### Styling
 
@@ -240,7 +240,7 @@ All notable changes to this project will be documented in this file.
 
 ### Miscellaneous Tasks
 
-- *(deps)* Update `@biomejs/biome` to v2.2.4
+- _(deps)_ Update `@biomejs/biome` to v2.2.4
 - Bump version to 0.5.1
 
 ## [0.5.0] - 2025-07-18
@@ -288,7 +288,7 @@ All notable changes to this project will be documented in this file.
 
 ### Features
 
-- *(config)* Add support for markdownlint-cli2 configs
+- _(config)_ Add support for markdownlint-cli2 configs
 - Add workspace folder support
 - Implement config caching for better performance
 - Replace console logging with proper LSP tracer
@@ -297,4 +297,3 @@ All notable changes to this project will be documented in this file.
 
 - Switch to pnpm
 - Add biome
-

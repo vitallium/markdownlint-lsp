@@ -43,7 +43,7 @@ Inline code like `const x = 42` has proper spacing.
 ```javascript
 // Fenced code blocks have language specified
 function example() {
-  return "Hello, World!";
+	return "Hello, World!";
 }
 ```
 
@@ -67,7 +67,7 @@ function example() {
 
 ## Emphasis
 
-This text has *proper emphasis* and **strong emphasis** with correct spacing.
+This text has _proper emphasis_ and **strong emphasis** with correct spacing.
 
 ## Final Notes
 
