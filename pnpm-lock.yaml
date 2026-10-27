@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       ignore:
-        specifier: ^7.0.6
-        version: 7.0.6
+        specifier: ^7.0.14
+        version: 7.0.14
       js-yaml:
         specifier: ^5.4.2
         version: 5.4.2
@@ -314,8 +314,8 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
-  ignore@7.0.6:
-    resolution: {integrity: sha512-BAg6QkE8W+TuQLrrw0Ugr7HegXduRuuj8/ti2kSOc+jz1dmx8/WNcjr6XGnq5YpDWxFwwaavqD0+jIUOKelTsw==}
+  ignore@7.0.14:
+    resolution: {integrity: sha512-wCBiZ77u1tuWde6G/nfOtLaCTYcFDU5yCzARzK10y+rLhzYoL7a7yEemcopcc2Mzow7gZOIjnV2ym1NYmdiJOQ==}
     engines: {node: '>= 4'}
 
   is-alphabetical@2.0.1:
@@ -841,7 +841,7 @@ snapshots:
 
   he@1.2.0: {}
 
-  ignore@7.0.6: {}
+  ignore@7.0.14: {}
 
   is-alphabetical@2.0.1: {}
 
