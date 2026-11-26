@@ -398,6 +398,28 @@ no-duplicate-heading:
 			expect(md013).to.be.undefined;
 		});
 
+		it("resolves config.extends relative to the CLI2 config file", async () => {
+			const testDir = await prepareTestDir("cli2-config-extends");
+			await fs.writeFile(
+				path.join(testDir, "base.json"),
+				JSON.stringify({ default: true, MD013: false }),
+			);
+			await fs.writeFile(
+				path.join(testDir, ".markdownlint-cli2.jsonc"),
+				JSON.stringify({ config: { extends: "./base.json" } }),
+			);
+
+			const uri = pathToFileURL(path.join(testDir, "test.md")).href;
+			await client.openTextDocument(
+				uri,
+				`${"Long line ".repeat(20).trimEnd()}\n`,
+			);
+			const diagnostics = await client.waitForDiagnosticsArray(uri);
+
+			expect(diagnostics.find((diagnostic) => diagnostic.code === "MD013")).to
+				.be.undefined;
+		});
+
 		it("does not read a declarative CLI2 files path while linting the open buffer", async () => {
 			const testDir = await prepareTestDir("cli2-files-not-read");
 			const outsidePath = path.join(
