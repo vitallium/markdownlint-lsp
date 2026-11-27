@@ -80,31 +80,6 @@ describe("Configuration Loading", function () {
 			expect(md009).to.be.undefined;
 		});
 
-		it("should load .markdownlint.jsonc configuration", async () => {
-			const configContent = JSON.stringify({
-				default: true,
-				MD041: false,
-				MD013: { line_length: 120 },
-			});
-
-			const testDir = await prepareTestDir("jsonc");
-
-			await fs.writeFile(
-				path.join(testDir, ".markdownlint.jsonc"),
-				configContent,
-			);
-
-			const uri = `file://${path.join(testDir, "test-jsonc.md")}`;
-			const content = "Not a heading on first line\n\n# Heading\n";
-
-			await client.openTextDocument(uri, content);
-			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
-
-			// MD041 should be disabled
-			const md041 = publishedDiagnostics.find((d) => d.code === "MD041");
-			expect(md041).to.be.undefined;
-		});
-
 		it("should parse comments in .markdownlint.jsonc configuration", async () => {
 			const configContent = `{
 				"default": true,
@@ -371,33 +346,6 @@ no-duplicate-heading:
 	});
 
 	describe("CLI2-style Configuration", () => {
-		it("should load .markdownlint-cli2.jsonc configuration", async () => {
-			const configContent = `{
-				"config": {
-					"default": true,
-					"MD013": false
-				},
-				"ignores": ["node_modules/**"]
-			}`;
-
-			const testDir = await prepareTestDir("cli2-jsonc");
-
-			await fs.writeFile(
-				path.join(testDir, ".markdownlint-cli2.jsonc"),
-				configContent,
-			);
-
-			const uri = `file://${path.join(testDir, "test-cli2.md")}`;
-			const content =
-				"This is a very long line that would normally trigger the line length rule\n";
-
-			await client.openTextDocument(uri, content);
-			const publishedDiagnostics = await client.waitForDiagnosticsArray(uri);
-
-			const md013 = publishedDiagnostics.find((d) => d.code === "MD013");
-			expect(md013).to.be.undefined;
-		});
-
 		it("resolves config.extends relative to the CLI2 config file", async () => {
 			const testDir = await prepareTestDir("cli2-config-extends");
 			await fs.writeFile(

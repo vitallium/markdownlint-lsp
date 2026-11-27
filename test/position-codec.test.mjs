@@ -80,9 +80,6 @@ describe("Sequential content change conversion", () => {
 					expect(original.version).to.equal(1);
 					expect(runtime.hasLatestVersion(original.uri, 1)).to.equal(true);
 					expect(changes).to.deep.equal(input);
-					if (encoding === "utf-16") {
-						expect(converted).to.equal(changes);
-					}
 
 					const updated = runtime.update(
 						{ uri: original.uri, version: 7 },

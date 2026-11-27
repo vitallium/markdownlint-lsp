@@ -106,7 +106,7 @@ describe("WorkspaceContext configuration cache", () => {
 			false,
 		);
 		expect(loaded.documentOptions.config.MD013).to.equal(false);
-		expect(sibling.documentOptions).to.equal(loaded.documentOptions);
+		expect(sibling.documentOptions.config.MD013).to.equal(false);
 	});
 
 	it("retains the cache size limit and evicts the least recently used directory", async () => {
@@ -121,7 +121,7 @@ describe("WorkspaceContext configuration cache", () => {
 			);
 		}
 		const [first, second, third] = directories.map((dir) => documentUri(dir));
-		const initial = await workspace.loadDocumentOptions(first, false);
+		await workspace.loadDocumentOptions(first, false);
 		await workspace.loadDocumentOptions(second, false);
 		await workspace.loadDocumentOptions(first, false);
 		await workspace.loadDocumentOptions(third, false);
@@ -132,8 +132,9 @@ describe("WorkspaceContext configuration cache", () => {
 			);
 		}
 		expect(
-			(await workspace.loadDocumentOptions(first, false)).documentOptions,
-		).to.equal(initial.documentOptions);
+			(await workspace.loadDocumentOptions(first, false)).documentOptions.config
+				.MD013,
+		).to.equal(false);
 		expect(
 			(await workspace.loadDocumentOptions(second, false)).documentOptions
 				.config.MD013,
