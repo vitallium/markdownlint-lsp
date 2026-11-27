@@ -420,6 +420,31 @@ no-duplicate-heading:
 				.be.undefined;
 		});
 
+		it("parses JSONC extends from a YAML CLI2 config", async () => {
+			const testDir = await prepareTestDir("cli2-yaml-jsonc-extends");
+			await fs.writeFile(
+				path.join(testDir, "base.jsonc"),
+				`{
+					// Disable the line length rule.
+					"MD013": false,
+				}`,
+			);
+			await fs.writeFile(
+				path.join(testDir, ".markdownlint-cli2.yaml"),
+				"config:\n  extends: ./base.jsonc\n",
+			);
+
+			const uri = pathToFileURL(path.join(testDir, "test.md")).href;
+			await client.openTextDocument(
+				uri,
+				`${"Long line ".repeat(20).trimEnd()}\n`,
+			);
+			const diagnostics = await client.waitForDiagnosticsArray(uri);
+
+			expect(diagnostics.find((diagnostic) => diagnostic.code === "MD013")).to
+				.be.undefined;
+		});
+
 		it("does not read a declarative CLI2 files path while linting the open buffer", async () => {
 			const testDir = await prepareTestDir("cli2-files-not-read");
 			const outsidePath = path.join(
