@@ -64,20 +64,24 @@ describe("Extended configuration watchers", function () {
 		return (await report).diagnostics.map(({ code }) => code);
 	}
 
-	it("registers extends files and refreshes cached diagnostics on edit, delete and recreate", async () => {
-		const rules = path.join(root, "rules.yaml");
-		await fs.writeFile(
-			path.join(root, ".markdownlint.json"),
-			JSON.stringify({ extends: "./rules.yaml" }),
-		);
-		await fs.writeFile(rules, "MD009: false\n");
-		await start();
-		expect(await open()).not.to.include("MD009");
-		expect(await change(rules, "MD009: true\n")).to.include("MD009");
-		expect(await change(rules, null, 3)).to.include("MD009");
-		expect(await change(rules, "MD009: false\n", 1)).not.to.include("MD009");
-		expect(client.isWatched(path.join(root, "unrelated.yaml"))).to.equal(false);
-	});
+	for (const [filename, config] of [
+		[".markdownlint.json", { extends: "./rules.yaml" }],
+		[".markdownlint-cli2.jsonc", { config: { extends: "./rules.yaml" } }],
+	]) {
+		it(`watches extends from ${filename} across edit, delete and recreate`, async () => {
+			const rules = path.join(root, "rules.yaml");
+			await fs.writeFile(path.join(root, filename), JSON.stringify(config));
+			await fs.writeFile(rules, "MD009: false\n");
+			await start();
+			expect(await open()).not.to.include("MD009");
+			expect(await change(rules, "MD009: true\n")).to.include("MD009");
+			expect(await change(rules, null, 3)).to.include("MD009");
+			expect(await change(rules, "MD009: false\n", 1)).not.to.include("MD009");
+			expect(client.isWatched(path.join(root, "unrelated.yaml"))).to.equal(
+				false,
+			);
+		});
+	}
 
 	it("watches transitive package and outside-root dependencies with literal glob characters", async () => {
 		const packageDir = path.join(root, "node_modules", "shared-rules");

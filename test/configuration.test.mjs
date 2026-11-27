@@ -409,7 +409,9 @@ no-duplicate-heading:
 				JSON.stringify({ config: { extends: "./base.json" } }),
 			);
 
-			const uri = pathToFileURL(path.join(testDir, "test.md")).href;
+			const docs = path.join(testDir, "docs");
+			await fs.mkdir(docs);
+			const uri = pathToFileURL(path.join(docs, "test.md")).href;
 			await client.openTextDocument(
 				uri,
 				`${"Long line ".repeat(20).trimEnd()}\n`,
@@ -615,6 +617,31 @@ no-duplicate-heading:
 
 				const md013 = publishedDiagnostics.find((d) => d.code === "MD013");
 				expect(md013).to.be.undefined;
+			} finally {
+				await trustedClient.stop();
+			}
+		});
+
+		it("resolves extends from a frozen CLI2 JavaScript config", async () => {
+			const testDir = await prepareTestDir("cli2-frozen");
+			await fs.writeFile(
+				path.join(testDir, ".markdownlint-cli2.cjs"),
+				'module.exports = Object.freeze({ config: { extends: "./rules.json" } });',
+			);
+			await fs.writeFile(path.join(testDir, "rules.json"), '{"MD013":false}');
+			const trustedClient = new TestLanguageClient({
+				rootUri: pathToFileURL(testDir).href,
+				initializationOptions: { allowJavaScriptConfig: true },
+			});
+			try {
+				await trustedClient.start();
+				const uri = pathToFileURL(path.join(testDir, "test.md")).href;
+				await trustedClient.openTextDocument(
+					uri,
+					`${"Long line ".repeat(20).trimEnd()}\n`,
+				);
+				const diagnostics = await trustedClient.waitForDiagnosticsArray(uri);
+				expect(diagnostics.map(({ code }) => code)).not.to.include("MD013");
 			} finally {
 				await trustedClient.stop();
 			}
@@ -890,6 +917,29 @@ no-duplicate-heading:
 	});
 
 	describe("Package.json Configuration", () => {
+		it("resolves CLI2 extends relative to the workspace package.json", async () => {
+			const root = await prepareTestDir("package-extends");
+			const docs = path.join(root, "docs");
+			await fs.mkdir(docs);
+			await fs.writeFile(
+				path.join(root, "package.json"),
+				JSON.stringify({
+					"markdownlint-cli2": { config: { extends: "./rules.jsonc" } },
+				}),
+			);
+			await fs.writeFile(
+				path.join(root, "rules.jsonc"),
+				'{\n // Disable the line length rule.\n "MD013": false,\n}',
+			);
+
+			const options = await loadConfig(
+				pathToFileURL(path.join(docs, "test.md")).href,
+				root,
+			);
+
+			expect(options?.config?.MD013).to.be.false;
+		});
+
 		it("should prefer a CLI2 config file over package.json", async () => {
 			const testDir = await prepareTestDir("package-precedence");
 			await fs.writeFile(
