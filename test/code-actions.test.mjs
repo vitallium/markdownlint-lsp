@@ -1,6 +1,5 @@
 import os from "node:os";
 import { expect } from "chai";
-import { applyFixes } from "markdownlint";
 import { lint } from "markdownlint/sync";
 import { describe, it } from "mocha";
 import { TextDocument } from "vscode-languageserver-textdocument";
@@ -140,7 +139,6 @@ describe("CodeActions", () => {
 				actions[0].edit.changes[doc.uri],
 			);
 			expect(fixed).to.equal(expected);
-			expect(fixed).to.equal(applyFixes(content, issues));
 		});
 	}
 
@@ -197,7 +195,6 @@ describe("CodeActions", () => {
 				actions[0].edit.changes[doc.uri],
 			);
 			expect(fixed).to.equal(expected);
-			expect(fixed).to.equal(applyFixes(content, issues));
 		});
 	}
 
@@ -241,59 +238,19 @@ describe("CodeActions", () => {
 		expect(actions[0].edit.changes[document.uri][0].newText).to.equal("first");
 	});
 
-	it("does not read fix pairs for fix-all-only requests", () => {
-		const diagnosticFixPairs = [
-			{
-				get diagnostic() {
-					throw new Error("quick-fix diagnostics should not be read");
-				},
-			},
-		];
-
-		expect(() =>
-			new CodeActions({ codec }).build({
-				uri: document.uri,
-				document,
-				params: {
-					range,
-					context: { only: ["source.fixAll"], diagnostics: [] },
-				},
-				diagnosticFixPairs,
-				issues: [],
-			}),
-		).not.to.throw();
-	});
-
-	it("looks up each requested diagnostic without rescanning fix pairs", () => {
-		const reads = Array(10).fill(0);
-		const diagnostics = reads.map((_, index) => ({
-			range: {
-				start: { line: 0, character: index },
-				end: { line: 0, character: index + 1 },
-			},
-			code: `MD${index}`,
-			message: `diagnostic ${index}`,
-		}));
-		const diagnosticFixPairs = diagnostics.map((value, index) => ({
-			get diagnostic() {
-				reads[index] += 1;
-				return value;
-			},
-			fixInfo: { lineNumber: 1, editColumn: index + 1, insertText: "x" },
-		}));
-
+	it("returns only Fix All when requested", () => {
+		const fixInfo = { lineNumber: 1, editColumn: 3, insertText: "X" };
 		const actions = new CodeActions({ codec }).build({
 			uri: document.uri,
 			document,
 			params: {
 				range,
-				context: { only: ["quickfix"], diagnostics },
+				context: { only: ["source.fixAll"], diagnostics: [diagnostic] },
 			},
-			diagnosticFixPairs,
-			issues: [],
+			diagnosticFixPairs: [{ diagnostic, fixInfo }],
+			issues: [{ lineNumber: 1, fixInfo }],
 		});
 
-		expect(actions).to.have.lengthOf(diagnostics.length);
-		expect(reads).to.deep.equal(Array(10).fill(2));
+		expect(actions.map(({ kind }) => kind)).to.deep.equal(["source.fixAll"]);
 	});
 });

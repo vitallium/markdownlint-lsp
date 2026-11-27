@@ -8,6 +8,7 @@ describe("Validation Queue", () => {
 	before(async () => {
 		client = new TestLanguageClient({
 			capabilities: { workspace: { configuration: false } },
+			initializationOptions: { validationDelay: 100 },
 		});
 		await client.start();
 	});
@@ -18,30 +19,17 @@ describe("Validation Queue", () => {
 
 	it("should publish diagnostics for the latest change", async () => {
 		const uri = createTestDocumentUri("validation-queue.md");
-		await client.openTextDocument(uri, "#No space\n");
+		await client.openTextDocument(uri, "# Heading\n");
 		await client.waitForDiagnostics(uri);
 
-		await client.changeTextDocument(uri, 2, [
-			{
-				range: {
-					start: { line: 0, character: 0 },
-					end: { line: 0, character: 9 },
-				},
-				text: "# With space",
-			},
+		const latest = client.waitForDiagnostics(uri);
+		await Promise.all([
+			client.changeTextDocument(uri, 2, [{ text: "# With space\n" }]),
+			client.changeTextDocument(uri, 3, [{ text: "#No space\n" }]),
 		]);
 
-		await client.changeTextDocument(uri, 3, [
-			{
-				range: {
-					start: { line: 0, character: 0 },
-					end: { line: 0, character: 12 },
-				},
-				text: "#No space",
-			},
-		]);
-
-		const { diagnostics } = await client.waitForDiagnostics(uri);
+		const { diagnostics, version } = await latest;
+		expect(version).to.equal(3);
 		expect(
 			diagnostics.some((diagnostic) => diagnostic.code === "MD018"),
 		).to.equal(true);

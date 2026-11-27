@@ -298,10 +298,6 @@ export class TestLanguageClient {
 		this.#client = new MockLanguageClient(options);
 	}
 
-	get state() {
-		return this.#client.state;
-	}
-
 	get capabilities() {
 		return this.#client.initializeResult?.capabilities;
 	}

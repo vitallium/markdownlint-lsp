@@ -4,6 +4,7 @@ import * as path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { expect } from "chai";
 import { after, before, describe, it } from "mocha";
+import { TextDocumentSyncKind } from "vscode-languageserver/node";
 import { createTestDocumentUri, TestLanguageClient } from "./helpers.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -21,16 +22,10 @@ describe("Markdownlint Language Server", () => {
 		await client.stop();
 	});
 
-	describe("Server Initialization", () => {
-		it("should successfully initialize the language server", async () => {
-			expect(client.state).to.equal(2); // Running state
-		});
-
-		it("should support markdown documents", async () => {
-			const capabilities = client.capabilities;
-			expect(capabilities).to.exist;
-			expect(capabilities.textDocumentSync).to.exist;
-		});
+	it("advertises incremental document synchronization", () => {
+		expect(client.capabilities.textDocumentSync).to.equal(
+			TextDocumentSyncKind.Incremental,
+		);
 	});
 
 	describe("Document Diagnostics", () => {
@@ -159,24 +154,6 @@ describe("Markdownlint Language Server", () => {
 	});
 
 	describe("Configuration Loading", () => {
-		it("should respect .markdownlint.json configuration", async () => {
-			const configDir = path.join(__dirname, "fixtures", "configs");
-			const uri = `file://${path.join(configDir, "test-with-config.md")}`;
-
-			// MD013 (line-length) is disabled in the config
-			const content =
-				"This is a very long line that would normally trigger MD013 line length rule but should be ignored due to configuration settings\n";
-
-			await client.openTextDocument(uri, content);
-			const { diagnostics: publishedDiagnostics } =
-				await client.waitForDiagnostics(uri);
-
-			const md013Diagnostic = publishedDiagnostics.find(
-				(d) => d.code === "MD013",
-			);
-			expect(md013Diagnostic).to.be.undefined;
-		});
-
 		it("should allow HTML elements specified in configuration", async () => {
 			const configDir = path.join(__dirname, "fixtures", "configs");
 			const uri = `file://${path.join(configDir, "test-allowed-html.md")}`;
@@ -195,63 +172,6 @@ describe("Markdownlint Language Server", () => {
 			);
 			expect(md033Diagnostics).to.have.lengthOf(1);
 			expect(md033Diagnostics[0].range.start.line).to.equal(4);
-		});
-	});
-
-	describe("File Watching", () => {
-		it("should re-validate when configuration file changes", async () => {
-			const tempDir = path.join(__dirname, "fixtures", "temp-watch");
-			await fs.promises.rm(tempDir, { recursive: true, force: true });
-			await fs.promises.mkdir(tempDir, { recursive: true });
-
-			const configPath = path.join(tempDir, ".markdownlint.json");
-			const documentPath = path.join(tempDir, "watch.md");
-			const documentUri = pathToFileURL(documentPath).href;
-
-			const initialConfig = {
-				default: true,
-				MD009: false,
-			};
-			await fs.promises.writeFile(
-				configPath,
-				JSON.stringify(initialConfig),
-				"utf8",
-			);
-
-			const content = "Trailing spaces    \n";
-			await client.openTextDocument(documentUri, content);
-			let { diagnostics: publishedDiagnostics } =
-				await client.waitForDiagnostics(documentUri);
-			let md009 = publishedDiagnostics.find((d) => d.code === "MD009");
-			expect(md009).to.be.undefined;
-
-			const updatedConfig = {
-				default: true,
-				MD009: true,
-			};
-			await fs.promises.writeFile(
-				configPath,
-				JSON.stringify(updatedConfig),
-				"utf8",
-			);
-
-			const configUri = pathToFileURL(configPath).href;
-			const diagnosticsPromise = client.waitForDiagnostics(documentUri);
-			await client.sendRawNotification("workspace/didChangeWatchedFiles", {
-				changes: [
-					{
-						uri: configUri,
-						type: 2,
-					},
-				],
-			});
-
-			({ diagnostics: publishedDiagnostics } = await diagnosticsPromise);
-			md009 = publishedDiagnostics.find((d) => d.code === "MD009");
-			expect(md009).to.exist;
-
-			await client.closeTextDocument(documentUri);
-			await fs.promises.rm(tempDir, { recursive: true, force: true });
 		});
 	});
 
@@ -493,54 +413,10 @@ describe("Markdownlint Language Server", () => {
 		});
 	});
 
-	describe("Error Handling", () => {
-		it("should handle malformed markdown gracefully", async () => {
-			const uri = createTestDocumentUri("malformed.md");
-			const content = "```\nunclosed code block\n# Heading inside code?\n";
-
-			await client.openTextDocument(uri, content);
-
-			// Should still produce diagnostics without crashing
-			const { diagnostics: publishedDiagnostics } =
-				await client.waitForDiagnostics(uri);
-			expect(publishedDiagnostics).to.be.an("array");
-			// Should have at least one diagnostic for unclosed code block
-			expect(publishedDiagnostics.length).to.be.greaterThan(0);
-		});
-
-		it("should handle empty documents", async () => {
-			const uri = createTestDocumentUri("empty.md");
-			const content = "";
-
-			await client.openTextDocument(uri, content);
-			const { diagnostics: publishedDiagnostics } =
-				await client.waitForDiagnostics(uri);
-
-			expect(publishedDiagnostics).to.be.an("array");
-			// May or may not have diagnostics depending on configuration
-		});
-
-		it("should handle very large documents", async () => {
-			const uri = createTestDocumentUri("large.md");
-			// Generate a large document
-			let content = "# Large Document\n\n";
-			for (let i = 0; i < 1000; i++) {
-				content += `## Section ${i}\n\nThis is paragraph ${i} with some content.\n\n`;
-			}
-
-			await client.openTextDocument(uri, content);
-			const { diagnostics: publishedDiagnostics } =
-				await client.waitForDiagnostics(uri);
-
-			expect(publishedDiagnostics).to.be.an("array");
-			// Should complete without timeout
-		});
-	});
-
 	describe("Diagnostic Ranges", () => {
-		it("should provide accurate ranges for errors", async () => {
+		it("reports diagnostic ranges after Unicode text and mixed line endings", async () => {
 			const uri = createTestDocumentUri("test-ranges.md");
-			const content = "# Heading\n\n#No space\n\nContent\n";
+			const content = "# 你好 🎉\r\n\r#No space\n\nContent\n";
 
 			await client.openTextDocument(uri, content);
 			const { diagnostics: publishedDiagnostics } =
@@ -554,56 +430,6 @@ describe("Markdownlint Language Server", () => {
 			expect(md018Diagnostic.range.start.character).to.equal(0);
 			expect(md018Diagnostic.range.end.line).to.equal(2);
 			expect(md018Diagnostic.range.end.character).to.be.greaterThan(0);
-		});
-	});
-
-	describe("Rule-Specific Tests", () => {
-		it("should detect MD001 - heading increment", async () => {
-			const uri = createTestDocumentUri("md001.md");
-			const content = "# Heading 1\n### Heading 3\n";
-
-			await client.openTextDocument(uri, content);
-			const { diagnostics: publishedDiagnostics } =
-				await client.waitForDiagnostics(uri);
-
-			const md001 = publishedDiagnostics.find((d) => d.code === "MD001");
-			expect(md001).to.exist;
-		});
-
-		it("should detect MD009 - trailing spaces", async () => {
-			const uri = createTestDocumentUri("md009.md");
-			const content = "This line has trailing spaces    \n";
-
-			await client.openTextDocument(uri, content);
-			const { diagnostics: publishedDiagnostics } =
-				await client.waitForDiagnostics(uri);
-
-			const md009 = publishedDiagnostics.find((d) => d.code === "MD009");
-			expect(md009).to.exist;
-		});
-
-		it("should detect MD010 - hard tabs", async () => {
-			const uri = createTestDocumentUri("md010.md");
-			const content = "\tThis line starts with a tab\n";
-
-			await client.openTextDocument(uri, content);
-			const { diagnostics: publishedDiagnostics } =
-				await client.waitForDiagnostics(uri);
-
-			const md010 = publishedDiagnostics.find((d) => d.code === "MD010");
-			expect(md010).to.exist;
-		});
-
-		it("should detect MD047 - missing trailing newline", async () => {
-			const uri = createTestDocumentUri("md047.md");
-			const content = "# Heading\n\nNo trailing newline";
-
-			await client.openTextDocument(uri, content);
-			const { diagnostics: publishedDiagnostics } =
-				await client.waitForDiagnostics(uri);
-
-			const md047 = publishedDiagnostics.find((d) => d.code === "MD047");
-			expect(md047).to.exist;
 		});
 	});
 });

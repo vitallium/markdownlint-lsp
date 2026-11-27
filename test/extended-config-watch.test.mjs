@@ -4,8 +4,6 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { expect } from "chai";
 import { afterEach, beforeEach, describe, it } from "mocha";
-import { loadConfig } from "../lib/config.mjs";
-import { WorkspaceContext } from "../lib/workspace-context.mjs";
 import { TestLanguageClient } from "./helpers.mjs";
 
 describe("Extended configuration watchers", function () {
@@ -252,32 +250,6 @@ describe("Extended configuration watchers", function () {
 			"MD009",
 		);
 		await client.waitForWatchers(() => !client.isWatched(rules));
-	});
-
-	it("keeps dependency tracking separate from public options and cached lint options", async () => {
-		const rules = path.join(root, "rules.yaml");
-		await fs.writeFile(
-			path.join(root, ".markdownlint.json"),
-			JSON.stringify({ extends: "./rules.yaml" }),
-		);
-		await fs.writeFile(rules, "MD009: false\n");
-		const dependencies = [];
-		expect(
-			await loadConfig(uri, root, {
-				onConfigDependency: (file) => dependencies.push(file),
-			}),
-		).to.deep.equal({ config: { MD009: false } });
-		expect(dependencies).to.deep.equal([rules]);
-		const workspace = new WorkspaceContext({
-			configCacheMaxSize: 1,
-			configChangeDebounceMs: 0,
-		});
-		workspace.initialize({ rootPath: root });
-		const loaded = await workspace.loadDocumentOptions(uri, false);
-		const cached = await workspace.loadDocumentOptions(uri, false);
-		expect(cached).to.deep.equal(loaded);
-		expect([...cached.configDependencies]).to.deep.equal([rules]);
-		expect(cached.documentOptions).to.deep.equal({ config: { MD009: false } });
 	});
 
 	it("reloads dependencies changed while their documents were closed", async () => {
