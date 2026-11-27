@@ -24,6 +24,29 @@ function warnings(logs, fragment = "") {
 }
 
 describe("Config content validation", () => {
+	it("warns and skips a CLI2 config whose extends target is missing", async () => {
+		const tempDir = await fs.mkdtemp(
+			path.join(os.tmpdir(), "markdownlint-lsp-cli2-missing-extends-"),
+		);
+		try {
+			const filename = ".markdownlint-cli2.jsonc";
+			await fs.writeFile(
+				path.join(tempDir, filename),
+				JSON.stringify({ config: { extends: "./missing.json", MD013: false } }),
+			);
+
+			const { config, logs } = await loadConfigCapturingLogs(tempDir);
+
+			expect(config).to.be.null;
+			const configWarnings = warnings(logs);
+			expect(configWarnings).to.have.lengthOf(1);
+			expect(configWarnings[0].message).to.include(filename);
+			expect(configWarnings[0].message).to.include("missing.json");
+		} finally {
+			await fs.rm(tempDir, { recursive: true, force: true });
+		}
+	});
+
 	for (const rcFilename of [".markdownlintrc", ".markdownlint/config"]) {
 		it(`warns and applies no config for INI-format ${rcFilename}`, async () => {
 			const tempDir = await fs.mkdtemp(
