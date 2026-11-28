@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.11.2] - 2026-11-28
+
+### Bug Fixes
+
+- Apply inherited markdownlint-cli2 rules in the editor (#55)
+
+### Testing
+
+- Prune redundant markdownlint LSP checks (#56)
+
 ## [0.11.1] - 2026-10-27
 
 ### Bug Fixes
